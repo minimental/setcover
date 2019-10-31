@@ -1,3 +1,15 @@
+// function that checks if the passed array contains at least one -1 element
+int isEveryItemCovered(int array[], int numberOfElements) {
+	int i = 0;
+	int maximumIndex = numberOfElements - 1;
+	while(array[i] != -1) {
+		if (i == maximumIndex)
+			return 1;
+		++i;
+	}
+	return 0;
+}
+
 int main(int nargs, char** args) {
 	
 	// number of items that need to be covered by the sets
