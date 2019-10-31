@@ -59,7 +59,45 @@ int main(int nargs, char** args) {
 	if (isEveryItemCovered(array_pp, 2))
 		printf("passed.\n");
 	else
-		printf("failed.\n");	
+		printf("failed.\n");
+	
+	printf("\n==================\n\n");
+	printf("Checking `numberOfDistinctElements()'...\n");
+	printf("Calling `numberOfDistinctElements' with two single-element sets that are equal.\n");
+	printf("Expecting the return value to be 0...");
+	int set1_1_eq[1] = {2};
+	int set2_1_eq[1] = {2};
+	if (!numberOfDistinctElements(set1_1_eq, 1, set2_1_eq, 1))
+		printf("passed.\n");
+	else
+		printf("failed.\n");
+	
+	printf("Calling `numberOfDistinctElements' with two single-element sets that are unequal.\n");
+	printf("Expecting the return value to be 1...");
+	int set1_1_neq[1] = {2};
+	int set2_1_neq[1] = {0};
+	if (!numberOfDistinctElements(set1_1_neq, 1, set2_1_neq, 1))
+		printf("failed.\n");
+	else
+		printf("passed.\n");	
+	
+	printf("Calling `numberOfDistinctElements' with two two-element sets that are equal.\n");
+	printf("Expecting the return value to be 0...");
+	int set1_2_eq[2] = {2, 3};
+	int set2_2_eq[2] = {3, 2};
+	if (!numberOfDistinctElements(set1_2_eq, 2, set2_2_eq, 2))
+		printf("passed.\n");
+	else
+		printf("failed.\n");
+	
+	printf("Calling `numberOfDistinctElements' with two two-element sets that have one element in common.\n");
+	printf("Expecting the return value to be 1...");
+	int set1_2_1oo2[2] = {2, 3};
+	int set2_2_1oo2[2] = {3, 4};
+	if (numberOfDistinctElements(set1_2_1oo2, 2, set2_2_1oo2, 2) != 1)
+		printf("failed.\n");
+	else
+		printf("passed.\n");	
 	
 	return 0;
 }
