@@ -1,5 +1,6 @@
-#include "setcover_greedy.h"
 #include <stdio.h>
+#include "setcover_greedy.h"
+#include "linkedList.h"
 
 // test suite for functions in `setcover_greedy'
 int main(int nargs, char** args) {
@@ -98,6 +99,33 @@ int main(int nargs, char** args) {
 		printf("failed.\n");
 	else
 		printf("passed.\n");	
+	
+	printf("Creating a linked list object...");
+	struct linkedList coverageSetNode;
+	printf("passed.\n");
+	
+	printf("Creating another linked list object, and attach it to the first one...");
+	struct linkedList nextCoverageSetNode;
+	coverageSetNode.next = &nextCoverageSetNode;
+	nextCoverageSetNode.next = 0;
+	printf("passed.\n");
+	
+	printf("Associating integer values with the linked list elements, and propagating through them...");
+	int data[2] = {13, 14};
+	coverageSetNode.data = &(data[0]);
+	nextCoverageSetNode.data = &(data[1]);
+	struct linkedList* currentNode = &coverageSetNode;
+	int failed = 0, i = 0;
+	while (currentNode) {
+		if (*((int*) currentNode->data) != data[i])
+			failed = 1;
+		++i;
+		currentNode = currentNode->next;
+	}
+	if (failed)
+		printf("failed.\n");
+	else
+		printf("passed.\n");
 	
 	return 0;
 }
