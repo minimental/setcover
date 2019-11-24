@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "setcover_greedy.h"
-#include "linkedList.h"
+#include "difference.h"
 
 // test suite for functions in `setcover_greedy'
 int main(int nargs, char** args) {
@@ -126,6 +126,34 @@ int main(int nargs, char** args) {
 		printf("failed.\n");
 	else
 		printf("passed.\n");
+	
+	printf("\n");
+	printf("In case you always wanted to know what the size of a void pointer is...\n");
+	printf("On your machine it is %d bytes.\n", sizeof( void* ));
+	printf("Enjoy.\n");
+	
+	printf("\n");
+	printf("The size of a `linkedList' structure is %d bytes.\n", sizeof(struct linkedList));
+	
+	printf("\n==================\n\n");
+	printf("Checking `difference()'...\n");
+	
+	printf("The difference of two empty sets should be the empty set...");
+	struct linkedList differenceList;
+	difference((struct linkedList*) 0, (struct linkedList*) 0, &differenceList);
+	if (&differenceList)
+		printf("failed.\n");
+	else
+		printf("passed.\n");
+	
+	printf("The difference of an empty set and a non-empty set should be empty...");
+	struct linkedList oneNodeLinkedList;
+	difference((struct linkedList*) 0, &oneNodeLinkedList, &differenceList);
+	if (&differenceList)
+		printf("failed.\n");
+	else
+		printf("passed.\n");	
+	
 	
 	return 0;
 }
