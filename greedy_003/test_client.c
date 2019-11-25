@@ -140,16 +140,20 @@ int main(int nargs, char** args) {
 	
 	printf("The difference of two empty sets should be the empty set...");
 	struct linkedList differenceList;
+	differenceList.next = 0;
 	difference((struct linkedList*) 0, (struct linkedList*) 0, &differenceList);
-	if (&differenceList)
+	if (differenceList.next)
 		printf("failed.\n");
 	else
 		printf("passed.\n");
 	
 	printf("The difference of an empty set and a non-empty set should be empty...");
-	struct linkedList oneNodeLinkedList;
-	difference((struct linkedList*) 0, &oneNodeLinkedList, &differenceList);
-	if (&differenceList)
+	struct linkedList linkedListThatRepresentsAOneElementSet;
+	struct linkedList nodeThatRepresentsAnElementOfASet;
+	linkedListThatRepresentsAOneElementSet.next = &nodeThatRepresentsAnElementOfASet;
+	nodeThatRepresentsAnElementOfASet.next = 0;
+	difference((struct linkedList*) 0, &linkedListThatRepresentsAOneElementSet, &differenceList);
+	if (differenceList.next)
 		printf("failed.\n");
 	else
 		printf("passed.\n");	
