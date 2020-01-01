@@ -1,8 +1,8 @@
 #include "difference.h"
 
-void add(struct linkedList* list, void* data) {
+void add(struct node* list, void* data) {
 	// create a node, assign data, ...
-	struct linkedList* node = (struct linkedList*) malloc(sizeof( struct linkedList ));
+	struct node* node = (struct node*) malloc(sizeof( struct node ));
 	node->data = data;
 	node->next = 0;
 	
@@ -10,7 +10,7 @@ void add(struct linkedList* list, void* data) {
 	list->next = node;
 }
 
-void difference(struct linkedList* A, struct linkedList* B, struct linkedList* C) {
+void difference(struct node* A, struct node* B, struct node* C) {
 	
 	// base case: No more remaining elements in A; nothing to do
 	if (!A) return;

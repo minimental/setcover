@@ -101,11 +101,11 @@ int main(int nargs, char** args) {
 		printf("passed.\n");	
 	
 	printf("Creating a linked list object...");
-	struct linkedList coverageSetNode;
+	struct node coverageSetNode;
 	printf("passed.\n");
 	
 	printf("Creating another linked list object, and attach it to the first one...");
-	struct linkedList nextCoverageSetNode;
+	struct node nextCoverageSetNode;
 	coverageSetNode.next = &nextCoverageSetNode;
 	nextCoverageSetNode.next = 0;
 	printf("passed.\n");
@@ -114,7 +114,7 @@ int main(int nargs, char** args) {
 	int data[2] = {13, 14};
 	coverageSetNode.data = &(data[0]);
 	nextCoverageSetNode.data = &(data[1]);
-	struct linkedList* currentNode = &coverageSetNode;
+	struct node* currentNode = &coverageSetNode;
 	int failed = 0, i = 0;
 	while (currentNode) {
 		if (*((int*) currentNode->data) != data[i])
@@ -133,26 +133,26 @@ int main(int nargs, char** args) {
 	printf("Enjoy.\n");
 	
 	printf("\n");
-	printf("The size of a `linkedList' structure is %d bytes.\n", sizeof(struct linkedList));
+	printf("The size of a `node' structure is %d bytes.\n", sizeof(struct node));
 	
 	printf("\n==================\n\n");
 	printf("Checking `difference()'...\n");
 	
 	printf("The difference of two empty sets should be the empty set...");
-	struct linkedList differenceList;
+	struct node differenceList;
 	differenceList.next = 0;
-	difference((struct linkedList*) 0, (struct linkedList*) 0, &differenceList);
+	difference((struct node*) 0, (struct node*) 0, &differenceList);
 	if (differenceList.next)
 		printf("failed.\n");
 	else
 		printf("passed.\n");
 	
 	printf("The difference of an empty set and a non-empty set should be empty...");
-	struct linkedList linkedListThatRepresentsAOneElementSet;
-	struct linkedList nodeThatRepresentsAnElementOfASet;
-	linkedListThatRepresentsAOneElementSet.next = &nodeThatRepresentsAnElementOfASet;
+	struct node nodeThatRepresentsAOneElementSet;
+	struct node nodeThatRepresentsAnElementOfASet;
+	nodeThatRepresentsAOneElementSet.next = &nodeThatRepresentsAnElementOfASet;
 	nodeThatRepresentsAnElementOfASet.next = 0;
-	difference((struct linkedList*) 0, &linkedListThatRepresentsAOneElementSet, &differenceList);
+	difference((struct node*) 0, &nodeThatRepresentsAOneElementSet, &differenceList);
 	if (differenceList.next)
 		printf("failed.\n");
 	else
