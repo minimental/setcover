@@ -33,8 +33,6 @@ void difference(struct node* A, struct node* B, struct node* C) {
 		difference(A, B, C);
 	}
 	if (*((int*) A->data) > *((int*) B->data)) {
-		add(C, B->data);
-		C = C->next;
 		B = B->next;
 		difference(A, B, C);
 	}

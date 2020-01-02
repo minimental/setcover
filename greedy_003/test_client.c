@@ -139,25 +139,88 @@ int main(int nargs, char** args) {
 	printf("Checking `difference()'...\n");
 	
 	printf("The difference of two empty sets should be the empty set...");
-	struct node differenceList;
-	differenceList.next = 0;
-	difference((struct node*) 0, (struct node*) 0, &differenceList);
-	if (differenceList.next)
+	// empty set
+	struct node emptySet;
+	emptySet.next = 0;
+	// difference set
+	struct node differenceSet;
+	differenceSet.next = 0;
+	// call method
+	difference(emptySet.next, emptySet.next, &differenceSet);
+	// validate result
+	if (differenceSet.next)
 		printf("failed.\n");
 	else
 		printf("passed.\n");
 	
+	
 	printf("The difference of an empty set and a non-empty set should be empty...");
-	struct node nodeThatRepresentsAOneElementSet;
-	struct node nodeThatRepresentsAnElementOfASet;
-	nodeThatRepresentsAOneElementSet.next = &nodeThatRepresentsAnElementOfASet;
-	nodeThatRepresentsAnElementOfASet.next = 0;
-	difference((struct node*) 0, &nodeThatRepresentsAOneElementSet, &differenceList);
-	if (differenceList.next)
+	// single-element set
+	struct node nonEmptySet;
+	struct node firstNode;
+	firstNode.next = 0;
+	nonEmptySet.next = &firstNode;
+	// call method
+	difference(emptySet.next, nonEmptySet.next, &differenceSet);
+	// validate result
+	if (differenceSet.next)
 		printf("failed.\n");
 	else
-		printf("passed.\n");	
+		printf("passed.\n");
 	
+	
+	printf("The difference of a non-empty set and an empty set should be non-empty...");
+	// call method
+	difference(nonEmptySet.next, emptySet.next, &differenceSet);
+	// validate result
+	if (differenceSet.next)
+		printf("passed.\n");
+	else
+		printf("failed.\n");
+	
+	
+	printf("The difference of {0} and {0} should be the empty set...");
+	// left set
+	struct node left;
+	struct node node0;
+	int node0data = 0;
+	node0.next = 0;
+	node0.data = (void*) &node0data;
+	left.next = &node0;
+	// right set
+	struct node right;
+	right.next = &node0;
+	// reset difference set
+	differenceSet.next = 0;
+	// call method
+	difference(left.next, right.next, &differenceSet);
+	// validate result
+	if (differenceSet.next)
+		printf("failed.\n");
+	else
+		printf("passed.\n");
+	
+	
+	printf("The difference of {1} and {0} should be {1}...");
+	// left set
+	struct node node1;
+	int node1data = 1;
+	node1.next = 0;
+	node1.data = (void*) &node1data;
+	left.next = &node1;
+	// reset difference set
+	differenceSet.next = 0;
+	// call method
+	difference(left.next, right.next, &differenceSet);	
+	// validate result
+	if (!differenceSet.next)
+		printf("failed.\n");
+	else
+		if (*((int*) differenceSet.next->data) == 1)
+			printf("passed.\n");
+		else
+			printf("failed.\n");
+		
 	
 	return 0;
 }
