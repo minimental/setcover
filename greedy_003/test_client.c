@@ -221,6 +221,39 @@ int main(int nargs, char** args) {
 		else
 			printf("failed.\n");
 		
+		
+	printf("The difference of {12, 227} and {227, 10043} should be {12}...");
+	// data nodes
+	struct node node12, node227Left, node227Right, node10043;
+	int node12data = 12, node227data = 227, node10043data = 10043;
+	node12.data = &node12data;
+	node227Left.data = &node227data;
+	node227Right.data = &node227data;
+	node10043.data = &node10043data;
+	// left set
+	left.next = &node12;
+	node12.next = &node227Left;
+	node227Left.next = 0;
+	// right set
+	right.next = &node227Right;
+	node227Right.next = &node10043;
+	node10043.next = 0;
+	// reset difference set
+	differenceSet.next = 0;	
+	// call method
+	difference(left.next, right.next, &differenceSet);
+	// validate result
+	if (!differenceSet.next)
+		printf("failed.\n");
+	else
+		if (*((int*) differenceSet.next->data) == 12)
+			if (differenceSet.next->next)
+				printf("failed.\n");
+			else
+				printf("passed.\n");
+		else
+			printf("failed.\n");
+	
 	
 	return 0;
 }
