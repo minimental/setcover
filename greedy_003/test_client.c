@@ -156,30 +156,8 @@ int main(int nargs, char** args) {
 	if (differenceList.next)
 		printf("failed.\n");
 	else
-		printf("passed.\n");
+		printf("passed.\n");	
 	
-	printf("The difference of a single-element set and the empty set should be the set containing the element...");
-	/* left set: single element */
-	struct node singleElementSet;
-	singleElementSet.next = 0;
-	nodeThatRepresentsAnElementOfASet.data = (void*) &(data[1]);
-	/* difference set */
-	struct node differenceSet;
-	differenceSet.next = 0;
-	/* call difference */
-	difference(&singleElementSet, &emptySet, &differenceSet);
-	/* check if the difference set has any element at all */
-	if (!differenceSet.next) {
-		printf("failed.\nThe difference set is the empty set.\n");
-		return -1;
-	}
-	else 
-		printf("The difference set contains at least one element.\n");
-	/* validate result */
-	if (*((int*) differenceSet.next->data) == data[1])
-		printf("passed.\n");
-	else
-		printf("failed.\n");
 	
 	return 0;
 }
