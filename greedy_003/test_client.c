@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "setcover_greedy.h"
 #include "difference.h"
+#include "read.h"
 
 // test suite for functions in `setcover_greedy'
 int main(int nargs, char** args) {
@@ -254,6 +255,15 @@ int main(int nargs, char** args) {
 		else
 			printf("failed.\n");
 	
+	printf("\n==================\n\n");
+	printf("Checking `read()'...\n\n");
+	
+	printf("read should be able to read number of sets and elements from file...");
+	struct problem problem_sc_6_1 = read("C:\\Users\\maxherrman\\coursera\\discrete_optimization\\week3\\setcover\\data\\sc_6_1");
+	if ((problem_sc_6_1.numberOfSets == 9) && (problem_sc_6_1.numberOfElements == 6))
+		printf("passed.\n");
+	else
+		printf("failed.\n");
 	
 	return 0;
 }
