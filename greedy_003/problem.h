@@ -7,5 +7,5 @@ struct set {
 struct problem {
 	int numberOfSets;
 	int numberOfElements;
-	struct set* sets;
+	struct set** sets;
 };
