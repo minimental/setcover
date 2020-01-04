@@ -277,14 +277,14 @@ int main(int nargs, char** args) {
 	printf("Checking `read()'...\n\n");
 	
 	printf("`read()' should read number of sets and elements from file...");
-	struct problem problem_sc_6_1 = read("C:\\Users\\maxherrman\\coursera\\discrete_optimization\\week3\\setcover\\data\\sc_6_1");
+	struct problem problem_sc_6_1 = read("..\\data\\sc_6_1");
 	if ((problem_sc_6_1.numberOfSets == 6) && (problem_sc_6_1.numberOfElements == 9))
 		printf("passed.\n");
 	else
 		printf("failed.\n");
 	
 	printf("`read()' should allow access to the first set encoded in the file (cost = 1, elements = {0, 3})...");
-	problem_sc_6_1 = read("C:\\Users\\maxherrman\\coursera\\discrete_optimization\\week3\\setcover\\data\\sc_6_1");
+	problem_sc_6_1 = read("..\\data\\sc_6_1");
 	testSucceeded = 1;
 	testSucceeded &= (problem_sc_6_1.sets[0].cost == 1.0);
 	testSucceeded &= (problem_sc_6_1.sets[0].numberOfElements == 2);
@@ -296,7 +296,7 @@ int main(int nargs, char** args) {
 		printf("failed.\n");
 	
 	printf("`read()' should allow access to all of the sets encoded and header information in the file...");
-	struct problem problem_sc_25_0 = read("C:\\Users\\maxherrman\\coursera\\discrete_optimization\\week3\\setcover\\data\\sc_25_0");
+	struct problem problem_sc_25_0 = read("..\\data\\sc_25_0");
 	testSucceeded = 1;
 	testSucceeded &= (problem_sc_25_0.numberOfSets == 25);
 	testSucceeded &= (problem_sc_25_0.numberOfElements == 12);
