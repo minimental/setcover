@@ -254,13 +254,181 @@ int main(int nargs, char** args) {
 				printf("passed.\n");
 		else
 			printf("failed.\n");
+		
+	printf("\n==================\n\n");
+	printf("Checking `copyIntegerArray()'...\n\n");
+    printf("`copyIntegerArray()' should copy the specified number of elements into a newly allocated array...");
+	// define test array and destination pointer
+	int someIntegerArray[] = {89, 101, -76, 4};
+	int* destination;
+	// call method
+	destination = copyIntegerArray(someIntegerArray, 3);
+	// validate result
+	int testSucceeded = 1;
+	testSucceeded &= (destination[0] == 89);
+	testSucceeded &= (destination[1] == 101);
+	testSucceeded &= (destination[2] == -76);
+	if (testSucceeded)
+		printf("passed.\n");
+	else
+		printf("failed.\n");
 	
 	printf("\n==================\n\n");
 	printf("Checking `read()'...\n\n");
 	
-	printf("read should be able to read number of sets and elements from file...");
+	printf("`read()' should read number of sets and elements from file...");
 	struct problem problem_sc_6_1 = read("C:\\Users\\maxherrman\\coursera\\discrete_optimization\\week3\\setcover\\data\\sc_6_1");
-	if ((problem_sc_6_1.numberOfSets == 9) && (problem_sc_6_1.numberOfElements == 6))
+	if ((problem_sc_6_1.numberOfSets == 6) && (problem_sc_6_1.numberOfElements == 9))
+		printf("passed.\n");
+	else
+		printf("failed.\n");
+	
+	printf("`read()' should allow access to the first set encoded in the file (cost = 1, elements = {0, 3})...");
+	problem_sc_6_1 = read("C:\\Users\\maxherrman\\coursera\\discrete_optimization\\week3\\setcover\\data\\sc_6_1");
+	testSucceeded = 1;
+	testSucceeded &= (problem_sc_6_1.sets[0].cost == 1.0);
+	testSucceeded &= (problem_sc_6_1.sets[0].numberOfElements == 2);
+	testSucceeded &= (problem_sc_6_1.sets[0].elements[0] == 0);
+	testSucceeded &= (problem_sc_6_1.sets[0].elements[1] == 3);
+	if (testSucceeded)
+		printf("passed.\n");
+	else
+		printf("failed.\n");
+	
+	printf("`read()' should allow access to all of the sets encoded and header information in the file...");
+	struct problem problem_sc_25_0 = read("C:\\Users\\maxherrman\\coursera\\discrete_optimization\\week3\\setcover\\data\\sc_25_0");
+	testSucceeded = 1;
+	testSucceeded &= (problem_sc_25_0.numberOfSets == 25);
+	testSucceeded &= (problem_sc_25_0.numberOfElements == 12);
+	testSucceeded &= (problem_sc_25_0.sets[0].cost == 4.0);
+	testSucceeded &= (problem_sc_25_0.sets[0].numberOfElements == 6);
+	testSucceeded &= (problem_sc_25_0.sets[0].elements[0] == 0);
+	testSucceeded &= (problem_sc_25_0.sets[0].elements[1] == 2);
+	testSucceeded &= (problem_sc_25_0.sets[0].elements[2] == 4);
+	testSucceeded &= (problem_sc_25_0.sets[0].elements[3] == 6);
+	testSucceeded &= (problem_sc_25_0.sets[0].elements[4] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[0].elements[5] == 10);
+	testSucceeded &= (problem_sc_25_0.sets[1].cost == 4.0);
+	testSucceeded &= (problem_sc_25_0.sets[1].numberOfElements == 5);
+	testSucceeded &= (problem_sc_25_0.sets[1].elements[0] == 1);
+	testSucceeded &= (problem_sc_25_0.sets[1].elements[1] == 3);
+	testSucceeded &= (problem_sc_25_0.sets[1].elements[2] == 5);
+	testSucceeded &= (problem_sc_25_0.sets[1].elements[3] == 7);
+	testSucceeded &= (problem_sc_25_0.sets[1].elements[4] == 9);
+	testSucceeded &= (problem_sc_25_0.sets[2].cost == 3.0);
+	testSucceeded &= (problem_sc_25_0.sets[2].numberOfElements == 4);
+	testSucceeded &= (problem_sc_25_0.sets[2].elements[0] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[2].elements[1] == 9);
+	testSucceeded &= (problem_sc_25_0.sets[2].elements[2] == 10);
+	testSucceeded &= (problem_sc_25_0.sets[2].elements[3] == 11);
+	testSucceeded &= (problem_sc_25_0.sets[3].cost == 3.0);
+	testSucceeded &= (problem_sc_25_0.sets[3].numberOfElements == 3);
+	testSucceeded &= (problem_sc_25_0.sets[3].elements[0] == 7);
+	testSucceeded &= (problem_sc_25_0.sets[3].elements[1] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[3].elements[2] == 9);
+	testSucceeded &= (problem_sc_25_0.sets[4].cost == 3.0);
+	testSucceeded &= (problem_sc_25_0.sets[4].numberOfElements == 2);
+	testSucceeded &= (problem_sc_25_0.sets[4].elements[0] == 5);
+	testSucceeded &= (problem_sc_25_0.sets[4].elements[1] == 7);
+	testSucceeded &= (problem_sc_25_0.sets[5].cost == 3.0);
+	testSucceeded &= (problem_sc_25_0.sets[5].numberOfElements == 1);
+	testSucceeded &= (problem_sc_25_0.sets[5].elements[0] == 2);
+	testSucceeded &= (problem_sc_25_0.sets[6].cost == 3.0);
+	testSucceeded &= (problem_sc_25_0.sets[6].numberOfElements == 5);
+	testSucceeded &= (problem_sc_25_0.sets[6].elements[0] == 0);
+	testSucceeded &= (problem_sc_25_0.sets[6].elements[1] == 5);
+	testSucceeded &= (problem_sc_25_0.sets[6].elements[2] == 6);
+	testSucceeded &= (problem_sc_25_0.sets[6].elements[3] == 7);
+	testSucceeded &= (problem_sc_25_0.sets[6].elements[4] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[7].cost == 2.0);
+	testSucceeded &= (problem_sc_25_0.sets[7].numberOfElements == 1);
+	testSucceeded &= (problem_sc_25_0.sets[7].elements[0] == 11);	
+	testSucceeded &= (problem_sc_25_0.sets[8].cost == 2.0);
+	testSucceeded &= (problem_sc_25_0.sets[8].numberOfElements == 2);
+	testSucceeded &= (problem_sc_25_0.sets[8].elements[0] == 0);
+	testSucceeded &= (problem_sc_25_0.sets[8].elements[1] == 7);
+	testSucceeded &= (problem_sc_25_0.sets[9].cost == 2.0);
+	testSucceeded &= (problem_sc_25_0.sets[9].numberOfElements == 4);
+	testSucceeded &= (problem_sc_25_0.sets[9].elements[0] == 2);
+	testSucceeded &= (problem_sc_25_0.sets[9].elements[1] == 6);
+	testSucceeded &= (problem_sc_25_0.sets[9].elements[2] == 7);
+	testSucceeded &= (problem_sc_25_0.sets[9].elements[3] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[10].cost == 2.0);
+	testSucceeded &= (problem_sc_25_0.sets[10].numberOfElements == 3);
+	testSucceeded &= (problem_sc_25_0.sets[10].elements[0] == 4);
+	testSucceeded &= (problem_sc_25_0.sets[10].elements[1] == 5);
+	testSucceeded &= (problem_sc_25_0.sets[10].elements[2] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[11].cost == 2.0);
+	testSucceeded &= (problem_sc_25_0.sets[11].numberOfElements == 2);
+	testSucceeded &= (problem_sc_25_0.sets[11].elements[0] == 0);
+	testSucceeded &= (problem_sc_25_0.sets[11].elements[1] == 1);
+	testSucceeded &= (problem_sc_25_0.sets[12].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[12].numberOfElements == 2);
+	testSucceeded &= (problem_sc_25_0.sets[12].elements[0] == 2);
+	testSucceeded &= (problem_sc_25_0.sets[12].elements[1] == 3);
+	testSucceeded &= (problem_sc_25_0.sets[13].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[13].numberOfElements == 2);
+	testSucceeded &= (problem_sc_25_0.sets[13].elements[0] == 3);
+	testSucceeded &= (problem_sc_25_0.sets[13].elements[1] == 4);
+	testSucceeded &= (problem_sc_25_0.sets[14].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[14].numberOfElements == 3);
+	testSucceeded &= (problem_sc_25_0.sets[14].elements[0] == 1);
+	testSucceeded &= (problem_sc_25_0.sets[14].elements[1] == 2);
+	testSucceeded &= (problem_sc_25_0.sets[14].elements[2] == 3);
+	testSucceeded &= (problem_sc_25_0.sets[15].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[15].numberOfElements == 4);
+	testSucceeded &= (problem_sc_25_0.sets[15].elements[0] == 6);
+	testSucceeded &= (problem_sc_25_0.sets[15].elements[1] == 7);
+	testSucceeded &= (problem_sc_25_0.sets[15].elements[2] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[15].elements[3] == 9);
+	testSucceeded &= (problem_sc_25_0.sets[16].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[16].numberOfElements == 2);
+	testSucceeded &= (problem_sc_25_0.sets[16].elements[0] == 9);
+	testSucceeded &= (problem_sc_25_0.sets[16].elements[1] == 10);
+	testSucceeded &= (problem_sc_25_0.sets[17].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[17].numberOfElements == 4);
+	testSucceeded &= (problem_sc_25_0.sets[17].elements[0] == 5);
+	testSucceeded &= (problem_sc_25_0.sets[17].elements[1] == 6);
+	testSucceeded &= (problem_sc_25_0.sets[17].elements[2] == 7);
+	testSucceeded &= (problem_sc_25_0.sets[17].elements[3] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[18].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[18].numberOfElements == 2);
+	testSucceeded &= (problem_sc_25_0.sets[18].elements[0] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[18].elements[1] == 9);
+	testSucceeded &= (problem_sc_25_0.sets[19].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[19].numberOfElements == 4);
+	testSucceeded &= (problem_sc_25_0.sets[19].elements[0] == 0);
+	testSucceeded &= (problem_sc_25_0.sets[19].elements[1] == 4);
+	testSucceeded &= (problem_sc_25_0.sets[19].elements[2] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[19].elements[3] == 9);
+	testSucceeded &= (problem_sc_25_0.sets[20].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[20].numberOfElements == 3);
+	testSucceeded &= (problem_sc_25_0.sets[20].elements[0] == 3);
+	testSucceeded &= (problem_sc_25_0.sets[20].elements[1] == 5);
+	testSucceeded &= (problem_sc_25_0.sets[20].elements[2] == 7);
+	testSucceeded &= (problem_sc_25_0.sets[21].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[21].numberOfElements == 4);
+	testSucceeded &= (problem_sc_25_0.sets[21].elements[0] == 1);
+	testSucceeded &= (problem_sc_25_0.sets[21].elements[1] == 5);
+	testSucceeded &= (problem_sc_25_0.sets[21].elements[2] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[21].elements[3] == 9);
+	testSucceeded &= (problem_sc_25_0.sets[22].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[22].numberOfElements == 4);
+	testSucceeded &= (problem_sc_25_0.sets[22].elements[0] == 2);
+	testSucceeded &= (problem_sc_25_0.sets[22].elements[1] == 3);
+	testSucceeded &= (problem_sc_25_0.sets[22].elements[2] == 6);
+	testSucceeded &= (problem_sc_25_0.sets[22].elements[3] == 7);
+	testSucceeded &= (problem_sc_25_0.sets[23].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[23].numberOfElements == 2);
+	testSucceeded &= (problem_sc_25_0.sets[23].elements[0] == 3);
+	testSucceeded &= (problem_sc_25_0.sets[23].elements[1] == 6);
+	testSucceeded &= (problem_sc_25_0.sets[24].cost == 1.0);
+	testSucceeded &= (problem_sc_25_0.sets[24].numberOfElements == 4);
+	testSucceeded &= (problem_sc_25_0.sets[24].elements[0] == 4);
+	testSucceeded &= (problem_sc_25_0.sets[24].elements[1] == 8);
+	testSucceeded &= (problem_sc_25_0.sets[24].elements[2] == 9);
+	testSucceeded &= (problem_sc_25_0.sets[24].elements[3] == 10);
+	if (testSucceeded)
 		printf("passed.\n");
 	else
 		printf("failed.\n");

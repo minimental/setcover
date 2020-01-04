@@ -1,11 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "read.h"
+
+int* copyIntegerArray(int source[], int numberOfElements) {
+	int* destination = (int*) calloc(numberOfElements, sizeof(int));
+	for (int i = 0; i < numberOfElements; ++i)
+		destination[i] = source[i];
+	return destination;
+}
 
 struct problem read(char* path) {
 	FILE* file = fopen(path, "r");
 	// read header
 	int numberOfSets, numberOfElements;
-	fscanf(file, "%i %i", &numberOfSets, &numberOfElements);
+	fscanf(file, "%i %i", &numberOfElements, &numberOfSets);
 	
 	// instantiate problem struct
 	struct problem specificProblem;
@@ -20,39 +28,70 @@ struct problem read(char* path) {
 	int elements[numberOfElements];
 	
 	int character;
-	int line = 1;
+	int lineIndex = 0;
 	int numberOfElementsPerSet = 0;
 	int isCost = 1;
 	int characterIndex = 0;
-	char cost[64];
-	char element[32];
-	struct set* currentSet;
-	struct set** sets;
+	int terminatingCharacterReached = 0;
+	char string[32];
+	
+	// skipping a line feed followed by a call to `fscanf()'
+	fgetc(file);
+	
+	// read file character-wise
 	while ((character = fgetc(file)) != EOF) {
-		// line break found
-		if (character == '\n') {
-			int actualElements[numberOfElementsPerSet];
-			numberOfElementsPerSet = 0;
-			line++;
-		}
-		// blank found
-		if (character == ' ')
+		// terminating character found
+		if ((character == ' ') || (character == '\n')) {
+			if (!terminatingCharacterReached) {
+				if (isCost) {
+					string[characterIndex] = 0;
+					specificProblem.sets[lineIndex].cost = atof(&(string[0]));
+					isCost = 0;
+				}
+				else {
+					string[characterIndex] = 0;
+					elements[numberOfElementsPerSet++] = atoi(&(string[0]));
+				}				
+			}
 			// reset character index
 			characterIndex = 0;
-			if (isCost) {
-				cost[characterIndex] = 0;
-				currentSet.cost = atof(&(cost[0]));
-				isCost = 0;
+			// line break found
+			if (character == '\n') {
+				int* actualElements = copyIntegerArray(elements, numberOfElementsPerSet);
+				specificProblem.sets[lineIndex].elements = actualElements;
+				specificProblem.sets[lineIndex].numberOfElements = numberOfElementsPerSet;
+				numberOfElementsPerSet = 0;
+				isCost = 1;
+				// flag required to deal with multiple terminating characters
+				terminatingCharacterReached = 0;
+				lineIndex++;
 			}
 			else {
-				element[characterIndex] = 0;
-				elements[numberOfElementsPerSet++] = atoi(&(element[0]));
+				// flag required to deal with multiple terminating characters
+				terminatingCharacterReached = 1;			
 			}
-		// append character
-		if (isCost)
-			cost[characterIndex++] = (char) character;
-		else
-			element[characterIndex++] = (char) character;
+			continue;
+		}
+		// append character to cost/element string
+		string[characterIndex++] = (char) character;
+		// flag required to deal with multiple terminating characters
+		terminatingCharacterReached = 0;
+	}
+	
+	// deal with file not ending with line break
+	if (!terminatingCharacterReached) {
+		if (isCost) {
+			string[characterIndex] = 0;
+			specificProblem.sets[lineIndex].cost = atof(&(string[0]));
+		}
+		else {
+			string[characterIndex] = 0;
+			elements[numberOfElementsPerSet++] = atoi(&(string[0]));
+		}
+		int* actualElements = copyIntegerArray(elements, numberOfElementsPerSet);
+		specificProblem.sets[lineIndex].elements = actualElements;
+		specificProblem.sets[lineIndex].numberOfElements = numberOfElementsPerSet;
+		lineIndex++;
 	}
 	
 	fclose(file);
