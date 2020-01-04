@@ -12,6 +12,13 @@ struct problem read(char* path) {
 	specificProblem.numberOfSets = numberOfSets;
 	specificProblem.numberOfElements = numberOfElements;
 	
+	// instantiate sets
+	struct set sets[numberOfSets];
+	specificProblem.sets = sets;
+	
+	// instantiate elements array
+	int elements[numberOfElements];
+	
 	int character;
 	int line = 1;
 	int numberOfElementsPerSet = 0;
@@ -24,10 +31,7 @@ struct problem read(char* path) {
 	while ((character = fgetc(file)) != EOF) {
 		// line break found
 		if (character == '\n') {
-			// allocate memory for set struct address
-			*sets = (struct set**) malloc(sizeof(struct set*)); 
-			// allocate memory for set struct
-			currentSet = (struct set*) malloc(sizeof(struct set));
+			int actualElements[numberOfElementsPerSet];
 			numberOfElementsPerSet = 0;
 			line++;
 		}
@@ -36,15 +40,13 @@ struct problem read(char* path) {
 			// reset character index
 			characterIndex = 0;
 			if (isCost) {
+				cost[characterIndex] = 0;
 				currentSet.cost = atof(&(cost[0]));
 				isCost = 0;
 			}
 			else {
-				// allocate memory for a new element
-				currentSet.elements = (int*) malloc(sizeof int);
-				*currentSet.elements = atoi(&(element[0]));
-				// increment address to element
-				currentSet.elements++;
+				element[characterIndex] = 0;
+				elements[numberOfElementsPerSet++] = atoi(&(element[0]));
 			}
 		// append character
 		if (isCost)
