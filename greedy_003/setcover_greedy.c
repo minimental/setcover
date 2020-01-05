@@ -86,3 +86,14 @@ int findCoverage() {
 	
 	return 0;
 }
+
+/*
+   solves the set cover problem
+   greedy algorithm acc. to V. V. Vazirani "Approximation Algorithms" 2003, 2e:
+   Algorithm 2.2
+*/
+void setcover_greedy(char* path) {
+	// read problem description from file
+	struct problem specificProblem = read(path);
+	
+}

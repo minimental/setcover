@@ -1,5 +1,13 @@
+#include <stdio.h>
 #include <stdlib.h>
-#include "read.h"
+#include "problem.h"
+#include "node.h"
+
+void difference(struct set left, int leftIndex, struct set right, int rightIndex, struct set differenceSet, int differenceSetIndex);
+
+int* copyIntegerArray(int source[], int numberOfElements);
+
+struct problem read(char* path);
 
 struct coverage {
 	int size;

@@ -3,3 +3,5 @@
 *.exe
 *.log
 *.out
+*.s
+*.o

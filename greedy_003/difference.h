@@ -1,6 +1,4 @@
 #include <stdlib.h>
-#include "node.h"
+#include "problem.h"
 
-void add(struct node* list, void* data);
-
-void difference(struct node* A, struct node* B, struct node* C);
+void difference(struct set left, int leftIndex, struct set right, int rightIndex, struct set differenceSet, int differenceSetIndex);
