@@ -95,5 +95,4 @@ int findCoverage() {
 void setcover_greedy(char* path) {
 	// read problem description from file
 	struct problem specificProblem = read(path);
-	
 }

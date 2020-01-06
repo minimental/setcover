@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "problem.h"
-#include "node.h"
 
 void difference(struct set left, int leftIndex, struct set right, int rightIndex, struct set* differenceSet, int differenceSetIndex);
 

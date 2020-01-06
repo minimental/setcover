@@ -96,42 +96,7 @@ int main(int nargs, char** args) {
 	if (numberOfDistinctElements(set1_2_1oo2, 2, set2_2_1oo2, 2) != 1)
 		printf("failed.\n");
 	else
-		printf("passed.\n");	
-	
-	printf("Creating a linked list object...");
-	struct node coverageSetNode;
-	printf("passed.\n");
-	
-	printf("Creating another linked list object, and attach it to the first one...");
-	struct node nextCoverageSetNode;
-	coverageSetNode.next = &nextCoverageSetNode;
-	nextCoverageSetNode.next = 0;
-	printf("passed.\n");
-	
-	printf("Associating integer values with the linked list elements, and propagating through them...");
-	int data[2] = {13, 14};
-	coverageSetNode.data = &(data[0]);
-	nextCoverageSetNode.data = &(data[1]);
-	struct node* currentNode = &coverageSetNode;
-	int failed = 0, i = 0;
-	while (currentNode) {
-		if (*((int*) currentNode->data) != data[i])
-			failed = 1;
-		++i;
-		currentNode = currentNode->next;
-	}
-	if (failed)
-		printf("failed.\n");
-	else
 		printf("passed.\n");
-	
-	printf("\n");
-	printf("In case you always wanted to know what the size of a void pointer is...\n");
-	printf("On your machine it is %d bytes.\n", sizeof( void* ));
-	printf("Enjoy.\n");
-	
-	printf("\n");
-	printf("The size of a `node' structure is %d bytes.\n", sizeof(struct node));
 	
 	printf("\n==================\n\n");
 	printf("Checking `difference()'...\n");
