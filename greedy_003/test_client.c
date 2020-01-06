@@ -144,7 +144,7 @@ int main(int nargs, char** args) {
 	struct set differenceSet;
 	differenceSet.numberOfElements = 0;
 	// call method
-	difference(emptySet, 0, emptySet, 0, differenceSet, 0);
+	difference(emptySet, 0, emptySet, 0, &differenceSet, 0);
 	// validate result
 	if (differenceSet.numberOfElements)
 		printf("failed.\n");
@@ -159,7 +159,7 @@ int main(int nargs, char** args) {
 	nonEmptySet.numberOfElements = 3;
 	nonEmptySet.elements = &(elements[0]);
 	// call method
-	difference(emptySet, 0, nonEmptySet, 0, differenceSet, 0);
+	difference(emptySet, 0, nonEmptySet, 0, &differenceSet, 0);
 	// validate result
 	if (differenceSet.numberOfElements)
 		printf("failed.\n");
@@ -173,7 +173,7 @@ int main(int nargs, char** args) {
 	int zeroElements[] = {0, 0, 0};
 	differenceSet.elements = &(zeroElements[0]);
 	// call method
-	difference(nonEmptySet, 0, emptySet, 0, differenceSet, 0);
+	difference(nonEmptySet, 0, emptySet, 0, &differenceSet, 0);
 	// validate result
 	int testSucceeded = 1;
 	testSucceeded &= differenceSet.elements[0] == 1003;
@@ -196,7 +196,7 @@ int main(int nargs, char** args) {
 	differenceSet.numberOfElements = 0;
 	differenceSet.elements = &(differenceSetElements[0]);
 	// call method
-	difference(zeroSet, 0, zeroSet, 0, differenceSet, 0);
+	difference(zeroSet, 0, zeroSet, 0, &differenceSet, 0);
 	// validate result
 	if (differenceSet.numberOfElements != 0)
 		printf("failed.\n");
@@ -213,50 +213,38 @@ int main(int nargs, char** args) {
 	// reset difference set
 	differenceSet.numberOfElements = 0;
 	// call method
-	difference(oneSet, 0, zeroSet, 0, differenceSet, 0);
+	difference(oneSet, 0, zeroSet, 0, &differenceSet, 0);
 	// validate result
 	if ((differenceSet.numberOfElements == 1) && (differenceSet.elements[0] == 1))
 		printf("passed.\n");
 	else
 		printf("failed.\n");
-	// print results
-	printf("Expected: differenceSet.numberOfElements = 1. Actual: differenceSet.numberOfElements = %i.\n", differenceSet.numberOfElements);
-	printf("Expected: differenceSet.elements[0] = 1. Actual: differenceSet.elements[0] = %i.\n", differenceSet.elements[0]);
 	
 	
-	/*
 	printf("The difference of {12, 227} and {227, 10043} should be {12}...");
-	// data nodes
-	struct node node12, node227Left, node227Right, node10043;
-	int node12data = 12, node227data = 227, node10043data = 10043;
-	node12.data = &node12data;
-	node227Left.data = &node227data;
-	node227Right.data = &node227data;
-	node10043.data = &node10043data;
-	// left set
-	left.next = &node12;
-	node12.next = &node227Left;
-	node227Left.next = 0;
-	// right set
-	right.next = &node227Right;
-	node227Right.next = &node10043;
-	node10043.next = 0;
+	// left operand
+	struct set left;
+	int leftElements[] = {12, 227};
+	left.numberOfElements = 2;
+	left.elements = &(leftElements[0]);
+	// right operand
+	struct set right;
+	int rightElements[] = {227, 10043};
+	right.numberOfElements = 2;
+	right.elements = &(rightElements[0]);
 	// reset difference set
-	differenceSet.next = 0;	
+	differenceSet.numberOfElements = 0;	
 	// call method
-	difference(left.next, right.next, &differenceSet);
+	difference(left, 0, right, 0, &differenceSet, 0);
 	// validate result
-	if (!differenceSet.next)
-		printf("failed.\n");
+	testSucceeded = 1;
+	testSucceeded &= differenceSet.numberOfElements == 1;
+	testSucceeded &= differenceSet.elements[0] == 12;
+	if (testSucceeded)
+		printf("passed.\n");
 	else
-		if (*((int*) differenceSet.next->data) == 12)
-			if (differenceSet.next->next)
-				printf("failed.\n");
-			else
-				printf("passed.\n");
-		else
-			printf("failed.\n");
-	*/
+		printf("failed.\n");	
+
 		
 	printf("\n==================\n\n");
 	printf("Checking `copyIntegerArray()'...\n\n");
