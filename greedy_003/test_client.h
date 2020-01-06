@@ -4,6 +4,8 @@
 
 void difference(struct set left, int leftIndex, struct set right, int rightIndex, struct set* differenceSet, int differenceSetIndex);
 
+void union_of_sets(struct set left, int leftIndex, struct set right, int rightIndex, struct set* unionSet, int unionSetIndex);
+
 int* copyIntegerArray(int source[], int numberOfElements);
 
 struct problem read(char* path);

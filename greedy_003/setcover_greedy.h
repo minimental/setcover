@@ -1,16 +1,10 @@
 #include <stdlib.h>
 #include "read.h"
+#include "solution.h"
 
-struct coverage {
-	int size;
-	int numberOfSetItems;
-	int items[];
-};
+void difference(struct set left, int leftIndex, struct set right, int rightIndex, struct set* differenceSet, int differenceSetIndex);
 
-// function that checks if the passed array contains at least one -1 element
-int isEveryItemCovered(int array[], int numberOfElements);
+void union_of_sets(struct set left, int leftIndex, struct set right, int rightIndex, struct set* unionSet, int unionSetIndex);
 
-// function returns number of elements in set1 which are not in set2
-int numberOfDistinctElements(int set1[], int numberOfElementsInSet1, int set2[], int numberOfElementsinSet2);
-
-int findCoverage();
+// solves the set cover problem
+void setcover_greedy(char* path, struct solution* specificSolution);

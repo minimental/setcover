@@ -1,12 +1,5 @@
 #include "setcover_greedy.h"
 
-// function returns 1 if all elements are 1; 0 otherwise
-int isEveryItemCovered(int array[], int numberOfElements) {
-	for (int i = 0; i < numberOfElements; ++i)
-		if (!array[i]) return 0;
-	return 1;
-}
-
 int integerCompare(const void* arg1, const void* arg2) {
 	if (*((int*) arg1) > *((int*) arg2)) return 1;
 	if (*((int*) arg1) < *((int*) arg2)) return -1;
@@ -36,48 +29,18 @@ int numberOfDistinctElements(int set1[], int numberOfElementsInSet1, int set2[],
 	return numberOfDistinctElements;
 }
 
-int findCoverage() {
+double evalCostEffectiveness(double cost, struct set S, struct set C) {
+	// compute difference of S and C
+	struct set differenceSet;
+	int zeroElements[C.numberOfElements];
+	differenceSet.numberOfElements = 0;
+	differenceSet.elements = &(zeroElements[0]);
+	// 
 	
-	// number of items that need to be covered by the sets
-	int numberOfItems = 9;
-	// number of sets available for coverage
-	int numberOfSets = 6;
-	// initialize cost for every set
-	int cost[6] = {1, 1, 1, 1, 1, 1};
-	// instantiate cost-effectiveness for every set
-	int costEffectiveness[numberOfSets];
-	// instantiate pointers to sets
-	int* sets[numberOfSets];
-	// initialize sets
-	int sizesOfSets[6] = {2, 6, 5, 3, 5, 4};
-	int set0[2] = {0, 3};
-	sets[0] = &(set0[0]);
-	int set1[6] = {0, 1, 2, 5, 6, 8};
-	sets[1] = &(set1[0]);
-	int set2[5] = {1, 2, 5, 6, 8};
-	sets[2] = &(set2[0]);
-	int set3[3] = {6, 7, 8};
-	sets[3] = &(set3[0]);
-	int set4[5] = {0, 3, 4, 5, 6};
-	sets[4] = &(set4[0]);
-	int set5[4] = {1, 2, 7, 8};
-	sets[5] = &(set5[0]);
+	difference(S, 0, C, 0, &differenceSet, 0);
 	
-	// instantiate coverage struct
-	struct coverage* c;
-	c = (struct coverage*) calloc(numberOfItems + 2, sizeof(int));
-	
-	for (int i = 0; i < numberOfItems; ++i)
-		c->items[i] = -1;
-	
-	// test if coverage equals universe
-	if (!isEveryItemCovered(c->items, numberOfItems)) {
-		for (int i = 0; i < numberOfSets; ++i)
-			costEffectiveness[i] = cost[i]/numberOfDistinctElements(sets[i], sizesOfSets[i], c->items, c->size);
-	}
-		
-	
-	return 0;
+	// compute cost effectiveness of set
+	return cost / differenceSet.numberOfElements;
 }
 
 /*
@@ -85,36 +48,55 @@ int findCoverage() {
    greedy algorithm acc. to V.V. Vazirani "Approximation Algorithms" 2003, 2e:
    Algorithm 2.2
 */
-void setcover_greedy(char* path) {
+void setcover_greedy(char* path, struct solution* specificSolution) {
 	// read problem description from file
 	struct problem specificProblem = read(path);
 	// overall number of elements and sets
 	int M = specificProblem.numberOfSets;
 	int N = specificProblem.numberOfElements;
-	// bit masks of covered sets and coverage
-	int coveredSets[M], coverage[N];
+	// create coverage
+	struct set coverage, coverage_update;
+	coverage.numberOfElements = 0;
+	coverage_update.numberOfElements = 0;
+	int zeroElements[N], zeroElements_update[N];
+	coverage.elements = &(zeroElements[0]);
+	coverage_update.elements = &(zeroElements_update[0]);
+	// bit masks of picked sets
+	int pickedSets[M];
 	for (int i = 0; i < M; ++i)
-		coveredSets[i] = 0;
-	for (int i = 0; i < N; ++i)
-		coverage[i] = 0;
+		pickedSets[i] = 0;
 	// cost effectiveness per set
 	double costEffectiveness, minimumCostEffectiveness = specificProblem.sets[0].cost;
 	int minimumCostEffectiveSetIndex = 0;
 	// loop until every element is covered
-	while (!isEveryItemCovered(coverage, N)) {
+	while (coverage.numberOfElements != N) {
 		for (int currentSetIndex = 0; currentSetIndex < M; ++currentSetIndex) {
 			// skip set if already picked
-			if (coveredSets[currentSetIndex]) continue;
+			if (pickedSets[currentSetIndex]) continue;
 			costEffectiveness = evalCostEffectiveness(specificProblem.sets[currentSetIndex].cost, specificProblem.sets[currentSetIndex], coverage);
 			if (minimumCostEffectiveness > costEffectiveness) {
 				minimumCostEffectiveness = costEffectiveness;
 				minimumCostEffectiveSetIndex = currentSetIndex;
 			}			
 		}
-		// flag element indices in coverage that are covered by minimum cost effectiveness set
-		struct set minimumCostEffectiveSet = specificProblem.sets[minimumCostEffectiveSetIndex];
-		for (int i = 0; i < minimumCostEffectiveSet.numberOfElements; ++i)
-			coverage[minimumCostEffectiveSet.elements[i]] = 1;		
+		// compute union of coverage and minimum cost effective set
+		union_of_sets(coverage, 0, specificProblem.sets[minimumCostEffectiveSetIndex], 0, &coverage_update, 0);
+		coverage.numberOfElements = coverage_update.numberOfElements;
+		// swap elements
+		int* temp = coverage.elements;
+		coverage.elements = coverage_update.elements;
+		coverage_update.elements = temp;
+		coverage_update.numberOfElements = 0;
 	}
-
+	// compute overall cost
+	double cost = 0;
+	for (int i = 0; i < M; ++i)
+		if (pickedSets[i])
+			cost += specificProblem.sets[0].cost;
+	// fill solution struct
+	specificSolution->numberOfSets = M;
+	specificSolution->pickedSets = (int*) calloc(M, sizeof(int));
+	for (int i = 0; i < M; ++i)
+		specificSolution->pickedSets[i] = pickedSets[i];
+	specificSolution->cost = cost;
 }

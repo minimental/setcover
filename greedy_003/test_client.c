@@ -3,63 +3,6 @@
 // test suite for functions in `setcover_greedy'
 int main(int nargs, char** args) {
 	
-	printf("Checking `isEveryItemCovered()'...\n");
-	printf("Calling `isEveryItemCovered(array, 0)' with an empty array.\n");
-	printf("Expecting the return value to be 1...");
-	int array_0[0];
-	if (isEveryItemCovered(array_0, 0))
-		printf("passed.\n");
-	else
-		printf("failed.\n");
-	
-	printf("Calling `isEveryItemCovered(array, 1)' with [1].\n");
-	printf("Expecting the return value to be 1...");
-	int array_1_passed[1] = {1};
-	if (isEveryItemCovered(array_1_passed, 1))
-		printf("passed.\n");
-	else
-		printf("failed.\n");
-	
-	printf("Calling `isEveryItemCovered(array, 1)' with [-1].\n");
-	printf("Expecting the return value to be 0...");
-	int array_1_failed[1] = {-1};
-	if (isEveryItemCovered(array_1_failed, 1))
-		printf("failed.\n");
-	else
-		printf("passed.\n");
-	
-	printf("Calling `isEveryItemCovered(array, 2)' with [1, -1].\n");
-	printf("Expecting the return value to be 0...");
-	int array_pn[2] = {1, -1};
-	if (isEveryItemCovered(array_pn, 2))
-		printf(".\n");
-	else
-		printf("passed.\n");
-	
-	printf("Calling `isEveryItemCovered(array, 2)' with [-1, 2].\n");
-	printf("Expecting the return value to be 0...");
-	int array_np[2] = {-1, 2};
-	if (isEveryItemCovered(array_np, 2))
-		printf(".\n");
-	else
-		printf("passed.\n");
-	
-	printf("Calling `isEveryItemCovered(array, 2)' with [-1, -1].\n");
-	printf("Expecting the return value to be 0...");
-	int array_nn[2] = {-1, -1};
-	if (isEveryItemCovered(array_nn, 2))
-		printf(".\n");
-	else
-		printf("passed.\n");
-	
-	printf("Calling `isEveryItemCovered(array, 2)' with [1, 2].\n");
-	printf("Expecting the return value to be 1...");
-	int array_pp[2] = {1, 2};
-	if (isEveryItemCovered(array_pp, 2))
-		printf("passed.\n");
-	else
-		printf("failed.\n");
-	
 	printf("\n==================\n\n");
 	printf("Checking `numberOfDistinctElements()'...\n");
 	printf("Calling `numberOfDistinctElements' with two single-element sets that are equal.\n");
@@ -388,6 +331,33 @@ int main(int nargs, char** args) {
 		printf("passed.\n");
 	else
 		printf("failed.\n");
+	
+	printf("\n==================\n\n");
+	printf("Checking `union_of_sets()'...\n\n");
+	
+	printf("The union of {12, 227} and {227, 10043} should be {12, 227, 10043}...");
+	// create union set
+	struct set unionSet;
+	unionSet.numberOfElements = 0;
+	int threeElements[3];
+	unionSet.elements = &(threeElements[0]);
+	// call method
+	union_of_sets(left, 0, right, 0, &unionSet, 0);
+	// validate result
+	testSucceeded = 1;
+	testSucceeded &= unionSet.numberOfElements == 3;
+	printf("\n[Expected number of elements in union set: 3. Actual number of elements in union set: %i.]\n", unionSet.numberOfElements);
+	testSucceeded &= unionSet.elements[0] == 12;
+	testSucceeded &= unionSet.elements[1] == 227;
+	testSucceeded &= unionSet.elements[2] == 10043;
+	if (testSucceeded)
+		printf("passed.\n");
+	else
+		printf("failed.\n");
+	
+	
+	printf("\n==================\n\n");
+	printf("Checking `setcover_greedy()'...\n\n");
 	
 	return 0;
 }
