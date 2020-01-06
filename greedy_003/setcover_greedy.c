@@ -1,17 +1,10 @@
 #include "setcover_greedy.h"
 
-// function that checks if the passed array contains at least one -1 element
+// function returns 1 if all elements are 1; 0 otherwise
 int isEveryItemCovered(int array[], int numberOfElements) {
-	// if the array is empty, every item is covered
-	if (numberOfElements == 0) return 1;
-	int i = 0;
-	int maximumIndex = numberOfElements - 1;
-	while(array[i] != -1) {
-		if (i == maximumIndex)
-			return 1;
-		++i;
-	}
-	return 0;
+	for (int i = 0; i < numberOfElements; ++i)
+		if (!array[i]) return 0;
+	return 1;
 }
 
 int integerCompare(const void* arg1, const void* arg2) {
@@ -89,10 +82,39 @@ int findCoverage() {
 
 /*
    solves the set cover problem
-   greedy algorithm acc. to V. V. Vazirani "Approximation Algorithms" 2003, 2e:
+   greedy algorithm acc. to V.V. Vazirani "Approximation Algorithms" 2003, 2e:
    Algorithm 2.2
 */
 void setcover_greedy(char* path) {
 	// read problem description from file
 	struct problem specificProblem = read(path);
+	// overall number of elements and sets
+	int M = specificProblem.numberOfSets;
+	int N = specificProblem.numberOfElements;
+	// bit masks of covered sets and coverage
+	int coveredSets[M], coverage[N];
+	for (int i = 0; i < M; ++i)
+		coveredSets[i] = 0;
+	for (int i = 0; i < N; ++i)
+		coverage[i] = 0;
+	// cost effectiveness per set
+	double costEffectiveness, minimumCostEffectiveness = specificProblem.sets[0].cost;
+	int minimumCostEffectiveSetIndex = 0;
+	// loop until every element is covered
+	while (!isEveryItemCovered(coverage, N)) {
+		for (int currentSetIndex = 0; currentSetIndex < M; ++currentSetIndex) {
+			// skip set if already picked
+			if (coveredSets[currentSetIndex]) continue;
+			costEffectiveness = evalCostEffectiveness(specificProblem.sets[currentSetIndex].cost, specificProblem.sets[currentSetIndex], coverage);
+			if (minimumCostEffectiveness > costEffectiveness) {
+				minimumCostEffectiveness = costEffectiveness;
+				minimumCostEffectiveSetIndex = currentSetIndex;
+			}			
+		}
+		// flag element indices in coverage that are covered by minimum cost effectiveness set
+		struct set minimumCostEffectiveSet = specificProblem.sets[minimumCostEffectiveSetIndex];
+		for (int i = 0; i < minimumCostEffectiveSet.numberOfElements; ++i)
+			coverage[minimumCostEffectiveSet.elements[i]] = 1;		
+	}
+
 }
