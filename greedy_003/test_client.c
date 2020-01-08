@@ -151,8 +151,36 @@ int main(int nargs, char** args) {
 	if (testSucceeded)
 		printf("passed.\n");
 	else
+		printf("failed.\n");
+	
+	
+	printf("The difference of {-14, 0, 21, 894, 30240} and {-140, -88, 0, 3, 13, 894, 20006, 20007, 30240} should be {-14, 21}...");
+	// re-assign left set
+	int leftElementsDifference0[] = {-14, 0, 21, 894, 30240};
+	left.numberOfElements = 5;
+	left.elements = &(leftElementsDifference0[0]);
+	// re-assign right set
+	int rightElementsDifference0[] = {-140, -88, 0, 3, 13, 894, 20006, 20007, 30240};
+	/*
+	right.numberOfElements = 9;
+	right.elements = &(rightElementsDifference0[0]);
+	// reset difference set
+	int elementsDifference0[5];
+	differenceSet.numberOfElements = 0;
+	differenceSet.elements = &(elementsDifference0[0]);
+	// call method
+	difference(left, 0, right, 0, &differenceSet, 0);
+	// validate result
+	testSucceeded = 1;
+	testSucceeded &= differenceSet.numberOfElements == 2;
+	testSucceeded &= differenceSet.elements[0] == -14;
+	testSucceeded &= differenceSet.elements[1] == 21;
+	if (testSucceeded)
+		printf("passed.\n");
+	else
 		printf("failed.\n");	
-
+	*/
+	
 		
 	printf("\n==================\n\n");
 	printf("Checking `copyIntegerArray()'...\n\n");
@@ -346,7 +374,6 @@ int main(int nargs, char** args) {
 	// validate result
 	testSucceeded = 1;
 	testSucceeded &= unionSet.numberOfElements == 3;
-	printf("\n[Expected number of elements in union set: 3. Actual number of elements in union set: %i.]\n", unionSet.numberOfElements);
 	testSucceeded &= unionSet.elements[0] == 12;
 	testSucceeded &= unionSet.elements[1] == 227;
 	testSucceeded &= unionSet.elements[2] == 10043;
@@ -355,6 +382,43 @@ int main(int nargs, char** args) {
 	else
 		printf("failed.\n");
 	
+	
+	printf("The union of {-14, 0, 21, 894, 30240} and {-140, -88, 0, 3, 13, 894, 20006, 20007, 30240} should be {-140, -88, -14, 0, 3, 13, 21, 894, 20006, 20007, 30240}...");
+	// Re-assign left set
+	int testSetLeft0[] = {-14, 0, 21, 894, 30240};
+	left.numberOfElements = 5;
+	left.elements = &(testSetLeft0[0]);
+	// Re-assign right set
+	int testSetRight0[] = {-140, -88, 0, 3, 13, 894, 20006, 20007, 30240};
+	right.numberOfElements = 9;
+	right.elements = &(testSetRight0[0]);
+	// Reset union set
+	int nineElements[14];
+	unionSet.numberOfElements = 0;
+	unionSet.elements = &(nineElements[0]);
+	// call method
+	union_of_sets(left, 0, right, 0, &unionSet, 0);
+	// validate result
+	testSucceeded = 1;
+	testSucceeded &= unionSet.numberOfElements == 11;
+	printf("\n[Expected number of elements in unions set: 11. Actual number of elements in union set: %i.]\n", unionSet.numberOfElements);
+	for(int i = 0; i < unionSet.numberOfElements; ++i)
+		printf("%i ", unionSet.elements[i]);
+	testSucceeded &= unionSet.elements[0] == -140;
+	testSucceeded &= unionSet.elements[1] == -88;
+	testSucceeded &= unionSet.elements[2] == -14;
+	testSucceeded &= unionSet.elements[3] == 0;
+	testSucceeded &= unionSet.elements[4] == 3;
+	testSucceeded &= unionSet.elements[5] == 13;
+	testSucceeded &= unionSet.elements[6] == 21;
+	testSucceeded &= unionSet.elements[7] == 894;
+	testSucceeded &= unionSet.elements[8] == 20006;
+	testSucceeded &= unionSet.elements[9] == 20007;
+	testSucceeded &= unionSet.elements[10] == 30240;
+	if (testSucceeded)
+		printf("passed.\n");
+	else
+		printf("failed.\n");	
 	
 	printf("\n==================\n\n");
 	printf("Checking `setcover_greedy()'...\n\n");
