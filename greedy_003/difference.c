@@ -1,10 +1,6 @@
 #include "difference.h"
-#include <stdio.h>
 
 void difference(struct set left, int leftIndex, struct set right, int rightIndex, struct set* differenceSet, int differenceSetIndex) {
-	
-	// TODO: remove; for debugging purposes only
-	printf("\n[Call to difference()]\n");
 	
 	// base case: No more remaining elements in A; nothing to do
 	if (leftIndex == left.numberOfElements) return;

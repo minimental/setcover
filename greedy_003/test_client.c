@@ -161,7 +161,6 @@ int main(int nargs, char** args) {
 	left.elements = &(leftElementsDifference0[0]);
 	// re-assign right set
 	int rightElementsDifference0[] = {-140, -88, 0, 3, 13, 894, 20006, 20007, 30240};
-	/*
 	right.numberOfElements = 9;
 	right.elements = &(rightElementsDifference0[0]);
 	// reset difference set
@@ -179,9 +178,8 @@ int main(int nargs, char** args) {
 		printf("passed.\n");
 	else
 		printf("failed.\n");	
-	*/
 	
-		
+	
 	printf("\n==================\n\n");
 	printf("Checking `copyIntegerArray()'...\n\n");
     printf("`copyIntegerArray()' should copy the specified number of elements into a newly allocated array...");
@@ -360,15 +358,24 @@ int main(int nargs, char** args) {
 	else
 		printf("failed.\n");
 	
+	
 	printf("\n==================\n\n");
 	printf("Checking `union_of_sets()'...\n\n");
 	
 	printf("The union of {12, 227} and {227, 10043} should be {12, 227, 10043}...");
+	// Re-assign left set
+	int leftElementsUnion0[] = {12, 227};
+	left.numberOfElements = 2;
+	left.elements = &(leftElementsUnion0[0]);
+	// Re-assign right set
+	int rightElementsUnion0[] = {12, 227, 10043};
+	right.numberOfElements = 3;
+	right.elements = &(rightElementsUnion0[0]);	
 	// create union set
 	struct set unionSet;
 	unionSet.numberOfElements = 0;
-	int threeElements[3];
-	unionSet.elements = &(threeElements[0]);
+	int elementsUnion0[3];
+	unionSet.elements = &(elementsUnion0[0]);
 	// call method
 	union_of_sets(left, 0, right, 0, &unionSet, 0);
 	// validate result
@@ -401,9 +408,6 @@ int main(int nargs, char** args) {
 	// validate result
 	testSucceeded = 1;
 	testSucceeded &= unionSet.numberOfElements == 11;
-	printf("\n[Expected number of elements in unions set: 11. Actual number of elements in union set: %i.]\n", unionSet.numberOfElements);
-	for(int i = 0; i < unionSet.numberOfElements; ++i)
-		printf("%i ", unionSet.elements[i]);
 	testSucceeded &= unionSet.elements[0] == -140;
 	testSucceeded &= unionSet.elements[1] == -88;
 	testSucceeded &= unionSet.elements[2] == -14;
@@ -422,6 +426,7 @@ int main(int nargs, char** args) {
 	
 	printf("\n==================\n\n");
 	printf("Checking `setcover_greedy()'...\n\n");
+	
 	
 	return 0;
 }
