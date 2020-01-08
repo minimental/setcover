@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "problem.h"
+#include "solution.h"
 
 void difference(struct set left, int leftIndex, struct set right, int rightIndex, struct set* differenceSet, int differenceSetIndex);
 
@@ -23,3 +24,5 @@ int isEveryItemCovered(int array[], int numberOfElements);
 int numberOfDistinctElements(int set1[], int numberOfElementsInSet1, int set2[], int numberOfElementsinSet2);
 
 int findCoverage();
+
+void setcover_greedy(char* path, struct solution* specificSolution);

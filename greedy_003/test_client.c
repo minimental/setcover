@@ -427,6 +427,25 @@ int main(int nargs, char** args) {
 	printf("\n==================\n\n");
 	printf("Checking `setcover_greedy()'...\n\n");
 	
+	printf("`setcover_greedy()' should return a cost of 3, and selection pattern {0 1 0 1 1 0}...");
+	// create solution struct
+	struct solution solution_sc_6_1;
+	// call method
+	setcover_greedy("..\\data\\sc_6_1", &solution_sc_6_1);
+	// validate result
+	testSucceeded = 1;
+	testSucceeded &= solution_sc_6_1.numberOfSets == 3;
+	testSucceeded &= solution_sc_6_1.cost == 3.0;
+	testSucceeded &= solution_sc_6_1.pickedSets[0] == 0;
+	testSucceeded &= solution_sc_6_1.pickedSets[1] == 1;
+	testSucceeded &= solution_sc_6_1.pickedSets[2] == 0;
+	testSucceeded &= solution_sc_6_1.pickedSets[3] == 1;
+	testSucceeded &= solution_sc_6_1.pickedSets[4] == 1;
+	testSucceeded &= solution_sc_6_1.pickedSets[5] == 0;
+	if (testSucceeded)
+		printf("passed.\n");
+	else
+		printf("failed.\n");	
 	
 	return 0;
 }
