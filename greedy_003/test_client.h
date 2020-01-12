@@ -9,7 +9,7 @@ void union_of_sets(struct set left, int leftIndex, struct set right, int rightIn
 
 int* copyIntegerArray(int source[], int numberOfElements);
 
-void read(char* path, struct problem** specificProblem);
+void read(char* path, struct problem* specificProblem);
 
 struct coverage {
 	int size;
