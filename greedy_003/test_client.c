@@ -467,7 +467,7 @@ int main(int nargs, char** args) {
 	printf("\n==================\n\n");
 	printf("Checking `setcover_greedy()'...\n\n");
 	
-	printf("`setcover_greedy()' should return a cost of 3, and selection pattern {0 1 0 1 1 0}...");
+	printf("`setcover_greedy()' should return a cost of 3, and selection pattern {0 1 0 0 1 1} for problem `sc_6_1'...");
 	// create solution struct
 	struct solution solution_sc_6_1;
 	// call method
@@ -493,7 +493,16 @@ int main(int nargs, char** args) {
 		for (int i = 0; i < 6; ++i)
 			printf("Set %i: Flag %i\n", i, solution_sc_6_1.pickedSets[i]);
 	}
-		
+	
+	printf("solution to `setcover_greedy()' should be below upper bound H_n * OPT for `sc_9_0'...");
+	// create solution structs
+	struct solution solution_sc_9_0, optimal_solution_sc_9_0;
+	// compute optimal solution
+	setcover_bruteforce("..\\data\\sc_9_0", &optimal_solution_sc_9_0);
+	// call method
+	// setcover_greedy("..\\data\\sc_9_0", &solution_sc_9_0);
+	// validate result	
+	
 	
 	return 0;
 }

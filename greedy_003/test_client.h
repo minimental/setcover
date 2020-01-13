@@ -26,3 +26,5 @@ int numberOfDistinctElements(int set1[], int numberOfElementsInSet1, int set2[],
 int findCoverage();
 
 void setcover_greedy(char* path, struct solution* specificSolution);
+
+void setcover_bruteforce(char* path, struct solution* specificSolution);
