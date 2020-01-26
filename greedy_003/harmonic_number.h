@@ -1,0 +1,1 @@
+int harmonic_number(int n, double* Hn);

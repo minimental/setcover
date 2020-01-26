@@ -1,4 +1,5 @@
 #include "test_client.h"
+#include "harmonic_number.h"
 
 // test suite for functions in `setcover_greedy'
 int main(int nargs, char** args) {
@@ -463,11 +464,49 @@ int main(int nargs, char** args) {
 	else
 		printf("failed.\n");
 	
+	printf("\n==================\n\n");
+	printf("Checking `harmonic_number()'...\n\n");
+	
+	printf("`harmonic_number()' should return -1, if the index is not positive...");
+	// create harmonic number value
+	double Hn;
+	testSucceeded = 1;
+	testSucceeded &= (harmonic_number(0, &Hn) == -1);
+	testSucceeded &= (harmonic_number(-1, &Hn) == -1);
+	if (testSucceeded)
+		printf("passed.\n");
+	else
+		printf("failed.\n");
+	
+	printf("`harmonic_number()' should return Hn = 1, if index n = 1...");
+	// call method
+	harmonic_number(1, &Hn);
+	if (Hn == 1.0)
+		printf("passed.\n");
+	else
+		printf("failed.\n");
+	
+	printf("`harmonic_number()' should return Hn = 1.5, if index n = 2...");
+	// call method
+	harmonic_number(2, &Hn);
+	if (Hn == 1.5)
+		printf("passed.\n");
+	else
+		printf("failed.\n");
+	
+	printf("`harmonic_number()' should return Hn = 1.83..., if index n = 3...");
+	// call method
+	harmonic_number(3, &Hn);
+	if ((int)(Hn * 100.) == 183)
+		printf("passed.\n");
+	else
+		printf("failed.\n");	
+	
 	
 	printf("\n==================\n\n");
 	printf("Checking `setcover_greedy()'...\n\n");
 	
-	printf("`setcover_greedy()' should return a cost of 3, and selection pattern {0 1 0 0 1 1} for problem `sc_6_1'...");
+	printf("`setcover_greedy()' should return a cost of 3, and selection pattern (0 1 0 0 1 1) for problem `sc_6_1'...");
 	// create solution struct
 	struct solution solution_sc_6_1;
 	// call method
@@ -499,10 +538,31 @@ int main(int nargs, char** args) {
 	struct solution solution_sc_9_0, optimal_solution_sc_9_0;
 	// compute optimal solution
 	setcover_bruteforce("..\\data\\sc_9_0", &optimal_solution_sc_9_0);
+	// compute harmonic number
+	harmonic_number(optimal_solution_sc_9_0.numberOfSets, &Hn);	
 	// call method
-	// setcover_greedy("..\\data\\sc_9_0", &solution_sc_9_0);
-	// validate result	
+	setcover_greedy("..\\data\\sc_9_0", &solution_sc_9_0);
+	// validate result
+	if (solution_sc_9_0.cost <= Hn * optimal_solution_sc_9_0.cost)
+		printf("passed.\n");
+	else
+		printf("failed.\n");
 	
+	printf("\n[optimal solution:]\n");
+	printf("[   Sets picked: %i out of %i: (", optimal_solution_sc_9_0.numberOfSetsPicked, optimal_solution_sc_9_0.numberOfSets);
+	for (int i = 0; i < optimal_solution_sc_9_0.numberOfSets; ++i)
+		printf("%i ", optimal_solution_sc_9_0.pickedSets[i]);
+	printf(")]\n");
+	printf("[   Cost: %.0f]\n", optimal_solution_sc_9_0.cost);
+	printf("[   H_9 * OPT = %.2f]\n", Hn * optimal_solution_sc_9_0.cost);
+
+	printf("\n[greedy solution:]\n");
+	printf("[   Sets picked: %i out of %i: (", solution_sc_9_0.numberOfSetsPicked, solution_sc_9_0.numberOfSets);
+	for (int i = 0; i < solution_sc_9_0.numberOfSets; ++i)
+		printf("%i ", solution_sc_9_0.pickedSets[i]);
+	printf(")]\n");
+	printf("[   Cost: %.0f]\n", solution_sc_9_0.cost);
+
 	
 	return 0;
 }
