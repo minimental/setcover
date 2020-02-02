@@ -506,11 +506,13 @@ int main(int nargs, char** args) {
 	printf("\n==================\n\n");
 	printf("Checking `setcover_greedy()'...\n\n");
 	
+	long elapsedNanoSecondsGreedy;
+	
 	printf("`setcover_greedy()' should return a cost of 3, and selection pattern (0 1 0 0 1 1) for problem `sc_6_1'...");
 	// create solution struct
 	struct solution solution_sc_6_1;
 	// call method
-	setcover_greedy("..\\data\\sc_6_1", &solution_sc_6_1);
+	setcover_greedy("..\\data\\sc_6_1", &solution_sc_6_1, &elapsedNanoSecondsGreedy);
 	// validate result
 	testSucceeded = 1;
 	testSucceeded &= solution_sc_6_1.numberOfSets == 6;
@@ -541,7 +543,7 @@ int main(int nargs, char** args) {
 	// compute harmonic number
 	harmonic_number(optimal_solution_sc_9_0.numberOfSets, &Hn);	
 	// call method
-	setcover_greedy("..\\data\\sc_9_0", &solution_sc_9_0);
+	setcover_greedy("..\\data\\sc_9_0", &solution_sc_9_0, &elapsedNanoSecondsGreedy);
 	// validate result
 	if (solution_sc_9_0.cost <= Hn * optimal_solution_sc_9_0.cost)
 		printf("passed.\n");
@@ -550,7 +552,7 @@ int main(int nargs, char** args) {
 	
 	printf("\n[optimal solution:]\n");
 	printf("[   Sets picked: %i out of %i: (", optimal_solution_sc_9_0.numberOfSetsPicked, optimal_solution_sc_9_0.numberOfSets);
-	for (int i = 0; i < optimal_solution_sc_9_0.numberOfSets; ++i)
+	for (int i = optimal_solution_sc_9_0.numberOfSets - 1; i > -1; --i)
 		printf("%i ", optimal_solution_sc_9_0.pickedSets[i]);
 	printf(")]\n");
 	printf("[   Cost: %.0f]\n", optimal_solution_sc_9_0.cost);
@@ -558,11 +560,70 @@ int main(int nargs, char** args) {
 
 	printf("\n[greedy solution:]\n");
 	printf("[   Sets picked: %i out of %i: (", solution_sc_9_0.numberOfSetsPicked, solution_sc_9_0.numberOfSets);
-	for (int i = 0; i < solution_sc_9_0.numberOfSets; ++i)
+	for (int i = solution_sc_9_0.numberOfSets - 1; i > -1 ; --i)
 		printf("%i ", solution_sc_9_0.pickedSets[i]);
 	printf(")]\n");
-	printf("[   Cost: %.0f]\n", solution_sc_9_0.cost);
+	printf("[   Cost: %.0f]\n\n", solution_sc_9_0.cost);
 
+	printf("solution to `setcover_greedy()' should be below upper bound H_n * OPT for `sc_15_0'...");
+	// create solution structs
+	struct solution solution_sc_15_0, optimal_solution_sc_15_0;
+	// compute optimal solution
+	setcover_bruteforce("..\\data\\sc_15_0", &optimal_solution_sc_15_0);
+	// compute harmonic number
+	harmonic_number(optimal_solution_sc_15_0.numberOfSets, &Hn);	
+	// call method
+	setcover_greedy("..\\data\\sc_15_0", &solution_sc_15_0, &elapsedNanoSecondsGreedy);
+	// validate result
+	if (solution_sc_15_0.cost <= Hn * optimal_solution_sc_15_0.cost)
+		printf("passed.\n");
+	else
+		printf("failed.\n");
+	
+	printf("Elapsed time (greedy -- 15 sets) [nanoseconds]: %li", elapsedNanoSecondsGreedy);
+	
+	printf("\n");
+	
+	printf("solution to `setcover_greedy()' should cover all elements... ");
+	
+	// create solution structure and coverages
+	struct solution solution_sc_27_0;
+	struct set coverage_sc_27_0;
+	struct set coverage_sc_27_0_update;
+	int coverage_sc_27_0_elements[117];
+	int coverage_sc_27_0_elements_update[117];
+	coverage_sc_27_0.numberOfElements = 0;
+	coverage_sc_27_0_update.numberOfElements = 0;
+	coverage_sc_27_0.elements = &(coverage_sc_27_0_elements[0]);
+	coverage_sc_27_0_update.elements = &(coverage_sc_27_0_elements_update[0]);
+	
+	// create path string
+	char path[64];
+	sprintf(&(path[0]), "..\\data\\sc_%i_0", 27);
+	
+	// create temporary pointer to elements
+	int* temp;
+	
+	// call method
+	setcover_greedy(path, &solution_sc_27_0, &elapsedNanoSecondsGreedy);
+	
+	// validate result
+	for (int i = 0; i < solution_sc_27_0.numberOfSetsPicked; ++i) {
+		union_of_sets(solution_sc_27_0.pickedSets[i], 0, coverage_sc_27_0, 0, &coverage_sc_27_0_update, 0);
+		// swap elements
+		temp = coverage_sc_27_0.elements;
+		coverage_sc_27_0.elements = coverage_sc_27_0_elements_update.elements;
+		coverage_sc_27_0_elements.numberOfElements = coverage_sc_27_0_elements_update.numberOfElements;
+		coverage_sc_27_0_elements_update.elements = temp;
+		coverage_sc_27_0_update.numberOfElements = 0;
+	}
+	
+	if (coverage_sc_27_0.numberOfElements == 117)
+		printf("passed.\n");
+	else
+		printf("failed.\n");
+	
+	printf("Elapsed time (greedy -- 27 sets) [nanoseconds]: %li", elapsedNanoSecondsGreedy);
 	
 	return 0;
 }

@@ -1,3 +1,4 @@
+#include <time.h>
 #include <stdio.h>
 #include "setcover_greedy.h"
 
@@ -49,11 +50,15 @@ double evalCostEffectiveness(double cost, struct set S, struct set C) {
    greedy algorithm acc. to V.V. Vazirani "Approximation Algorithms" 2003, 2e:
    Algorithm 2.2
 */
-void setcover_greedy(char* path, struct solution* specificSolution) {
+void setcover_greedy(char* path, struct solution* specificSolution, long* elapsedNanoSeconds) {
 	
 	// read problem description from file
 	struct problem specificProblem;
 	read(path, &specificProblem);
+	
+	// timing
+	struct timespec startTime, endTime;
+	clock_gettime(CLOCK_MONOTONIC, &startTime);
 	
 	// overall number of elements and sets
 	int M = specificProblem.numberOfSets;
@@ -130,4 +135,8 @@ void setcover_greedy(char* path, struct solution* specificSolution) {
 	}
 		
 	specificSolution->cost = cost;
+	
+	// timing
+	clock_gettime(CLOCK_MONOTONIC, &endTime);
+	*elapsedNanoSeconds = endTime.tv_nsec - startTime.tv_nsec;
 }
