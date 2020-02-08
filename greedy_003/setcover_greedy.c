@@ -50,19 +50,11 @@ double evalCostEffectiveness(double cost, struct set S, struct set C) {
    greedy algorithm acc. to V.V. Vazirani "Approximation Algorithms" 2003, 2e:
    Algorithm 2.2
 */
-void setcover_greedy(char* path, struct solution* specificSolution, long* elapsedNanoSeconds) {
-	
-	// read problem description from file
-	struct problem specificProblem;
-	read(path, &specificProblem);
-	
-	// timing
-	struct timespec startTime, endTime;
-	clock_gettime(CLOCK_MONOTONIC, &startTime);
+void setcover_greedy(struct problem* specificProblem, struct solution* specificSolution) {
 	
 	// overall number of elements and sets
-	int M = specificProblem.numberOfSets;
-	int N = specificProblem.numberOfElements;
+	int M = specificProblem->numberOfSets;
+	int N = specificProblem->numberOfElements;
 	
 	// create coverage
 	struct set coverage, coverage_update;
@@ -78,8 +70,8 @@ void setcover_greedy(char* path, struct solution* specificSolution, long* elapse
 	double maximumCost = -1;
 	for (int i = 0; i < M; ++i) {
 		pickedSets[i] = 0;
-		if (specificProblem.sets[i].cost > maximumCost)
-			maximumCost = specificProblem.sets[i].cost;
+		if (specificProblem->sets[i].cost > maximumCost)
+			maximumCost = specificProblem->sets[i].cost;
 	}
 			
 	// cost effectiveness per set
@@ -93,7 +85,7 @@ void setcover_greedy(char* path, struct solution* specificSolution, long* elapse
 			// skip set if already picked
 			if (pickedSets[currentSetIndex]) continue;
 			
-			costEffectiveness = evalCostEffectiveness(specificProblem.sets[currentSetIndex].cost, specificProblem.sets[currentSetIndex], coverage);
+			costEffectiveness = evalCostEffectiveness(specificProblem->sets[currentSetIndex].cost, specificProblem->sets[currentSetIndex], coverage);
 			
 			// find minimum cost effective set
 			if (minimumCostEffectiveness >= costEffectiveness) {
@@ -110,7 +102,7 @@ void setcover_greedy(char* path, struct solution* specificSolution, long* elapse
 		pickedSets[minimumCostEffectiveSetIndex] = 1;
 		
 		// compute union of coverage and minimum cost effective set
-		union_of_sets(coverage, 0, specificProblem.sets[minimumCostEffectiveSetIndex], 0, &coverage_update, 0);
+		union_of_sets(coverage, 0, specificProblem->sets[minimumCostEffectiveSetIndex], 0, &coverage_update, 0);
 		
 		coverage.numberOfElements = coverage_update.numberOfElements;
 		// swap elements
@@ -123,7 +115,7 @@ void setcover_greedy(char* path, struct solution* specificSolution, long* elapse
 	double cost = 0;
 	for (int i = 0; i < M; ++i)
 		if (pickedSets[i])
-			cost += specificProblem.sets[0].cost;
+			cost += specificProblem->sets[0].cost;
 		
 	// fill solution struct
 	specificSolution->numberOfSets = M;
@@ -135,8 +127,4 @@ void setcover_greedy(char* path, struct solution* specificSolution, long* elapse
 	}
 		
 	specificSolution->cost = cost;
-	
-	// timing
-	clock_gettime(CLOCK_MONOTONIC, &endTime);
-	*elapsedNanoSeconds = endTime.tv_nsec - startTime.tv_nsec;
 }

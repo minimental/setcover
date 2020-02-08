@@ -7,4 +7,4 @@ void difference(struct set left, int leftIndex, struct set right, int rightIndex
 void union_of_sets(struct set left, int leftIndex, struct set right, int rightIndex, struct set* unionSet, int unionSetIndex);
 
 // solves the set cover problem
-void setcover_greedy(char* path, struct solution* specificSolution, long* elapsedNanoSeconds);
+void setcover_greedy(struct problem* specificProblem, struct solution* specificSolution);

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "problem.h"
 #include "solution.h"
 
@@ -25,6 +26,6 @@ int numberOfDistinctElements(int set1[], int numberOfElementsInSet1, int set2[],
 
 int findCoverage();
 
-void setcover_greedy(char* path, struct solution* specificSolution, long* elapsedNanoSeconds);
+void setcover_greedy(struct problem* specificProblem, struct solution* specificSolution);
 
 void setcover_bruteforce(char* path, struct solution* specificSolution);

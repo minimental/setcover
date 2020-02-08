@@ -6,3 +6,4 @@
 *.s
 *.o
 *.gcc
+time_sandbox.c
