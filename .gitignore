@@ -7,3 +7,4 @@
 *.o
 *.gcc
 time_sandbox.c
+directory_access_sandbox.c
