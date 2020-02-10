@@ -9,7 +9,7 @@ int* copyIntegerArray(int source[], int numberOfElements) {
 	return destination;
 }
 
-void read(char* path, struct problem* specificProblem) {
+void readProblemDescription(char* path, struct problem* specificProblem) {
 	FILE* file = fopen(path, "r");
 	// read header
 	int numberOfSets, numberOfElements;

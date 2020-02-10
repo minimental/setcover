@@ -1,7 +1,4 @@
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <dirent.h>
+#include "test_client_performance.h"
 
 #define LENGTH_OF_FILE_NAME 260
 #define LENGTH_OF_NUMBER_OF_SETS_STRING 8
@@ -36,7 +33,7 @@ int readFileNamesInDirectory(char* directoryString, char** fileNames) {
 	
 }
 
-int extractNumber(char* string) {
+int extractNumberOfSets(char* string) {
 
 	// find the first occurence of '_' in string
 	char* numberOfSetsStartString = strchr((char*) string, '_');
@@ -74,10 +71,10 @@ int compareTwoFiles(const void* string1, const void* string2) {
 	// determine number of sets contained in the file name
 	int numberOfSets1, numberOfSets2;
 	
-	numberOfSets1 = extractNumber((char*) string1);
-	numberOfSets2 = extractNumber((char*) string2);
+	numberOfSets1 = extractNumberOfSets((char*) string1);
+	numberOfSets2 = extractNumberOfSets((char*) string2);
 	
-	// entries that does not match the file naming convention should be placed at end
+	// entries that do not match the file naming convention should be placed at end
 	if (numberOfSets1 < 0)
 		return 1;
 	if (numberOfSets2 < 0)
@@ -98,16 +95,42 @@ void sortFileNamesBySetNumbers(char* fileNames, int numberOfFiles) {
 
 int main() {
 
-	int numberOfFiles;
+	int numberOfFiles, numberOfSets;
 	char* fileNames;
+	struct timespec solverStart, solverEnd;
 	
 	numberOfFiles = readFileNamesInDirectory("..\\data", &fileNames);
 	sortFileNamesBySetNumbers(fileNames, numberOfFiles);
 	
-	int fileIndex = 0;
-	for (int i = 0; i < numberOfFiles; ++i) {
-		printf("\"%s\": %i\n", &(fileNames[fileIndex]), extractNumber(&(fileNames[fileIndex])));
+	printf("Number of sets | Elapsed time [nsec]\n");
+	printf("---------------+--------------------\n");
+	
+	int fileIndex = 13 * LENGTH_OF_FILE_NAME;
+	for (int i = 0; i < 4; ++i) {
+		
+		// if problem size exceeds a given limit, stop
+		if ((numberOfSets = extractNumberOfSets(&(fileNames[fileIndex]))) >= 1000)
+			break;
+		
+		// define problem
+		struct problem specificProblem;
+		char path[LENGTH_OF_FILE_NAME + 8];
+		sprintf(path, "..\\data\\%s", &(fileNames[fileIndex]));
+		readProblemDescription(&(path[0]), &specificProblem);
+		
+		// create solution struct
+		struct solution specificSolution;
+		
+		// call solver with timing
+		clock_gettime(CLOCK_MONOTONIC, &solverStart);
+		setcover_greedy(&specificProblem, &specificSolution);
+		clock_gettime(CLOCK_MONOTONIC, &solverEnd);
+		
+		// print statistics
+		printf("%14i | %19lli\n", numberOfSets, solverEnd.tv_nsec - solverStart.tv_nsec);
+		
 		fileIndex += LENGTH_OF_FILE_NAME;
+		
 	}
 	
 	return 0;
