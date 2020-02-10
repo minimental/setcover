@@ -1,20 +1,56 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <dirent.h>
 
 #define LENGTH_OF_FILE_NAME 260
 #define LENGTH_OF_NUMBER_OF_SETS_STRING 8
 
+// reads all files contained in the given directory
+int readFileNamesInDirectory(char* directoryString, char** fileNames) {
+	
+	DIR* directory;
+	struct dirent* directoryEntry;
+	directory = opendir(directoryString);
+	
+	// first run: number of files included
+	int numberOfFiles = 0;
+	while ((directoryEntry = readdir(directory)) != NULL) ++numberOfFiles;
+	
+	// second run: persist file names
+	rewinddir(directory);
+	*fileNames = calloc(numberOfFiles, LENGTH_OF_FILE_NAME);
+	int fileNamesIndexOffset = 0, characterIndex = 0;
+	while ((directoryEntry = readdir(directory)) != NULL) {
+		while(directoryEntry->d_name[characterIndex]) {
+			(*fileNames)[fileNamesIndexOffset + characterIndex] = directoryEntry->d_name[characterIndex];
+			++characterIndex;
+		}
+		// terminate file name string
+		(*fileNames)[fileNamesIndexOffset + characterIndex] = 0;
+		characterIndex = 0;
+		fileNamesIndexOffset += LENGTH_OF_FILE_NAME;
+	}
+	
+	return numberOfFiles;
+	
+}
+
 int extractNumber(char* string) {
 
 	// find the first occurence of '_' in string
-	char* numberOfSetsStartString = strchr((char*) string, '_') + 1;
-	// find the last occurence of '_' in string
-	char* numberOfSetsEndString = strchr(numberOfSetsStartString, '_') - 1;
-	
+	char* numberOfSetsStartString = strchr((char*) string, '_');
 	// file name does not fit convention
-	if (numberOfSetsStartString == 0 || numberOfSetsEndString == 0)
+	if (!numberOfSetsStartString)
 		return -1;
+	numberOfSetsStartString += 1;
+	
+	// find the last occurence of '_' in string
+	char* numberOfSetsEndString = strchr(numberOfSetsStartString, '_');
+	// file name does not fit convention
+	if (!numberOfSetsEndString)
+		return -1;
+	numberOfSetsEndString -= 1;
 	
 	// extract number-of-sets string and convert it into an integer
 	char numberOfSetsString[LENGTH_OF_NUMBER_OF_SETS_STRING];
@@ -61,45 +97,18 @@ void sortFileNamesBySetNumbers(char* fileNames, int numberOfFiles) {
 }
 
 int main() {
-	char fileNames[3 * LENGTH_OF_FILE_NAME];
+
+	int numberOfFiles;
+	char* fileNames;
 	
-	char* fileName1String = "sc_105_0";
-	char* fileName2String = "sc_3023_3";
-	char* fileName3String = "sc_1600_1";
+	numberOfFiles = readFileNamesInDirectory("..\\data", &fileNames);
+	sortFileNamesBySetNumbers(fileNames, numberOfFiles);
 	
-	int fileNameIndex = 0, fileNamesIndex = 0;
-	char character;
-	while ((character = fileName1String[fileNameIndex]) != 0) {
-		fileNames[fileNamesIndex] = fileName1String[fileNameIndex];
-		++fileNameIndex;
-		++fileNamesIndex;
+	int fileIndex = 0;
+	for (int i = 0; i < numberOfFiles; ++i) {
+		printf("\"%s\": %i\n", &(fileNames[fileIndex]), extractNumber(&(fileNames[fileIndex])));
+		fileIndex += LENGTH_OF_FILE_NAME;
 	}
-	// terminate string
-	fileNames[fileNamesIndex] = 0;
-	
-	fileNameIndex = 0; fileNamesIndex = LENGTH_OF_FILE_NAME;
-	while ((character = fileName2String[fileNameIndex]) != 0) {
-		fileNames[fileNamesIndex] = fileName2String[fileNameIndex];
-		++fileNameIndex;
-		++fileNamesIndex;
-	}
-	// terminate string
-	fileNames[fileNamesIndex] = 0;
-	
-	fileNameIndex = 0; fileNamesIndex = 2 * LENGTH_OF_FILE_NAME;
-	while ((character = fileName3String[fileNameIndex]) != 0) {
-		fileNames[fileNamesIndex] = fileName3String[fileNameIndex];
-		++fileNameIndex;
-		++fileNamesIndex;
-	}
-	// terminate string
-	fileNames[fileNamesIndex] = 0;	
-	
-	sortFileNamesBySetNumbers(&(fileNames[0]), 3);
-	
-	printf("main: 1st file name: %s\n", &(fileNames[0]));
-	printf("main: 2nd file name: %s\n", &(fileNames[LENGTH_OF_FILE_NAME]));
-	printf("main: 3rd file name: %s\n", &(fileNames[2 * LENGTH_OF_FILE_NAME]));
 	
 	return 0;
 }
