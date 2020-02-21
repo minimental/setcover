@@ -1,6 +1,4 @@
 #include "solution.h"
 #include "union.h"
 
-void setcover_bruteforce(char* path, struct solution* specificSolution);
-
-void read(char* path, struct problem* specificProblem);
+void setcover_bruteforce(struct problem* specificProblem, struct solution* specificSolution);

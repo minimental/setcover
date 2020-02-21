@@ -4,13 +4,13 @@
 #include "problem.h"
 #include "solution.h"
 
-void difference(struct set left, int leftIndex, struct set right, int rightIndex, struct set* differenceSet, int differenceSetIndex);
+void difference(struct set left, struct set right, struct set* differenceSet);
 
 void union_of_sets(struct set left, int leftIndex, struct set right, int rightIndex, struct set* unionSet, int unionSetIndex);
 
 int* copyIntegerArray(int source[], int numberOfElements);
 
-void read(char* path, struct problem* specificProblem);
+void readProblemDescription(char* path, struct problem* specificProblem);
 
 struct coverage {
 	int size;
@@ -28,4 +28,4 @@ int findCoverage();
 
 void setcover_greedy(struct problem* specificProblem, struct solution* specificSolution);
 
-void setcover_bruteforce(char* path, struct solution* specificSolution);
+void setcover_bruteforce(struct problem* specificProblem, struct solution* specificSolution);

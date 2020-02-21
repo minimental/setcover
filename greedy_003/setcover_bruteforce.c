@@ -1,14 +1,10 @@
 #include "setcover_bruteforce.h"
 
-void setcover_bruteforce(char* path, struct solution* specificSolution) {
-	// create problem instance
-	struct problem specificProblem;
-	// read problem description from file
-	read(path, &specificProblem);
+void setcover_bruteforce(struct problem* specificProblem, struct solution* specificSolution) {
 		
 	// extract number of sets and elements
-	int M = specificProblem.numberOfSets;
-	int N = specificProblem.numberOfElements;
+	int M = specificProblem->numberOfSets;
+	int N = specificProblem->numberOfElements;
 	
 	// create coverage and associated data
 	struct set coverage, coverage_update;
@@ -21,7 +17,7 @@ void setcover_bruteforce(char* path, struct solution* specificSolution) {
 	double maximumCost = 0.0;
 	// evaluate maximum cost
 	for (int i = 0; i < M; ++i)
-		maximumCost = maximumCost += specificProblem.sets[i].cost;
+		maximumCost = maximumCost += specificProblem->sets[i].cost;
 	
 	// loop: determine if permutation of sets covers the problem set, and if so, evaluate cost
 	int numberOfPossiblePermutations = (1 << M);
@@ -34,7 +30,7 @@ void setcover_bruteforce(char* path, struct solution* specificSolution) {
 		for (int setIndex = 0; setIndex < M; ++setIndex) {		
 			if ((permutation & testBit) > 0) {
 				// add picked set to coverage
-				union_of_sets(specificProblem.sets[testIndex], 0, coverage, 0, &coverage_update, 0);
+				union_of_sets(specificProblem->sets[testIndex], 0, coverage, 0, &coverage_update, 0);
 				// swap coverage and coverage update elements
 				coverage.numberOfElements = coverage_update.numberOfElements;
 				temp = coverage.elements;
@@ -42,7 +38,7 @@ void setcover_bruteforce(char* path, struct solution* specificSolution) {
 				coverage_update.elements = temp;
 				coverage_update.numberOfElements = 0;
 				// update
-				cost += specificProblem.sets[testIndex].cost;
+				cost += specificProblem->sets[testIndex].cost;
 				numberOfSetsPicked += 1;			
 			}
 			// update test index and bit

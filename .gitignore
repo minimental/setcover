@@ -6,6 +6,7 @@
 *.s
 *.o
 *.gcc
+*.profile
 time_sandbox.c
 directory_access_sandbox.c
 greedy_003/sandbox/*

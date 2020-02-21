@@ -53,7 +53,7 @@ int main(int nargs, char** args) {
 	struct set differenceSet;
 	differenceSet.numberOfElements = 0;
 	// call method
-	difference(emptySet, 0, emptySet, 0, &differenceSet, 0);
+	difference(emptySet, emptySet, &differenceSet);
 	// validate result
 	if (differenceSet.numberOfElements)
 		printf("failed.\n");
@@ -68,7 +68,7 @@ int main(int nargs, char** args) {
 	nonEmptySet.numberOfElements = 3;
 	nonEmptySet.elements = &(elements[0]);
 	// call method
-	difference(emptySet, 0, nonEmptySet, 0, &differenceSet, 0);
+	difference(emptySet, nonEmptySet, &differenceSet);
 	// validate result
 	if (differenceSet.numberOfElements)
 		printf("failed.\n");
@@ -82,7 +82,7 @@ int main(int nargs, char** args) {
 	int zeroElements[] = {0, 0, 0};
 	differenceSet.elements = &(zeroElements[0]);
 	// call method
-	difference(nonEmptySet, 0, emptySet, 0, &differenceSet, 0);
+	difference(nonEmptySet, emptySet, &differenceSet);
 	// validate result
 	int testSucceeded = 1;
 	testSucceeded &= differenceSet.elements[0] == 1003;
@@ -105,7 +105,7 @@ int main(int nargs, char** args) {
 	differenceSet.numberOfElements = 0;
 	differenceSet.elements = &(differenceSetElements[0]);
 	// call method
-	difference(zeroSet, 0, zeroSet, 0, &differenceSet, 0);
+	difference(zeroSet, zeroSet, &differenceSet);
 	// validate result
 	if (differenceSet.numberOfElements != 0)
 		printf("failed.\n");
@@ -122,7 +122,7 @@ int main(int nargs, char** args) {
 	// reset difference set
 	differenceSet.numberOfElements = 0;
 	// call method
-	difference(oneSet, 0, zeroSet, 0, &differenceSet, 0);
+	difference(oneSet, zeroSet, &differenceSet);
 	// validate result
 	if ((differenceSet.numberOfElements == 1) && (differenceSet.elements[0] == 1))
 		printf("passed.\n");
@@ -144,7 +144,7 @@ int main(int nargs, char** args) {
 	// reset difference set
 	differenceSet.numberOfElements = 0;	
 	// call method
-	difference(left, 0, right, 0, &differenceSet, 0);
+	difference(left, right, &differenceSet);
 	// validate result
 	testSucceeded = 1;
 	testSucceeded &= differenceSet.numberOfElements == 1;
@@ -169,7 +169,7 @@ int main(int nargs, char** args) {
 	differenceSet.numberOfElements = 0;
 	differenceSet.elements = &(elementsDifference0[0]);
 	// call method
-	difference(left, 0, right, 0, &differenceSet, 0);
+	difference(left, right, &differenceSet);
 	// validate result
 	testSucceeded = 1;
 	testSucceeded &= differenceSet.numberOfElements == 2;
@@ -178,8 +178,7 @@ int main(int nargs, char** args) {
 	if (testSucceeded)
 		printf("passed.\n");
 	else
-		printf("failed.\n");	
-	
+		printf("failed.\n");
 	
 	printf("\n==================\n\n");
 	printf("Checking `copyIntegerArray()'...\n\n");
@@ -200,18 +199,18 @@ int main(int nargs, char** args) {
 		printf("failed.\n");
 	
 	printf("\n==================\n\n");
-	printf("Checking `read()'...\n\n");
+	printf("Checking `readProblemDescription()'...\n\n");
 	
-	printf("`read()' should read number of sets and elements from file...");
+	printf("`readProblemDescription()' should read number of sets and elements from file...");
 	struct problem problem_sc_6_1;
-	read("..\\data\\sc_6_1", &problem_sc_6_1);
+	readProblemDescription("..\\data\\sc_6_1", &problem_sc_6_1);
 	if ((problem_sc_6_1.numberOfSets == 6) && (problem_sc_6_1.numberOfElements == 9))
 		printf("passed.\n");
 	else
 		printf("failed.\n");
 	
 	
-	printf("`read()' should allow access to all of the sets encoded in the file `sc_6_1'...");
+	printf("`readProblemDescription()' should allow access to all of the sets encoded in the file `sc_6_1'...");
 	testSucceeded = 1;
 	testSucceeded &= (problem_sc_6_1.sets[0].cost == 1.0);
 	testSucceeded &= (problem_sc_6_1.sets[0].numberOfElements == 2);
@@ -256,11 +255,11 @@ int main(int nargs, char** args) {
 		printf("failed.\n");
 	
 	
-	printf("`read()' should allow access to all of the sets encoded in the file `sc_25_0'...");
+	printf("`readProblemDescription()' should allow access to all of the sets encoded in the file `sc_25_0'...");
 	// create pointer to problem struct
 	struct problem problem_sc_25_0;
 	// call method
-	read("..\\data\\sc_25_0", &problem_sc_25_0);
+	readProblemDescription("..\\data\\sc_25_0", &problem_sc_25_0);
 	// validate results
 	testSucceeded = 1;
 	testSucceeded &= (problem_sc_25_0.numberOfSets == 25);
@@ -512,7 +511,7 @@ int main(int nargs, char** args) {
 	
 	// read problem description
 	struct problem specificProblem;
-	read("..\\data\\sc_6_1", &problem_sc_6_1);
+	readProblemDescription("..\\data\\sc_6_1", &problem_sc_6_1);
 	
 	// create solution struct
 	struct solution solution_sc_6_1;
@@ -546,13 +545,13 @@ int main(int nargs, char** args) {
 	
 	// read problem description
 	struct problem problem_sc_9_0;
-	read("..\\data\\sc_9_0", &problem_sc_9_0);	
+	readProblemDescription("..\\data\\sc_9_0", &problem_sc_9_0);	
 	
 	// create solution structs
 	struct solution solution_sc_9_0, optimal_solution_sc_9_0;
 	
 	// compute optimal solution
-	setcover_bruteforce("..\\data\\sc_9_0", &optimal_solution_sc_9_0);
+	setcover_bruteforce(&problem_sc_9_0, &optimal_solution_sc_9_0);
 	
 	// compute harmonic number
 	harmonic_number(optimal_solution_sc_9_0.numberOfSets, &Hn);	
@@ -585,13 +584,13 @@ int main(int nargs, char** args) {
 	
 	// read problem description
 	struct problem problem_sc_15_0;
-	read("..\\data\\sc_15_0", &problem_sc_15_0);		
+	readProblemDescription("..\\data\\sc_15_0", &problem_sc_15_0);		
 	
 	// create solution structs
 	struct solution solution_sc_15_0, optimal_solution_sc_15_0;
 	
 	// compute optimal solution
-	setcover_bruteforce("..\\data\\sc_15_0", &optimal_solution_sc_15_0);
+	setcover_bruteforce(&problem_sc_15_0, &optimal_solution_sc_15_0);
 	
 	// compute harmonic number
 	harmonic_number(optimal_solution_sc_15_0.numberOfSets, &Hn);
@@ -610,7 +609,7 @@ int main(int nargs, char** args) {
 	
 	printf("Elapsed time (greedy; sc_15_0) [nanoseconds]: %li", end_sc_15_0_greedy.tv_nsec - start_sc_15_0_greedy.tv_nsec);
 	
-	printf("\n");
+	printf("\n\n");
 	
 	printf("solution to sc_27_0 should cover all elements... ");
 	
@@ -631,22 +630,26 @@ int main(int nargs, char** args) {
 	
 	// read problem description
 	struct problem problem_sc_27_0;
-	read(&(path[0]), &problem_sc_27_0);	
+	readProblemDescription(&(path[0]), &problem_sc_27_0);	
 	
 	// create temporary pointer to elements
 	int* temp;
 	
 	// call method with timing
 	struct timespec start_sc_27_0_greedy, end_sc_27_0_greedy;
+
 	clock_gettime(CLOCK_MONOTONIC, &start_sc_27_0_greedy);
 	setcover_greedy(&problem_sc_27_0, &solution_sc_27_0);
 	clock_gettime(CLOCK_MONOTONIC, &end_sc_27_0_greedy);
+
 	
 	// validate result
 	for (int i = 0; i < problem_sc_27_0.numberOfSets; ++i) {
 		if (!solution_sc_27_0.pickedSets[i])
 			continue;
+		
 		union_of_sets(problem_sc_27_0.sets[i], 0, coverage_sc_27_0, 0, &coverage_sc_27_0_update, 0);
+		
 		// swap elements
 		temp = coverage_sc_27_0.elements;
 		coverage_sc_27_0.elements = coverage_sc_27_0_update.elements;
@@ -663,7 +666,6 @@ int main(int nargs, char** args) {
 		for (int i = 0; i < coverage_sc_27_0.numberOfElements; ++i)
 			printf("%i, ", coverage_sc_27_0.elements[i]);
 	}
-		
 	
 	printf("Elapsed time (greedy; sc_27_0) [nanoseconds]: %li", end_sc_27_0_greedy.tv_nsec - start_sc_27_0_greedy.tv_nsec);
 	

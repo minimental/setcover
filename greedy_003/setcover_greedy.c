@@ -1,5 +1,7 @@
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "setcover_greedy.h"
 
 int integerCompare(const void* arg1, const void* arg2) {
@@ -39,7 +41,7 @@ double evalCostEffectiveness(double cost, struct set S, struct set C) {
 	differenceSet.numberOfElements = 0;
 	differenceSet.elements = &(zeroElements[0]);
 	
-	difference(S, 0, C, 0, &differenceSet, 0);
+	difference(S, C, &differenceSet);
 	
 	// compute cost effectiveness of set
 	return cost / differenceSet.numberOfElements;
@@ -78,8 +80,9 @@ void setcover_greedy(struct problem* specificProblem, struct solution* specificS
 	double costEffectiveness, minimumCostEffectiveness = maximumCost;
 	int minimumCostEffectiveSetIndex = 0;
 	
-	// loop until every element is covered
-	while (coverage.numberOfElements != N) {
+	// loop until every element is covered, or if every set is considered in case of an ill-formed problem
+	int loopCount = 0;
+	while ((coverage.numberOfElements != N) && (loopCount < M)) {
 		
 		for (int currentSetIndex = 0; currentSetIndex < M; ++currentSetIndex) {
 			// skip set if already picked
@@ -110,12 +113,16 @@ void setcover_greedy(struct problem* specificProblem, struct solution* specificS
 		coverage.elements = coverage_update.elements;
 		coverage_update.elements = temp;
 		coverage_update.numberOfElements = 0;
+		
+		// increment loop count
+		++loopCount;
 	}
+	
 	// compute overall cost
 	double cost = 0;
 	for (int i = 0; i < M; ++i)
 		if (pickedSets[i])
-			cost += specificProblem->sets[0].cost;
+			cost += specificProblem->sets[0].cost;		
 		
 	// fill solution struct
 	specificSolution->numberOfSets = M;

@@ -1,7 +1,10 @@
+#include <stdlib.h>
+
 #include "test_client_performance.h"
 
 #define LENGTH_OF_FILE_NAME 260
 #define LENGTH_OF_NUMBER_OF_SETS_STRING 8
+#define MAXIMUM_NUMBER_OF_PROBLEM_SETS 1000
 
 // reads all files contained in the given directory
 int readFileNamesInDirectory(char* directoryString, char** fileNames) {
@@ -105,11 +108,11 @@ int main() {
 	printf("Number of sets | Elapsed time [nsec]\n");
 	printf("---------------+--------------------\n");
 	
-	int fileIndex = 13 * LENGTH_OF_FILE_NAME;
-	for (int i = 0; i < 4; ++i) {
+	int fileIndex = 0;
+	for (int i = 0; i < numberOfFiles; ++i) {
 		
 		// if problem size exceeds a given limit, stop
-		if ((numberOfSets = extractNumberOfSets(&(fileNames[fileIndex]))) >= 1000)
+		if ((numberOfSets = extractNumberOfSets(&(fileNames[fileIndex]))) >= MAXIMUM_NUMBER_OF_PROBLEM_SETS)
 			break;
 		
 		// define problem
@@ -128,6 +131,14 @@ int main() {
 		
 		// print statistics
 		printf("%14i | %19lli\n", numberOfSets, solverEnd.tv_nsec - solverStart.tv_nsec);
+		
+		// free resources / discard solution
+		free(specificSolution.pickedSets);
+		
+		// free resources / discard problem description
+		for (int i = 0; i < specificProblem.numberOfSets; ++i)
+			free(specificProblem.sets[i].elements);
+		free(specificProblem.sets);		
 		
 		fileIndex += LENGTH_OF_FILE_NAME;
 		
