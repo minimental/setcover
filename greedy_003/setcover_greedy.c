@@ -105,7 +105,7 @@ void setcover_greedy(struct problem* specificProblem, struct solution* specificS
 		pickedSets[minimumCostEffectiveSetIndex] = 1;
 		
 		// compute union of coverage and minimum cost effective set
-		union_of_sets(coverage, 0, specificProblem->sets[minimumCostEffectiveSetIndex], 0, &coverage_update, 0);
+		union_of_sets(coverage, specificProblem->sets[minimumCostEffectiveSetIndex], &coverage_update);
 		
 		coverage.numberOfElements = coverage_update.numberOfElements;
 		// swap elements

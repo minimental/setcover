@@ -130,7 +130,7 @@ int main() {
 		clock_gettime(CLOCK_MONOTONIC, &solverEnd);
 		
 		// print statistics
-		printf("%14i | %19lli\n", numberOfSets, solverEnd.tv_nsec - solverStart.tv_nsec);
+		printf("%14i | %19lli\n", numberOfSets, solverEnd.tv_sec - solverStart.tv_sec);
 		
 		// free resources / discard solution
 		free(specificSolution.pickedSets);

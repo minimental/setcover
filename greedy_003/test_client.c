@@ -416,7 +416,7 @@ int main(int nargs, char** args) {
 	int elementsUnion0[3];
 	unionSet.elements = &(elementsUnion0[0]);
 	// call method
-	union_of_sets(left, 0, right, 0, &unionSet, 0);
+	union_of_sets(left, right, &unionSet);
 	// validate result
 	testSucceeded = 1;
 	testSucceeded &= unionSet.numberOfElements == 3;
@@ -443,7 +443,7 @@ int main(int nargs, char** args) {
 	unionSet.numberOfElements = 0;
 	unionSet.elements = &(nineElements[0]);
 	// call method
-	union_of_sets(left, 0, right, 0, &unionSet, 0);
+	union_of_sets(left, right, &unionSet);
 	// validate result
 	testSucceeded = 1;
 	testSucceeded &= unionSet.numberOfElements == 11;
@@ -648,7 +648,7 @@ int main(int nargs, char** args) {
 		if (!solution_sc_27_0.pickedSets[i])
 			continue;
 		
-		union_of_sets(problem_sc_27_0.sets[i], 0, coverage_sc_27_0, 0, &coverage_sc_27_0_update, 0);
+		union_of_sets(problem_sc_27_0.sets[i], coverage_sc_27_0, &coverage_sc_27_0_update);
 		
 		// swap elements
 		temp = coverage_sc_27_0.elements;

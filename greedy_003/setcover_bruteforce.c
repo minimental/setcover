@@ -30,7 +30,7 @@ void setcover_bruteforce(struct problem* specificProblem, struct solution* speci
 		for (int setIndex = 0; setIndex < M; ++setIndex) {		
 			if ((permutation & testBit) > 0) {
 				// add picked set to coverage
-				union_of_sets(specificProblem->sets[testIndex], 0, coverage, 0, &coverage_update, 0);
+				union_of_sets(specificProblem->sets[testIndex], coverage, &coverage_update);
 				// swap coverage and coverage update elements
 				coverage.numberOfElements = coverage_update.numberOfElements;
 				temp = coverage.elements;
