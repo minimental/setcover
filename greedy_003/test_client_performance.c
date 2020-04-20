@@ -4,7 +4,7 @@
 
 #define LENGTH_OF_FILE_NAME 260
 #define LENGTH_OF_NUMBER_OF_SETS_STRING 8
-#define MAXIMUM_NUMBER_OF_PROBLEM_SETS 1000
+#define MAXIMUM_NUMBER_OF_PROBLEM_SETS 1534
 
 // reads all files contained in the given directory
 int readFileNamesInDirectory(char* directoryString, char** fileNames) {
@@ -105,8 +105,8 @@ int main() {
 	numberOfFiles = readFileNamesInDirectory("..\\data", &fileNames);
 	sortFileNamesBySetNumbers(fileNames, numberOfFiles);
 	
-	printf("Number of sets | Elapsed time [nsec]\n");
-	printf("---------------+--------------------\n");
+	printf("Number of sets | Elapsed time [sec] | Constant |\n");
+	printf("---------------+--------------------------------\n");
 	
 	int fileIndex = 0;
 	for (int i = 0; i < numberOfFiles; ++i) {
@@ -125,12 +125,22 @@ int main() {
 		struct solution specificSolution;
 		
 		// call solver with timing
-		clock_gettime(CLOCK_MONOTONIC, &solverStart);
+		// timing snippet taken from 21.4.1 "CPU Time Inquiry" of glibc documentation
+		clock_t start, end;
+		double cpu_time_used, time_per_computation_unit;
+
+		start = clock();
 		setcover_greedy(&specificProblem, &specificSolution);
-		clock_gettime(CLOCK_MONOTONIC, &solverEnd);
+		end = clock();
+		cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+		
+		// time per computation unit
+		int M = numberOfSets;
+		int N = specificProblem.numberOfElements;
+		time_per_computation_unit = N > M ? cpu_time_used / ((1. * M) * M * N) : cpu_time_used / ((1. * M) * N * N);
 		
 		// print statistics
-		printf("%14i | %19lli\n", numberOfSets, solverEnd.tv_sec - solverStart.tv_sec);
+		printf("%14i | %19e | %19e \n", numberOfSets, cpu_time_used, time_per_computation_unit);
 		
 		// free resources / discard solution
 		free(specificSolution.pickedSets);
