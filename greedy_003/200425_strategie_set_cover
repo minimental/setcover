@@ -1,0 +1,39 @@
+Neue Strategie für gewichtetes Set Cover:
+-----------------------------------------
+
+1.   Initialisiere das Problem mit einem Aufwand entsprechend der Summe aller Elemente in jeder Menge. (Generiere Tabellen)
+2.   Nimm die kosteneffizienteste Menge.
+3.   Entferne alle Elemente dieser Menge aus den anderen Mengen mithilfe einer Nachschau-Tabelle, die initial generiert wurde.
+4.   Füge alle Elemente einer Menge zu, die die bereits abgedeckten Elemente enthält.
+5.   Beim Entfernen bestimme die Kosteneffizienz der Mengen neu und halte den Index der kosteneffizientesten Menge vor.
+6.   Entferne die Menge aus der Mengenliste (neues Verlinken von `next')
+7.   Falls noch nicht alle Elemente abgedeckt sind, mach bei (2) weiter. Andernfalls, stop.
+
+Tabellen/Datentypen
+-------------------
+Element Wert -> ((Liste von Mengen, die ein Element mit diesem Wert enthält), (Liste von Indizes, wo dieses Element in der Menge enthalten ist))
+
+Mengen Index -> (Kosteneffizienz der Menge, Index des ersten Elements, Index der vorherigen Menge, Index der nachfolgenden Menge)
+
+Für jede Menge:
+Element Index -> (Element Wert, Index des vorherigen Elements, Index des nächsten Elements)
+
+Aufwand dieser Strategie
+------------------------
+Initialisierung: Summe aller Elemente in jeder Menge.
+Schleife: Wird maximal M-mal durchlaufen.
+Innerhalb der Schleife: Für jede Menge müssen Operationen durchgeführt werden entsprechend der Anzahl Elemente darin.
+Weil die durchzuführenden Operationen keine Suche brauchen, sondern sich auf Tabellenwerte verlegen beim Entfernen und Zufügen, sollten sie alle von der Ordnung O(1) sein.
+D.h. eventuell hat der Algorithmus mit den beschriebenen Datentypen einen Zeitaufwand entsprechend dem Algorithmus ohne Gewichtung.
+
+Hinweise
+--------
+Diese Implementierung braucht dynamische Listen/dynamische Arrays.
+Müsste für jedes Element die max. Anzahl von Mengen vorgehalten werden, würde das schnell den Speicher sprengen.
+Für das größte Problem müssten wir in etwa 10 GigaByte an Informationen reservieren.
+Mein Rechner hat nicht so viel Speicher.
+Dynamisch wachsende Arrays muss man aber erstmal implementieren.
+Das gehört nicht zu Standard C dazu.
+Ist tatsächlich so.
+Also implementiert es entweder selbst.
+Oder man verwendet eine vertrauenswürdige Quelle für eine Implementierung.
