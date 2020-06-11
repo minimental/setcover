@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "tinytest.h"
 #include "..\greedy_with_LUT\types.h"
 #include "..\greedy_with_LUT\functions.h"
@@ -14,18 +16,23 @@ int read_problem_description_from_file_should_store_number_of_elements_and_numbe
 }
 
 // greedy with look-up-table should read a file with the problem description: body
-int read_problem_description_from_file_should_store_set_specific_values {
+int read_problem_description_from_file_should_store_set_specific_values(const char* pName) {
 	struct problem specific_problem;
+	
+	char* path_to_file = "..\\..\\data\\sc_6_1";
+	read_problem_description_from_file(path_to_file, &specific_problem);	
+	
 	int every_element_value_is_mapped_to_its_sets_and_element_indices = 1;
 	
 	// element value 0
-	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0])[0]).set_index == 0);
-	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0])[1]).set_index == 1);
-	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0])[2]).set_index == 4);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[0]).set_index == 0);
+	printf("specific_problem.element_value_table[0]).data[0]).set_index = %i\n", ((specific_problem.element_value_table[0]).data[0]).set_index);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[1]).set_index == 1);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[2]).set_index == 4);
 	
-	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0])[0]).element_index == 0);
-	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0])[1]).element_index == 0);
-	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0])[2]).element_index == 0);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[0]).element_index == 0);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[1]).element_index == 0);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[2]).element_index == 0);
 	
 	TINYTEST_ASSERT(every_element_value_is_mapped_to_its_sets_and_element_indices);
 	return 1;
@@ -35,6 +42,7 @@ int read_problem_description_from_file_should_store_set_specific_values {
 
 TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_number_of_elements_and_number_of_sets, NULL, NULL);
+	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_set_specific_values, NULL, NULL);
 TINYTEST_END_SUITE();
 
 TINYTEST_START_MAIN();

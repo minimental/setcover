@@ -12,3 +12,4 @@ greedy with look-up-table should
 10. should be able to identify the most cost-efficient set after each removal of an element from all sets,
 11. should choose the most cost-efficient set after having propagated through each element of the previous one,
 12. iterate over all elements of a most cost-efficient set
+13. resources are freed after evaluating the solution

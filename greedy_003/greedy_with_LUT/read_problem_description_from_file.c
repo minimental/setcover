@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "types.h"
+void initialize(struct dynamic_array_index_pair* array);
 
 int* copyIntegerArray(int source[], int number_of_elements) {
 	int* destination = (int*) calloc(number_of_elements, sizeof(int));
@@ -19,8 +20,13 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 	specific_problem->number_of_sets = number_of_sets;
 	specific_problem->number_of_elements = number_of_elements;
 	
-	// instantiate elements array
-	int elements[number_of_elements];
+	// allocate cost array
+	specific_problem->costs = calloc(number_of_elements, sizeof(float));
+	
+	// allocate and initialize element-value-table
+	specific_problem->element_value_table = calloc(number_of_elements, sizeof(struct dynamic_array_index_pair));
+	for (int i = 0; i < number_of_elements; ++i)
+		initialize(&(specific_problem->element_value_table[i]));
 	
 	int character;
 	int lineIndex = 0;
@@ -29,6 +35,8 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 	int characterIndex = 0;
 	int terminatingCharacterReached = 0;
 	char string[32];
+	int element_value;
+	int element_index = 0;
 	
 	// skipping a line break followed by a call to `fscanf()'
 	fgetc(file);
@@ -44,12 +52,18 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 			if (!terminatingCharacterReached) {
 				if (isCost) {
 					string[characterIndex] = 0;
-					// specific_problem->sets[lineIndex].cost = atof(&(string[0]));
+					specific_problem->costs[lineIndex] = atof(&(string[0]));
 					isCost = 0;
 				}
 				else {
 					string[characterIndex] = 0;
-					elements[number_of_elementsPerSet++] = atoi(&(string[0]));
+					// add element to element-value-table
+					element_value = atoi(&(string[0]));
+					struct index_pair element;
+					element.set_index = lineIndex;
+					element.element_index = element_index;
+					(specific_problem->element_value_table[element_value]).add(element, &(specific_problem->element_value_table[element_value]));
+					++element_index;
 				}				
 			}
 				
@@ -57,13 +71,14 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 			characterIndex = 0;
 			// line break found
 			if (character == '\n') {
-				int* actualElements = copyIntegerArray(elements, number_of_elementsPerSet);
+				// int* actualElements = copyIntegerArray(elements, number_of_elementsPerSet);
 				
 				// specific_problem->sets[lineIndex].elements = actualElements;
 				// specific_problem->sets[lineIndex].number_of_elements = number_of_elementsPerSet;
 				number_of_elementsPerSet = 0;
 				isCost = 1;
 				lineIndex++;
+				element_index = 0;
 			}
 			
 			terminatingCharacterReached = 1;
@@ -84,10 +99,10 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 		}
 		else {
 			string[characterIndex] = 0;
-			elements[number_of_elementsPerSet++] = atoi(&(string[0]));
+			// elements[number_of_elementsPerSet++] = atoi(&(string[0]));
 		}
 		
-		int* actualElements = copyIntegerArray(elements, number_of_elementsPerSet);
+		// int* actualElements = copyIntegerArray(elements, number_of_elementsPerSet);
 		// specific_problem->sets[lineIndex].elements = actualElements;
 		// specific_problem->sets[lineIndex].number_of_elements = number_of_elementsPerSet;
 		lineIndex++;
