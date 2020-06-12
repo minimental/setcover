@@ -26,13 +26,76 @@ int read_problem_description_from_file_should_store_set_specific_values(const ch
 	
 	// element value 0
 	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[0]).set_index == 0);
-	printf("specific_problem.element_value_table[0]).data[0]).set_index = %i\n", ((specific_problem.element_value_table[0]).data[0]).set_index);
 	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[1]).set_index == 1);
 	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[2]).set_index == 4);
 	
 	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[0]).element_index == 0);
 	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[1]).element_index == 0);
 	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[0]).data[2]).element_index == 0);
+	
+	// element value 1
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[1]).data[0]).set_index == 1);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[1]).data[1]).set_index == 2);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[1]).data[2]).set_index == 5);
+	
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[1]).data[0]).element_index == 1);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[1]).data[1]).element_index == 0);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[1]).data[2]).element_index == 0);
+	
+	// element value 2
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[2]).data[0]).set_index == 1);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[2]).data[1]).set_index == 2);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[2]).data[2]).set_index == 5);
+	
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[2]).data[0]).element_index == 2);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[2]).data[1]).element_index == 1);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[2]).data[2]).element_index == 1);
+	
+	// element value 3
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[3]).data[0]).set_index == 0);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[3]).data[1]).set_index == 4);
+	
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[3]).data[0]).element_index == 1);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[3]).data[1]).element_index == 1);
+	
+	// element value 4
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[4]).data[0]).set_index == 4);
+	
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[4]).data[0]).element_index == 2);
+	
+	// element value 5
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[5]).data[0]).set_index == 1);
+	
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[5]).data[0]).element_index == 3);
+	
+	// element value 6
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[6]).data[0]).set_index == 1);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[6]).data[1]).set_index == 2);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[6]).data[2]).set_index == 3);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[6]).data[3]).set_index == 4);
+	
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[6]).data[0]).element_index == 4);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[6]).data[1]).element_index == 3);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[6]).data[2]).element_index == 0);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[6]).data[3]).element_index == 4);
+	
+	// element value 7
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[7]).data[0]).set_index == 3);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[7]).data[1]).set_index == 5);
+	
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[7]).data[0]).element_index == 1);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[7]).data[1]).element_index == 2);
+	
+	// element value 8
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[8]).data[0]).set_index == 1);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[8]).data[1]).set_index == 2);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[8]).data[2]).set_index == 3);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[8]).data[3]).set_index == 5);
+	
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[8]).data[0]).element_index == 5);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[8]).data[1]).element_index == 4);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[8]).data[2]).element_index == 2);
+	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[8]).data[3]).element_index == 3);
 	
 	TINYTEST_ASSERT(every_element_value_is_mapped_to_its_sets_and_element_indices);
 	return 1;
