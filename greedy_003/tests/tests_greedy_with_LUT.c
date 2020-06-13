@@ -16,7 +16,7 @@ int read_problem_description_from_file_should_store_number_of_elements_and_numbe
 }
 
 // greedy with look-up-table should read a file with the problem description: body
-int read_problem_description_from_file_should_store_set_specific_values(const char* pName) {
+int read_problem_description_from_file_should_store_element_value_table(const char* pName) {
 	struct problem specific_problem;
 	
 	char* path_to_file = "..\\..\\data\\sc_6_1";
@@ -101,11 +101,84 @@ int read_problem_description_from_file_should_store_set_specific_values(const ch
 	return 1;
 }
 
+// greedy with look-up-table should create sets: a set is a data type including its cost efficiency, and a list of element data types, containing value and indices to previous and next values; every set corresponds to a line in the body of the file
+int read_problem_description_from_file_should_store_cost_efficiency(const char* pName) {
+	struct problem specific_problem;
+	
+	char* path_to_file = "..\\..\\data\\sc_6_1";
+	read_problem_description_from_file(path_to_file, &specific_problem);
+	
+	int all_efficiencies_are_included_in_sets = 1;
+	
+	all_efficiencies_are_included_in_sets &= (((specific_problem.sets)[0]).efficiency == 1.f/2);
+	all_efficiencies_are_included_in_sets &= (((specific_problem.sets)[1]).efficiency == 1.f/6);
+	all_efficiencies_are_included_in_sets &= (((specific_problem.sets)[2]).efficiency == 1.f/5);
+	all_efficiencies_are_included_in_sets &= (((specific_problem.sets)[3]).efficiency == 1.f/3);
+	all_efficiencies_are_included_in_sets &= (((specific_problem.sets)[4]).efficiency == 1.f/5);
+	all_efficiencies_are_included_in_sets &= (((specific_problem.sets)[5]).efficiency == 1.f/4);
+
+	TINYTEST_ASSERT(all_efficiencies_are_included_in_sets);
+	
+	return 1;
+}
+
+int read_problem_description_from_file_should_store_the_values_of_the_elements_of_the_sets(const char* pName) {
+	struct problem specific_problem;
+	
+	char* path_to_file = "..\\..\\data\\sc_6_1";
+	read_problem_description_from_file(path_to_file, &specific_problem);
+	
+	int all_elements_included_in_sets = 1;
+	
+	// set 0: 0 3
+	all_elements_included_in_sets &= (specific_problem.sets[0].elements->data[0].value == 0);
+	all_elements_included_in_sets &= (specific_problem.sets[0].elements->data[1].value == 3);
+	
+	// set 1: 0 1 2 5 6 8
+	all_elements_included_in_sets &= (specific_problem.sets[1].elements->data[0].value == 0);
+	all_elements_included_in_sets &= (specific_problem.sets[1].elements->data[1].value == 1);
+	all_elements_included_in_sets &= (specific_problem.sets[1].elements->data[2].value == 2);
+	all_elements_included_in_sets &= (specific_problem.sets[1].elements->data[3].value == 5);
+	all_elements_included_in_sets &= (specific_problem.sets[1].elements->data[4].value == 6);
+	all_elements_included_in_sets &= (specific_problem.sets[1].elements->data[5].value == 8);
+	
+	// set 2: 1 2 5 6 8
+	all_elements_included_in_sets &= (specific_problem.sets[2].elements->data[0].value == 1);
+	all_elements_included_in_sets &= (specific_problem.sets[2].elements->data[1].value == 2);
+	all_elements_included_in_sets &= (specific_problem.sets[2].elements->data[2].value == 5);
+	all_elements_included_in_sets &= (specific_problem.sets[2].elements->data[3].value == 6);
+	all_elements_included_in_sets &= (specific_problem.sets[2].elements->data[4].value == 8);
+	
+	// set 3: 6 7 8
+	all_elements_included_in_sets &= (specific_problem.sets[3].elements->data[0].value == 6);
+	all_elements_included_in_sets &= (specific_problem.sets[3].elements->data[1].value == 7);
+	all_elements_included_in_sets &= (specific_problem.sets[3].elements->data[2].value == 8);
+	
+	// set 4: 0 3 4 5 6
+	all_elements_included_in_sets &= (specific_problem.sets[4].elements->data[0].value == 0);
+	all_elements_included_in_sets &= (specific_problem.sets[4].elements->data[1].value == 3);
+	all_elements_included_in_sets &= (specific_problem.sets[4].elements->data[2].value == 4);
+	all_elements_included_in_sets &= (specific_problem.sets[4].elements->data[3].value == 5);
+	all_elements_included_in_sets &= (specific_problem.sets[4].elements->data[4].value == 6);
+	
+	// set 5: 1 2 7 8
+	all_elements_included_in_sets &= (specific_problem.sets[5].elements->data[0].value == 1);
+	all_elements_included_in_sets &= (specific_problem.sets[5].elements->data[1].value == 2);
+	all_elements_included_in_sets &= (specific_problem.sets[5].elements->data[2].value == 7);
+	all_elements_included_in_sets &= (specific_problem.sets[5].elements->data[3].value == 8);
+	
+	TINYTEST_ASSERT(all_elements_included_in_sets);
+	
+	return 1;
+}
+
 
 
 TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_number_of_elements_and_number_of_sets, NULL, NULL);
-	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_set_specific_values, NULL, NULL);
+	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_element_value_table, NULL, NULL);
+	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_cost_efficiency, NULL, NULL);
+	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_the_values_of_the_elements_of_the_sets, NULL, NULL);
 TINYTEST_END_SUITE();
 
 TINYTEST_START_MAIN();

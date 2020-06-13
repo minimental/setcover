@@ -3,6 +3,7 @@
 
 #include "types.h"
 void initialize(struct dynamic_array_index_pair* array);
+void initialize_element(struct dynamic_array_element* array);
 
 int* copyIntegerArray(int source[], int number_of_elements) {
 	int* destination = (int*) calloc(number_of_elements, sizeof(int));
@@ -20,8 +21,12 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 	specific_problem->number_of_sets = number_of_sets;
 	specific_problem->number_of_elements = number_of_elements;
 	
-	// allocate cost array
-	specific_problem->costs = calloc(number_of_elements, sizeof(float));
+	// allocate set array
+	specific_problem->sets = calloc(number_of_elements, sizeof(struct set));
+	for (int i = 0; i < number_of_sets; ++i) {
+		specific_problem->sets[i].elements = malloc(sizeof(struct dynamic_array_element));
+		initialize_element(specific_problem->sets[i].elements);
+	}
 	
 	// allocate and initialize element-value-table
 	specific_problem->element_value_table = calloc(number_of_elements, sizeof(struct dynamic_array_index_pair));
@@ -52,17 +57,25 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 			if (!terminatingCharacterReached) {
 				if (isCost) {
 					string[characterIndex] = 0;
-					specific_problem->costs[lineIndex] = atof(&(string[0]));
+					specific_problem->sets[lineIndex].cost = atof(&(string[0]));
 					isCost = 0;
 				}
 				else {
 					string[characterIndex] = 0;
-					// add element to element-value-table
+					
 					element_value = atoi(&(string[0]));
-					struct index_pair element;
-					element.set_index = lineIndex;
-					element.element_index = element_index;
-					(specific_problem->element_value_table[element_value]).add(element, &(specific_problem->element_value_table[element_value]));
+					struct index_pair element_value_table_entry;
+					element_value_table_entry.set_index = lineIndex;
+					element_value_table_entry.element_index = element_index;
+					// add entry to element-value-table
+					(specific_problem->element_value_table[element_value]).add(element_value_table_entry, &(specific_problem->element_value_table[element_value]));
+					// add element to set
+					struct element _element;
+					_element.value = element_value;
+					_element.index_previous = element_index - 1;
+					_element.index_next = element_index + 1;
+					((specific_problem->sets[lineIndex]).elements)->add(_element, specific_problem->sets[lineIndex].elements);
+					// increment element index
 					++element_index;
 				}				
 			}
@@ -71,10 +84,9 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 			characterIndex = 0;
 			// line break found
 			if (character == '\n') {
-				// int* actualElements = copyIntegerArray(elements, number_of_elementsPerSet);
-				
-				// specific_problem->sets[lineIndex].elements = actualElements;
-				// specific_problem->sets[lineIndex].number_of_elements = number_of_elementsPerSet;
+
+				specific_problem->sets[lineIndex].number_of_elements = element_index;
+				specific_problem->sets[lineIndex].efficiency = specific_problem->sets[lineIndex].cost / specific_problem->sets[lineIndex].number_of_elements;
 				number_of_elementsPerSet = 0;
 				isCost = 1;
 				lineIndex++;
@@ -94,18 +106,26 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 		
 		if (isCost) {
 			string[characterIndex] = 0;
-			// specific_problem->sets[lineIndex].cost = atof(&(string[0]));
+			specific_problem->sets[lineIndex].cost = atof(&(string[0]));
 			isCost = 0;
 		}
 		else {
 			string[characterIndex] = 0;
-			// elements[number_of_elementsPerSet++] = atoi(&(string[0]));
+			element_value = atoi(&(string[0]));
+			struct index_pair element_value_table_entry;
+			element_value_table_entry.set_index = lineIndex;
+			element_value_table_entry.element_index = element_index;
+			// add entry to element-value-table
+			(specific_problem->element_value_table[element_value]).add(element_value_table_entry, &(specific_problem->element_value_table[element_value]));
+			// add element to set
+			struct element _element;
+			_element.value = element_value;
+			_element.index_previous = element_index - 1;
+			_element.index_next = element_index + 1;
+			((specific_problem->sets[lineIndex]).elements)->add(_element, specific_problem->sets[lineIndex].elements);
 		}
 		
-		// int* actualElements = copyIntegerArray(elements, number_of_elementsPerSet);
-		// specific_problem->sets[lineIndex].elements = actualElements;
-		// specific_problem->sets[lineIndex].number_of_elements = number_of_elementsPerSet;
-		lineIndex++;
+		specific_problem->sets[lineIndex].number_of_elements = element_index;
 	}
 	
 	fclose(file);
