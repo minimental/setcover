@@ -172,6 +172,34 @@ int read_problem_description_from_file_should_store_the_values_of_the_elements_o
 	return 1;
 }
 
+// greedy with look-up-table should remove an element from all sets that is currently being iterated over in the most cost-efficient set
+int remove_element_from_all_sets_should_remove_an_element_from_all_sets(const char* pName) {
+	struct problem specific_problem;
+	
+	char* path_to_file = "..\\..\\data\\sc_6_1";
+	read_problem_description_from_file(path_to_file, &specific_problem);
+	
+	struct element element_to_be_removed;
+	element_to_be_removed.value = 0;
+
+	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table);
+	
+	int the_element_is_still_there = 0;
+	int number_of_sets = specific_problem.number_of_sets;
+	int number_of_elements, index_of_current_element;
+	for (int i = 0; i < number_of_sets; ++i) {
+		number_of_elements = specific_problem.sets[i].number_of_elements;
+		index_of_current_element = specific_problem.sets[i].index_of_root_element;
+		while (index_of_current_element != -1) {
+			the_element_is_still_there |= (((specific_problem.sets[i].elements->data[index_of_current_element].value) == 0) ? 1 : 0);
+			// next element
+			index_of_current_element = specific_problem.sets[i].elements->data[index_of_current_element].index_next;
+		}
+	}
+	
+	TINYTEST_ASSERT(!the_element_is_still_there);
+}
+
 
 
 TINYTEST_START_SUITE(GREEDY_WITH_LUT);
@@ -179,6 +207,7 @@ TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_element_value_table, NULL, NULL);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_cost_efficiency, NULL, NULL);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_the_values_of_the_elements_of_the_sets, NULL, NULL);
+	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_remove_an_element_from_all_sets, NULL, NULL);
 TINYTEST_END_SUITE();
 
 TINYTEST_START_MAIN();

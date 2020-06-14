@@ -31,6 +31,7 @@ struct set {
 	float cost;
 	float efficiency;
 	int number_of_elements;
+	int index_of_root_element;
 	struct dynamic_array_element* elements;
 };
 
