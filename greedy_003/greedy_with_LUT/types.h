@@ -38,6 +38,8 @@ struct set {
 struct problem {
 	int number_of_sets;
 	int number_of_elements;
+	int minimum_efficiency_set_index;
+	float minimum_efficiency;
 	struct dynamic_array_index_pair* element_value_table;
 	struct set* sets;
 };

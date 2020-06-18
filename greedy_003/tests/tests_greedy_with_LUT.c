@@ -122,6 +122,17 @@ int read_problem_description_from_file_should_store_cost_efficiency(const char* 
 	return 1;
 }
 
+int read_problem_description_should_identify_the_most_cost_efficient_set(const char* pName) {
+	struct problem specific_problem;
+	
+	char* path_to_file = "..\\..\\data\\sc_9_0";
+	read_problem_description_from_file(path_to_file, &specific_problem);
+	
+	TINYTEST_ASSERT(specific_problem.minimum_efficiency_set_index == 0);
+	
+	return 1;
+}
+
 int read_problem_description_from_file_should_store_the_values_of_the_elements_of_the_sets(const char* pName) {
 	struct problem specific_problem;
 	
@@ -182,7 +193,7 @@ int remove_element_from_all_sets_should_remove_an_element_from_all_sets(const ch
 	struct element element_to_be_removed;
 	element_to_be_removed.value = 0;
 
-	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table);
+	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table, &specific_problem.minimum_efficiency_set_index, &specific_problem.minimum_efficiency);
 	
 	int the_element_is_still_there = 0;
 	int number_of_sets = specific_problem.number_of_sets;
@@ -198,6 +209,26 @@ int remove_element_from_all_sets_should_remove_an_element_from_all_sets(const ch
 	}
 	
 	TINYTEST_ASSERT(!the_element_is_still_there);
+	
+	return 1;
+}
+
+// greedy with look-up-table should be able to identify the most cost-efficient set after each removal of an element from all sets,
+int remove_element_from_all_sets_should_identify_the_most_cost_efficient_set(const char* pName) {
+
+	struct problem specific_problem;
+	
+	char* path_to_file = "..\\..\\data\\sc_15_0";
+	read_problem_description_from_file(path_to_file, &specific_problem);
+	
+	struct element element_to_be_removed;
+	element_to_be_removed.value = 32;	
+	
+	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table, &specific_problem.minimum_efficiency_set_index, &specific_problem.minimum_efficiency);
+	
+	TINYTEST_ASSERT(specific_problem.minimum_efficiency_set_index == 2);
+	
+	return 1;
 }
 
 
@@ -206,8 +237,10 @@ TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_number_of_elements_and_number_of_sets, NULL, NULL);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_element_value_table, NULL, NULL);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_cost_efficiency, NULL, NULL);
+	TINYTEST_ADD_TEST(read_problem_description_should_identify_the_most_cost_efficient_set, NULL, NULL);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_the_values_of_the_elements_of_the_sets, NULL, NULL);
 	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_remove_an_element_from_all_sets, NULL, NULL);
+	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_identify_the_most_cost_efficient_set, NULL, NULL);
 TINYTEST_END_SUITE();
 
 TINYTEST_START_MAIN();

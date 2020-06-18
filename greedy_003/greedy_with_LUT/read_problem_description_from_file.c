@@ -16,6 +16,9 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 	specific_problem->number_of_sets = number_of_sets;
 	specific_problem->number_of_elements = number_of_elements;
 	
+	// initialize with largest float (normal) number
+	specific_problem->minimum_efficiency = (float) 0x7f7fffff;
+	
 	// allocate and initialize set array
 	specific_problem->sets = calloc(number_of_elements, sizeof(struct set));
 	for (int i = 0; i < number_of_sets; ++i) {
@@ -85,6 +88,12 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 				specific_problem->sets[lineIndex].efficiency = specific_problem->sets[lineIndex].cost / specific_problem->sets[lineIndex].number_of_elements;
 				// mark last element of set
 				specific_problem->sets[lineIndex].elements->data[element_index - 1].index_next = -1;
+				
+				// identify most cost efficient set index
+				if (specific_problem->sets[lineIndex].efficiency < specific_problem->minimum_efficiency) {
+					specific_problem->minimum_efficiency_set_index = lineIndex;
+					specific_problem->minimum_efficiency = specific_problem->sets[lineIndex].efficiency;
+				}
 				
 				number_of_elementsPerSet = 0;
 				isCost = 1;
