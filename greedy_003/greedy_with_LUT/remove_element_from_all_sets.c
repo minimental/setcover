@@ -1,6 +1,6 @@
 #include "types.h"
 
-void remove_element_from_all_sets(struct element _element, struct set* sets, struct dynamic_array_index_pair* element_value_table, int* minimum_efficiency_set_index, float* minimum_efficiency) {
+void remove_element_from_all_sets(struct element _element, struct set* sets, struct dynamic_array_index_pair* element_value_table) {
 	
 	int current_set_index, current_element_index, current_previous_element_index, current_next_element_index;
 	
@@ -13,13 +13,6 @@ void remove_element_from_all_sets(struct element _element, struct set* sets, str
 		current_next_element_index = sets[current_set_index].elements->data[current_element_index].index_next;
 		
 		--(sets[current_set_index].number_of_elements);
-		
-		// identify most cost efficient set index
-		sets[current_set_index].efficiency = sets[current_set_index].cost / sets[current_set_index].number_of_elements;
-		if (sets[current_set_index].efficiency < *minimum_efficiency) {
-			*minimum_efficiency = sets[current_set_index].efficiency;
-			*minimum_efficiency_set_index = current_set_index;
-		}
 		
 		// special case: current element index points to first element of set
 		if (current_element_index == sets[current_set_index].index_of_root_element) {

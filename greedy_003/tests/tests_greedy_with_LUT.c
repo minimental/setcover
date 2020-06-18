@@ -193,7 +193,7 @@ int remove_element_from_all_sets_should_remove_an_element_from_all_sets(const ch
 	struct element element_to_be_removed;
 	element_to_be_removed.value = 0;
 
-	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table, &specific_problem.minimum_efficiency_set_index, &specific_problem.minimum_efficiency);
+	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table);
 	
 	int the_element_is_still_there = 0;
 	int number_of_sets = specific_problem.number_of_sets;
@@ -213,8 +213,8 @@ int remove_element_from_all_sets_should_remove_an_element_from_all_sets(const ch
 	return 1;
 }
 
-// greedy with look-up-table should be able to identify the most cost-efficient set after each removal of an element from all sets,
-int remove_element_from_all_sets_should_identify_the_most_cost_efficient_set(const char* pName) {
+// greedy with look-up-table should be able to identify the most cost-efficient set after each removal of an element from all sets
+int find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set(const char* pName) {
 
 	struct problem specific_problem;
 	
@@ -222,13 +222,47 @@ int remove_element_from_all_sets_should_identify_the_most_cost_efficient_set(con
 	read_problem_description_from_file(path_to_file, &specific_problem);
 	
 	struct element element_to_be_removed;
-	element_to_be_removed.value = 32;	
+	element_to_be_removed.value = 30;
 	
-	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table, &specific_problem.minimum_efficiency_set_index, &specific_problem.minimum_efficiency);
+	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table);
 	
-	TINYTEST_ASSERT(specific_problem.minimum_efficiency_set_index == 2);
+	find_most_cost_efficient_set(specific_problem.sets, specific_problem.number_of_sets, &specific_problem.minimum_efficiency, &specific_problem.minimum_efficiency_set_index);
+	
+	TINYTEST_ASSERT(specific_problem.minimum_efficiency_set_index == 1);
 	
 	return 1;
+}
+
+// greedy with look-up-table should be able to identify the most cost-efficient set after each removal of an element from all sets (2)
+int find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set_after_removal_of_multiple_values(const char* pName) {
+	struct problem specific_problem;
+	
+	char* path_to_file = "..\\..\\data\\sc_27_0";
+	read_problem_description_from_file(path_to_file, &specific_problem);
+	
+	struct element elements_to_be_removed[14];
+	elements_to_be_removed[0].value = 108;
+	elements_to_be_removed[1].value = 3;
+	elements_to_be_removed[2].value = 30;
+	elements_to_be_removed[3].value = 97;
+	elements_to_be_removed[4].value = 96;
+	elements_to_be_removed[5].value = 34;
+	elements_to_be_removed[6].value = 1;
+	elements_to_be_removed[7].value = 47;
+	elements_to_be_removed[8].value = 33;
+	elements_to_be_removed[9].value = 102;
+	elements_to_be_removed[10].value = 90;
+	elements_to_be_removed[11].value = 18;
+	elements_to_be_removed[12].value = 29;
+	elements_to_be_removed[13].value = 54;
+	
+	for (int e = 0; e < 14; ++e)
+		remove_element_from_all_sets(elements_to_be_removed[e], specific_problem.sets, specific_problem.element_value_table);
+	
+	find_most_cost_efficient_set(specific_problem.sets, specific_problem.number_of_sets, &specific_problem.minimum_efficiency, &specific_problem.minimum_efficiency_set_index);
+	
+	TINYTEST_ASSERT(specific_problem.minimum_efficiency_set_index == 3);
+	
 }
 
 
@@ -240,7 +274,8 @@ TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(read_problem_description_should_identify_the_most_cost_efficient_set, NULL, NULL);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_the_values_of_the_elements_of_the_sets, NULL, NULL);
 	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_remove_an_element_from_all_sets, NULL, NULL);
-	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_identify_the_most_cost_efficient_set, NULL, NULL);
+	TINYTEST_ADD_TEST(find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set, NULL, NULL);
+	TINYTEST_ADD_TEST(find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set_after_removal_of_multiple_values, NULL, NULL);
 TINYTEST_END_SUITE();
 
 TINYTEST_START_MAIN();
