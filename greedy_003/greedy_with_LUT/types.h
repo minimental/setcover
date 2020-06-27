@@ -43,3 +43,12 @@ struct problem {
 	struct dynamic_array_index_pair* element_value_table;
 	struct set* sets;
 };
+
+struct solution {
+	int number_of_sets;
+	int number_of_sets_picked;
+	int number_of_elements;
+	int number_of_elements_picked;
+	int* indices_of_picked_sets;
+	double cost;
+};

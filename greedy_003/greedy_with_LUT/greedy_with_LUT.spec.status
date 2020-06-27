@@ -9,7 +9,7 @@ greedy with look-up-table should
 7.  stop and return a solution if the number of elements being removed equals the overall number of elements,
 8.  keep track which set indices are part of the solution,
 * 9.  remove an element from all sets that is currently being iterated over in the most cost-efficient set,
-10. should be able to identify the most cost-efficient set after each removal of an element from all sets,
+* 10. should be able to identify the most cost-efficient set after each removal of an element from all sets,
 11. should choose the most cost-efficient set after having propagated through each element of the previous one,
 12. iterate over all elements of a most cost-efficient set
 13. resources are freed after evaluating the solution

@@ -309,6 +309,27 @@ int remove_element_from_all_sets_should_remove_only_one_element_if_called_twice_
 	
 }
 
+// greedy with LUT should count the number of elements being removed
+int greedy_with_LUT_should_count_the_number_of_elements_being_removed(const char* pName) {
+
+	struct problem specific_problem;
+	struct solution specific_solution;
+	
+	char* path_to_file = "..\\..\\data\\sc_15_0";
+	read_problem_description_from_file(path_to_file, &specific_problem);
+	
+	greedy_with_LUT(&specific_problem, &specific_solution);
+	
+	TINYTEST_ASSERT(specific_solution.number_of_elements_picked == 35);
+	return 1;
+}
+
+// greedy with LUT should keep track which set indices are part of the solution
+int greedy_with_LUT_should_return_the_indices_of_the_picked_sets(const char* pName) {
+	
+	TINYTEST_ASSERT();
+	return 1;
+}
 
 
 TINYTEST_START_SUITE(GREEDY_WITH_LUT);
@@ -322,6 +343,7 @@ TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set_after_removal_of_multiple_values, NULL, NULL);
 	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_be_able_to_remove_every_element_from_a_set, NULL, NULL);
 	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_remove_only_one_element_if_called_twice_on_the_same_element, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_should_count_the_number_of_elements_being_removed, NULL, NULL);
 TINYTEST_END_SUITE();
 
 TINYTEST_START_MAIN();
