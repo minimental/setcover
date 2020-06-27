@@ -12,6 +12,15 @@ void remove_element_from_all_sets(struct element _element, struct set* sets, str
 		current_previous_element_index = sets[current_set_index].elements->data[current_element_index].index_previous;
 		current_next_element_index = sets[current_set_index].elements->data[current_element_index].index_next;
 		
+		// if element has already been removed, continue
+		if (current_previous_element_index == -1) {
+			if (current_element_index != sets[current_set_index].index_of_root_element)
+				continue;			
+		}
+		else 
+			if (sets[current_set_index].elements->data[current_previous_element_index].index_next != current_element_index)
+				continue;
+		
 		--(sets[current_set_index].number_of_elements);
 		
 		// special case: current element index points to first element of set

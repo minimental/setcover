@@ -88,6 +88,8 @@ void read_problem_description_from_file(char* path, struct problem* specific_pro
 				specific_problem->sets[lineIndex].efficiency = specific_problem->sets[lineIndex].cost / specific_problem->sets[lineIndex].number_of_elements;
 				// mark last element of set
 				specific_problem->sets[lineIndex].elements->data[element_index - 1].index_next = -1;
+				// mark first element of set
+				specific_problem->sets[lineIndex].elements->data[0].index_previous = -1;
 				
 				// identify most cost efficient set index
 				if (specific_problem->sets[lineIndex].efficiency < specific_problem->minimum_efficiency) {

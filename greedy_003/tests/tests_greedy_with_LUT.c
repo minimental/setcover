@@ -198,7 +198,9 @@ int remove_element_from_all_sets_should_remove_an_element_from_all_sets(const ch
 	int the_element_is_still_there = 0;
 	int number_of_sets = specific_problem.number_of_sets;
 	int number_of_elements, index_of_current_element;
+	
 	for (int i = 0; i < number_of_sets; ++i) {
+		
 		number_of_elements = specific_problem.sets[i].number_of_elements;
 		index_of_current_element = specific_problem.sets[i].index_of_root_element;
 		while (index_of_current_element != -1) {
@@ -263,6 +265,48 @@ int find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set_aft
 	
 	TINYTEST_ASSERT(specific_problem.minimum_efficiency_set_index == 3);
 	
+	return 1;
+	
+}
+
+// greedy with LUT should be able to remove every element from a set
+int remove_element_from_all_sets_should_be_able_to_remove_every_element_from_a_set(const char* pName) {
+	
+	struct problem specific_problem;
+	
+	char* path_to_file = "..\\..\\data\\sc_9_0";
+	read_problem_description_from_file(path_to_file, &specific_problem);
+	
+	struct element elements_to_be_removed[4];
+	elements_to_be_removed[0].value = 1;
+	elements_to_be_removed[1].value = 2;
+	elements_to_be_removed[2].value = 6;
+	elements_to_be_removed[3].value = 9;
+	
+	for (int e = 0; e < 4; ++e)
+		remove_element_from_all_sets(elements_to_be_removed[e], specific_problem.sets, specific_problem.element_value_table);
+	
+	TINYTEST_ASSERT((specific_problem.sets[0].number_of_elements == 0) && (specific_problem.sets[0].index_of_root_element == -1));
+	
+	return 1;
+}
+
+// greedy with LUT should remove only one element if the same element is removed twice
+int remove_element_from_all_sets_should_remove_only_one_element_if_called_twice_on_the_same_element(const char* pName) {
+	
+	struct problem specific_problem;
+	
+	char* path_to_file = "..\\..\\data\\sc_9_0";
+	read_problem_description_from_file(path_to_file, &specific_problem);
+
+	struct element element_to_be_removed;
+	element_to_be_removed.value = 1;
+	
+	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table);
+	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table);
+	
+	TINYTEST_ASSERT((specific_problem.sets[0].number_of_elements == 3));
+	
 }
 
 
@@ -276,6 +320,8 @@ TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_remove_an_element_from_all_sets, NULL, NULL);
 	TINYTEST_ADD_TEST(find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set, NULL, NULL);
 	TINYTEST_ADD_TEST(find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set_after_removal_of_multiple_values, NULL, NULL);
+	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_be_able_to_remove_every_element_from_a_set, NULL, NULL);
+	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_remove_only_one_element_if_called_twice_on_the_same_element, NULL, NULL);
 TINYTEST_END_SUITE();
 
 TINYTEST_START_MAIN();
