@@ -32,6 +32,8 @@ void remove_element_from_all_sets(struct element _element, struct set* sets, str
 			}
 				
 			sets[current_set_index].index_of_root_element = current_next_element_index;
+			// mark next element as first element
+			sets[current_set_index].elements->data[current_next_element_index].index_previous = -1;
 			continue;
 		}
 				
