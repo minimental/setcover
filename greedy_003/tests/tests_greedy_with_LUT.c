@@ -9,15 +9,23 @@ TINYTEST_DECLARE_SUITE(GREEDY_WITH_LUT);
 
 // greedy with look-up-table should read a file with the problem description: header
 int read_problem_description_from_file_should_store_number_of_elements_and_number_of_sets(const char* pName) {
+	
 	struct problem specific_problem;
 	char* path_to_file = "..\\..\\data\\sc_6_1";
 	read_problem_description_from_file(path_to_file, &specific_problem);
+	
 	TINYTEST_ASSERT((specific_problem.number_of_sets == 6) && (specific_problem.number_of_elements == 9));
+	
+	// free resources
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);	
+	
 	return 1;
 }
 
 // greedy with look-up-table should read a file with the problem description: body
 int read_problem_description_from_file_should_store_element_value_table(const char* pName) {
+	
 	struct problem specific_problem;
 	
 	char* path_to_file = "..\\..\\data\\sc_6_1";
@@ -99,11 +107,17 @@ int read_problem_description_from_file_should_store_element_value_table(const ch
 	every_element_value_is_mapped_to_its_sets_and_element_indices &= (((specific_problem.element_value_table[8]).data[3]).element_index == 3);
 	
 	TINYTEST_ASSERT(every_element_value_is_mapped_to_its_sets_and_element_indices);
+	
+	// free resources
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);	
+	
 	return 1;
 }
 
 // greedy with look-up-table should create sets: a set is a data type including its cost efficiency, and a list of element data types, containing value and indices to previous and next values; every set corresponds to a line in the body of the file
 int read_problem_description_from_file_should_store_cost_efficiency(const char* pName) {
+	
 	struct problem specific_problem;
 	
 	char* path_to_file = "..\\..\\data\\sc_6_1";
@@ -120,10 +134,15 @@ int read_problem_description_from_file_should_store_cost_efficiency(const char* 
 
 	TINYTEST_ASSERT(all_efficiencies_are_included_in_sets);
 	
+	// free resources
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);	
+	
 	return 1;
 }
 
 int read_problem_description_should_identify_the_most_cost_efficient_set(const char* pName) {
+	
 	struct problem specific_problem;
 	
 	char* path_to_file = "..\\..\\data\\sc_9_0";
@@ -131,10 +150,15 @@ int read_problem_description_should_identify_the_most_cost_efficient_set(const c
 	
 	TINYTEST_ASSERT(specific_problem.minimum_efficiency_set_index == 0);
 	
+	// free resources
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);	
+	
 	return 1;
 }
 
 int read_problem_description_from_file_should_store_the_values_of_the_elements_of_the_sets(const char* pName) {
+	
 	struct problem specific_problem;
 	
 	char* path_to_file = "..\\..\\data\\sc_6_1";
@@ -181,11 +205,16 @@ int read_problem_description_from_file_should_store_the_values_of_the_elements_o
 	
 	TINYTEST_ASSERT(all_elements_included_in_sets);
 	
+	// free resources
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);	
+	
 	return 1;
 }
 
 // greedy with look-up-table should remove an element from all sets that is currently being iterated over in the most cost-efficient set
 int remove_element_from_all_sets_should_remove_an_element_from_all_sets(const char* pName) {
+	
 	struct problem specific_problem;
 	
 	char* path_to_file = "..\\..\\data\\sc_6_1";
@@ -213,6 +242,10 @@ int remove_element_from_all_sets_should_remove_an_element_from_all_sets(const ch
 	
 	TINYTEST_ASSERT(!the_element_is_still_there);
 	
+	// free resources
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);	
+	
 	return 1;
 }
 
@@ -233,11 +266,16 @@ int find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set(con
 	
 	TINYTEST_ASSERT(specific_problem.minimum_efficiency_set_index == 1);
 	
+	// free resources
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);	
+	
 	return 1;
 }
 
 // greedy with look-up-table should be able to identify the most cost-efficient set after each removal of an element from all sets (2)
 int find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set_after_removal_of_multiple_values(const char* pName) {
+	
 	struct problem specific_problem;
 	
 	char* path_to_file = "..\\..\\data\\sc_27_0";
@@ -266,6 +304,10 @@ int find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set_aft
 	
 	TINYTEST_ASSERT(specific_problem.minimum_efficiency_set_index == 3);
 	
+	// free resources
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);	
+	
 	return 1;
 	
 }
@@ -289,6 +331,10 @@ int remove_element_from_all_sets_should_be_able_to_remove_every_element_from_a_s
 	
 	TINYTEST_ASSERT((specific_problem.sets[0].number_of_elements == 0) && (specific_problem.sets[0].index_of_root_element == -1));
 	
+	// free resources
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);	
+	
 	return 1;
 }
 
@@ -304,9 +350,15 @@ int remove_element_from_all_sets_should_remove_only_one_element_if_called_twice_
 	element_to_be_removed.value = 1;
 	
 	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table);
-	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table);
+	remove_element_from_all_sets(element_to_be_removed, specific_problem.sets, specific_problem.element_value_table);	
 	
 	TINYTEST_ASSERT((specific_problem.sets[0].number_of_elements == 3));
+	
+	// free resources
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);
+
+	return 1;
 	
 }
 
@@ -324,6 +376,14 @@ int greedy_with_LUT_core_should_return_the_indices_of_the_picked_sets(const char
 	
 	greedy_with_LUT_core(&specific_problem, &specific_solution);
 	
+	for (int s = 0; s < specific_solution.number_of_sets; ++s)
+		all_elements_match &= (reference_solution[s] == specific_solution.mask_of_picked_sets[s]);
+	
+	// free resources
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);
+	free(specific_solution.mask_of_picked_sets);
+		
 	TINYTEST_ASSERT(all_elements_match);
 	return 1;
 }
@@ -354,6 +414,96 @@ int greedy_with_LUT_should_accept_a_path_as_input_string_and_return_the_solution
 	return 1;
 }
 
+int greedy_with_LUT_should_compute_sc_27_0(const char* pName) {
+	
+	char* path_to_file = "..\\..\\data\\sc_27_0";
+	char* output;
+	
+	greedy_with_LUT(path_to_file, &output);
+	
+	printf("\n");
+	printf("Test 13\n");
+	printf("=======\n");
+	printf("%s\n", output);
+	
+	TINYTEST_ASSERT(1);
+	
+	return 1;
+	
+}
+
+int greedy_with_LUT_should_compute_sc_45_0(const char* pName) {
+	
+	char* path_to_file = "..\\..\\data\\sc_45_0";
+	char* output;
+	
+	greedy_with_LUT(path_to_file, &output);
+	
+	printf("\n");
+	printf("Test 14\n");
+	printf("=======\n");
+	printf("%s\n", output);
+	
+	TINYTEST_ASSERT(1);
+	
+	return 1;
+	
+}
+
+int greedy_with_LUT_should_compute_sc_81_0(const char* pName) {
+	
+	char* path_to_file = "..\\..\\data\\sc_81_0";
+	char* output;
+	
+	greedy_with_LUT(path_to_file, &output);
+	
+	printf("\n");
+	printf("Test 15\n");
+	printf("=======\n");
+	printf("%s\n", output);
+	
+	TINYTEST_ASSERT(1);
+	
+	return 1;
+	
+}
+
+int greedy_with_LUT_should_compute_sc_135_0(const char* pName) {
+	
+	char* path_to_file = "..\\..\\data\\sc_135_0";
+	char* output;
+	
+	greedy_with_LUT(path_to_file, &output);
+	
+	printf("\n");
+	printf("Test 16\n");
+	printf("=======\n");
+	printf("%s\n", output);
+	
+	TINYTEST_ASSERT(1);
+	
+	return 1;
+	
+}
+
+int greedy_with_LUT_should_compute_sc_157_0(const char* pName) {
+	
+	char* path_to_file = "..\\..\\data\\sc_157_0";
+	char* output;
+	
+	greedy_with_LUT(path_to_file, &output);
+	
+	printf("\n");
+	printf("Test 17\n");
+	printf("=======\n");
+	printf("%s\n", output);
+	
+	TINYTEST_ASSERT(1);
+	
+	return 1;
+	
+}
+
 
 TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_number_of_elements_and_number_of_sets, NULL, NULL);
@@ -368,6 +518,11 @@ TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_remove_only_one_element_if_called_twice_on_the_same_element, NULL, NULL);
 	TINYTEST_ADD_TEST(greedy_with_LUT_core_should_return_the_indices_of_the_picked_sets, NULL, NULL);
 	TINYTEST_ADD_TEST(greedy_with_LUT_should_accept_a_path_as_input_string_and_return_the_solution_output_string, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_27_0, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_45_0, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_81_0, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_135_0, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_157_0, NULL, NULL);
 TINYTEST_END_SUITE();
 
 TINYTEST_START_MAIN();

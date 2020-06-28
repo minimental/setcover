@@ -36,7 +36,10 @@ void greedy_with_LUT(const char* path, char** output) {
 	char* solution_string = convert_binary_integer_array_to_character_array(specific_solution.mask_of_picked_sets, specific_solution.number_of_sets);
 	sprintf(*output, "%i 0\n%s", (int) specific_solution.cost, solution_string);
 	
-	// free memory of intermediate string
+	// free resources
 	free(solution_string);
+	free(specific_problem.element_value_table);
+	free(specific_problem.sets);
+	free(specific_solution.mask_of_picked_sets);
 	
 }
