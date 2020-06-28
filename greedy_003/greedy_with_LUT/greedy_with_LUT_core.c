@@ -17,6 +17,12 @@ void greedy_with_LUT_core(struct problem* specific_problem, struct solution* spe
 	for (int i = 0; i < specific_problem->number_of_sets; ++i)
 		specific_solution->mask_of_picked_sets[i] = 0;
 	
+	// initialize solution properties
+	specific_solution->number_of_sets = specific_problem->number_of_sets;
+	specific_solution->number_of_elements = specific_problem->number_of_elements;
+	specific_solution->cost = 0;
+	specific_solution->number_of_sets_picked = 0;
+	
 	while(!stop) {
 		
 		current_set_index = specific_problem->minimum_efficiency_set_index;
@@ -34,8 +40,6 @@ void greedy_with_LUT_core(struct problem* specific_problem, struct solution* spe
 			// remove element from all sets
 			remove_element_from_all_sets(current_element, specific_problem->sets, specific_problem->element_value_table);
 			
-			// printf("greedy_with_LUT_core: Removed element %i\n", current_element.value);
-			
 			if ((++number_of_elements_picked) == specific_problem->number_of_elements) {
 				// mark stop for outer set loop
 				stop = 1;
@@ -47,7 +51,13 @@ void greedy_with_LUT_core(struct problem* specific_problem, struct solution* spe
 		}
 		
 		// find new cost efficient set
-		find_most_cost_efficient_set(specific_problem->sets, specific_problem->number_of_sets, &specific_problem->minimum_efficiency, &specific_problem->minimum_efficiency_set_index);		
+		find_most_cost_efficient_set(specific_problem->sets, specific_problem->number_of_sets, &specific_problem->minimum_efficiency, &specific_problem->minimum_efficiency_set_index);
+
+		// increment cost
+		specific_solution->cost += specific_problem->sets[current_set_index].cost;
+		
+		// increment number of sets picked
+		++specific_solution->number_of_sets_picked;
 	}
 	
 }

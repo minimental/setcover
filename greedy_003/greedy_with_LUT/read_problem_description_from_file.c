@@ -7,7 +7,7 @@
 void initialize(struct dynamic_array_index_pair* array);
 void initialize_element(struct dynamic_array_element* array);
 
-void read_problem_description_from_file(char* path, struct problem* specific_problem) {
+void read_problem_description_from_file(const char* path, struct problem* specific_problem) {
 	FILE* file = fopen(path, "r");
 	// read header
 	int number_of_sets, number_of_elements;

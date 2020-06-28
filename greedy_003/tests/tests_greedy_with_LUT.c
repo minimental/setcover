@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "tinytest.h"
 #include "..\greedy_with_LUT\types.h"
@@ -310,7 +311,7 @@ int remove_element_from_all_sets_should_remove_only_one_element_if_called_twice_
 }
 
 // greedy with LUT should keep track which set indices are part of the solution
-int greedy_with_LUT_should_return_the_indices_of_the_picked_sets(const char* pName) {
+int greedy_with_LUT_core_should_return_the_indices_of_the_picked_sets(const char* pName) {
 	
 	int reference_solution[] = {0, 1, 0, 1, 1, 0};
 	int all_elements_match = 1;
@@ -327,6 +328,32 @@ int greedy_with_LUT_should_return_the_indices_of_the_picked_sets(const char* pNa
 	return 1;
 }
 
+/*
+ * greedy with LUT should take a path string as input and return the solution string as output
+ * 
+ * Quote from the handout "Discrete Optimization Assignment: Set Cover":
+ * 
+ * The output has two lines. The first line contains two values `obj' and `opt'. `obj' is the cost of the
+*  selected sets (i.e. the objective value). `opt' should be 1 if your algorithm proved optimality and
+*  0 otherwise. The next line is a list of |M| values in {0, 1}, one for each of the x_i variables that
+*  represent which sets have been selected. This line encodes the solution. Output Format
+*  
+*  obj opt
+*  x_0 x_1 ... x_|M|-1
+*/
+int greedy_with_LUT_should_accept_a_path_as_input_string_and_return_the_solution_output_string(const char* pName) {
+	
+	char* path_to_file = "..\\..\\data\\sc_6_1";
+	char* reference_output = "3 0\n0 1 0 1 1 0";
+	char* output;
+	
+	greedy_with_LUT(path_to_file, &output);
+	
+	TINYTEST_ASSERT(!strcmp(output, reference_output));
+	
+	return 1;
+}
+
 
 TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_number_of_elements_and_number_of_sets, NULL, NULL);
@@ -339,7 +366,8 @@ TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set_after_removal_of_multiple_values, NULL, NULL);
 	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_be_able_to_remove_every_element_from_a_set, NULL, NULL);
 	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_remove_only_one_element_if_called_twice_on_the_same_element, NULL, NULL);
-	TINYTEST_ADD_TEST(greedy_with_LUT_should_return_the_indices_of_the_picked_sets, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_core_should_return_the_indices_of_the_picked_sets, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_should_accept_a_path_as_input_string_and_return_the_solution_output_string, NULL, NULL);
 TINYTEST_END_SUITE();
 
 TINYTEST_START_MAIN();
