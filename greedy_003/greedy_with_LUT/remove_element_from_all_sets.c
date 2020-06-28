@@ -4,8 +4,8 @@ void remove_element_from_all_sets(struct element _element, struct set* sets, str
 	
 	int current_set_index, current_element_index, current_previous_element_index, current_next_element_index;
 	
-	int number_of_sets = element_value_table->size;
-	for (int i = 0; i < number_of_sets; ++i) {
+	int number_of_index_pairs = element_value_table[_element.value].size;
+	for (int i = 0; i < number_of_index_pairs; ++i) {
 		
 		current_set_index = ((element_value_table[_element.value]).data[i]).set_index;
 		current_element_index = ((element_value_table[_element.value]).data[i]).element_index;
@@ -15,7 +15,7 @@ void remove_element_from_all_sets(struct element _element, struct set* sets, str
 		// if element has already been removed, continue
 		if (current_previous_element_index == -1) {
 			if (current_element_index != sets[current_set_index].index_of_root_element)
-				continue;			
+				continue;
 		}
 		else 
 			if (sets[current_set_index].elements->data[current_previous_element_index].index_next != current_element_index)

@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <stdio.h>
 
 #include "types.h"
 #include "functions.h"
@@ -17,8 +16,6 @@ void greedy_with_LUT_core(struct problem* specific_problem, struct solution* spe
 	specific_solution->mask_of_picked_sets = calloc(specific_problem->number_of_sets, sizeof(int));
 	for (int i = 0; i < specific_problem->number_of_sets; ++i)
 		specific_solution->mask_of_picked_sets[i] = 0;
-	
-	printf("\n");
 	
 	while(!stop) {
 		
@@ -48,19 +45,6 @@ void greedy_with_LUT_core(struct problem* specific_problem, struct solution* spe
 			// next element
 			current_element_index = specific_problem->sets[current_set_index].elements->data[current_element_index].index_next;
 		}
-		
-		// show remaining elements
-		for (int s = 0; s < specific_problem->number_of_sets; ++s) {
-			printf("Set %2i: ", s);
-			if (specific_problem->sets[s].index_of_root_element == -1) {
-				printf("\n");
-				continue;
-			}
-			for (int e = specific_problem->sets[s].index_of_root_element; e != -1; e = specific_problem->sets[s].elements->data[e].index_next)
-				printf("%i ", specific_problem->sets[s].elements->data[e].value);
-			printf("\n");
-		}
-		printf("\n");
 		
 		// find new cost efficient set
 		find_most_cost_efficient_set(specific_problem->sets, specific_problem->number_of_sets, &specific_problem->minimum_efficiency, &specific_problem->minimum_efficiency_set_index);		

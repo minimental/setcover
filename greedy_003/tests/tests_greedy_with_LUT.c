@@ -323,17 +323,6 @@ int greedy_with_LUT_should_return_the_indices_of_the_picked_sets(const char* pNa
 	
 	greedy_with_LUT_core(&specific_problem, &specific_solution);
 	
-	printf("\n");
-	printf("Computed solution\n");
-	printf("=================\n");
-	
-	for (int i = 0; i < 6; ++i) {
-		printf("%i ", specific_solution.mask_of_picked_sets[i]);
-		all_elements_match &= (reference_solution[i] == specific_solution.mask_of_picked_sets[i]);		
-	}
-	
-	printf("\n");
-	
 	TINYTEST_ASSERT(all_elements_match);
 	return 1;
 }
