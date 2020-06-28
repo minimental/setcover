@@ -318,7 +318,7 @@ int greedy_with_LUT_should_return_the_indices_of_the_picked_sets(const char* pNa
 	struct problem specific_problem;
 	struct solution specific_solution;
 	
-	char* path_to_file = "..\\..\\data\\sc_15_0";
+	char* path_to_file = "..\\..\\data\\sc_6_1";
 	read_problem_description_from_file(path_to_file, &specific_problem);
 	
 	greedy_with_LUT_core(&specific_problem, &specific_solution);
