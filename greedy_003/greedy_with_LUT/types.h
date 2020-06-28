@@ -48,7 +48,6 @@ struct solution {
 	int number_of_sets;
 	int number_of_sets_picked;
 	int number_of_elements;
-	int number_of_elements_picked;
-	int* indices_of_picked_sets;
+	int* mask_of_picked_sets;
 	double cost;
 };
