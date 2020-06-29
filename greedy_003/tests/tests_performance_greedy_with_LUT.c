@@ -9,7 +9,7 @@
 
 #define LENGTH_OF_FILE_NAME 260
 #define LENGTH_OF_NUMBER_OF_SETS_STRING 8
-#define MAXIMUM_NUMBER_OF_PROBLEM_SETS 10000
+#define MAXIMUM_NUMBER_OF_PROBLEM_SETS 1100000
 
 // reads all files contained in the given directory
 int readFileNamesInDirectory(char* directoryString, char** fileNames) {
@@ -123,6 +123,13 @@ int main() {
 		// set path
 		char path[LENGTH_OF_FILE_NAME + 8];
 		sprintf(path, "..\\..\\data\\%s", &(fileNames[fileIndex]));
+		
+		// TODO: remove; for debugging purposes only
+		if (!strcmp(&(path[0]), "..\\..\\data\\sc_8661_1")) {
+			printf("Ignoring `sc_8661_1'...\n");
+			fileIndex += LENGTH_OF_FILE_NAME;
+			continue;
+		}
 		
 		// create problem struct to access number of elements
 		struct problem specific_problem;
