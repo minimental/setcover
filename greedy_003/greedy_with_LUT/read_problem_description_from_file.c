@@ -87,6 +87,7 @@ void read_problem_description_from_file(const char* path, struct problem* specif
 			if (character == '\n') {					
 
 				specific_problem->sets[lineIndex].number_of_elements = element_index;
+				
 				specific_problem->sets[lineIndex].efficiency = specific_problem->sets[lineIndex].cost / specific_problem->sets[lineIndex].number_of_elements;
 				// mark last element of set
 				specific_problem->sets[lineIndex].elements->data[element_index - 1].index_next = -1;
@@ -100,8 +101,9 @@ void read_problem_description_from_file(const char* path, struct problem* specif
 				}
 				
 				isCost = 1;
-				lineIndex++;
 				element_index = 0;
+				lineIndex++;
+				
 			}
 			
 			terminatingCharacterReached = 1;

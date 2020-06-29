@@ -313,7 +313,7 @@ int find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set_aft
 }
 
 // greedy with LUT should be able to remove every element from a set
-int remove_element_from_all_sets_should_be_able_to_remove_every_element_from_a_set(const char* pName) {
+int remove_element_from_all_sets_should_be_able_to_remove_an_element_from_all_sets(const char* pName) {
 	
 	struct problem specific_problem;
 	
@@ -492,6 +492,82 @@ int greedy_with_LUT_should_compute_sc_1150_3(const char* pName) {
 	
 }
 
+// greedy with look-up table should compute a feasible solution, i.e. a choice of sets that cover all elements
+int greedy_with_LUT_core_should_compute_a_feasible_solution_for_sc_9_0(const char* pName) {
+	
+	struct problem specific_problem;
+	struct solution specific_solution;
+	
+	char* path_to_file = "..\\..\\data\\sc_9_0";
+	
+	read_problem_description_from_file(path_to_file, &specific_problem);
+	
+	// store initial number of elements in set
+	int number_of_elements_in_set[specific_problem.number_of_sets];
+	for (int s = 0; s < specific_problem.number_of_sets; number_of_elements_in_set[s++] = specific_problem.sets[s].number_of_elements);
+	
+	// initialize bit mask with covered elements
+	int element_values_covered[specific_problem.number_of_elements];
+	for(int e = 0; e < specific_problem.number_of_elements; element_values_covered[e++] = 0);
+	
+	// compute solution
+	greedy_with_LUT_core(&specific_problem, &specific_solution);
+	
+	// mark covered element values
+	for (int s = 0; s < specific_solution.number_of_sets; ++s) {
+		if (!specific_solution.mask_of_picked_sets[s]) continue;
+		for (int e = 0; e < number_of_elements_in_set[s]; ++e) {
+			element_values_covered[specific_problem.sets[s].elements->data[e].value] = 1;	
+		}
+	}
+	
+	int all_elements_covered = 1;
+	for (int e = 0; e < specific_problem.number_of_elements; ++e)
+		all_elements_covered &= element_values_covered[e];
+	
+	TINYTEST_ASSERT(all_elements_covered);
+	
+	return 1;
+}
+
+// greedy with look-up table should compute a feasible solution, i.e. a choice of sets that cover all elements
+int greedy_with_LUT_core_should_compute_a_feasible_solution_for_sc_9524_0(const char* pName) {
+	
+	struct problem specific_problem;
+	struct solution specific_solution;
+	
+	char* path_to_file = "..\\..\\data\\sc_9524_0";
+	
+	read_problem_description_from_file(path_to_file, &specific_problem);
+	
+	// store initial number of elements in set
+	int number_of_elements_in_set[specific_problem.number_of_sets];
+	for (int s = 0; s < specific_problem.number_of_sets; number_of_elements_in_set[s++] = specific_problem.sets[s].number_of_elements);
+	
+	// initialize bit mask with covered elements
+	int element_values_covered[specific_problem.number_of_elements];
+	for(int e = 0; e < specific_problem.number_of_elements; element_values_covered[e++] = 0);
+	
+	// compute solution
+	greedy_with_LUT_core(&specific_problem, &specific_solution);
+	
+	// mark covered element values
+	for (int s = 0; s < specific_solution.number_of_sets; ++s) {
+		if (!specific_solution.mask_of_picked_sets[s]) continue;
+		for (int e = 0; e < number_of_elements_in_set[s]; ++e) {
+			element_values_covered[specific_problem.sets[s].elements->data[e].value] = 1;	
+		}
+	}
+	
+	int all_elements_covered = 1;
+	for (int e = 0; e < specific_problem.number_of_elements; ++e)
+		all_elements_covered &= element_values_covered[e];
+	
+	TINYTEST_ASSERT(all_elements_covered);
+	
+	return 1;
+}
+
 
 TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	
@@ -503,7 +579,7 @@ TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_remove_an_element_from_all_sets, NULL, NULL);
 	TINYTEST_ADD_TEST(find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set, NULL, NULL);
 	TINYTEST_ADD_TEST(find_most_cost_efficient_set_should_identify_the_most_cost_efficient_set_after_removal_of_multiple_values, NULL, NULL);
-	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_be_able_to_remove_every_element_from_a_set, NULL, NULL);
+	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_be_able_to_remove_an_element_from_all_sets, NULL, NULL);
 	TINYTEST_ADD_TEST(remove_element_from_all_sets_should_remove_only_one_element_if_called_twice_on_the_same_element, NULL, NULL);
 	TINYTEST_ADD_TEST(greedy_with_LUT_core_should_return_the_indices_of_the_picked_sets, NULL, NULL);
 	TINYTEST_ADD_TEST(greedy_with_LUT_should_accept_a_path_as_input_string_and_return_the_solution_output_string, NULL, NULL);
@@ -513,6 +589,8 @@ TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_135_0, NULL, NULL);
 	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_192_0, NULL, NULL);
 	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_1150_3, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_core_should_compute_a_feasible_solution_for_sc_9_0, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_core_should_compute_a_feasible_solution_for_sc_9524_0, NULL, NULL);
 	
 TINYTEST_END_SUITE();
 
