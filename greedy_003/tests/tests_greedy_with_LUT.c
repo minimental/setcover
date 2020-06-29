@@ -421,11 +421,6 @@ int greedy_with_LUT_should_compute_sc_27_0(const char* pName) {
 	
 	greedy_with_LUT(path_to_file, &output);
 	
-	printf("\n");
-	printf("Test 13\n");
-	printf("=======\n");
-	printf("%s\n", output);
-	
 	TINYTEST_ASSERT(1);
 	
 	return 1;
@@ -438,11 +433,6 @@ int greedy_with_LUT_should_compute_sc_45_0(const char* pName) {
 	char* output;
 	
 	greedy_with_LUT(path_to_file, &output);
-	
-	printf("\n");
-	printf("Test 14\n");
-	printf("=======\n");
-	printf("%s\n", output);
 	
 	TINYTEST_ASSERT(1);
 	
@@ -457,11 +447,6 @@ int greedy_with_LUT_should_compute_sc_81_0(const char* pName) {
 	
 	greedy_with_LUT(path_to_file, &output);
 	
-	printf("\n");
-	printf("Test 15\n");
-	printf("=======\n");
-	printf("%s\n", output);
-	
 	TINYTEST_ASSERT(1);
 	
 	return 1;
@@ -475,10 +460,18 @@ int greedy_with_LUT_should_compute_sc_135_0(const char* pName) {
 	
 	greedy_with_LUT(path_to_file, &output);
 	
-	printf("\n");
-	printf("Test 16\n");
-	printf("=======\n");
-	printf("%s\n", output);
+	TINYTEST_ASSERT(1);
+	
+	return 1;
+	
+}
+
+int greedy_with_LUT_should_compute_sc_192_0(const char* pName) {
+	
+	char* path_to_file = "..\\..\\data\\sc_192_0";
+	char* output;
+	
+	greedy_with_LUT(path_to_file, &output);
 	
 	TINYTEST_ASSERT(1);
 	
@@ -486,26 +479,22 @@ int greedy_with_LUT_should_compute_sc_135_0(const char* pName) {
 	
 }
 
-int greedy_with_LUT_should_compute_sc_157_0(const char* pName) {
+int greedy_with_LUT_should_compute_sc_1150_3(const char* pName) {
 	
-	char* path_to_file = "..\\..\\data\\sc_157_0";
+	char* path_to_file = "..\\..\\data\\sc_1150_3";
 	char* output;
 	
 	greedy_with_LUT(path_to_file, &output);
 	
-	printf("\n");
-	printf("Test 17\n");
-	printf("=======\n");
-	printf("%s\n", output);
-	
 	TINYTEST_ASSERT(1);
 	
-	return 1;
+	return 1;	
 	
 }
 
 
 TINYTEST_START_SUITE(GREEDY_WITH_LUT);
+	
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_number_of_elements_and_number_of_sets, NULL, NULL);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_element_value_table, NULL, NULL);
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_cost_efficiency, NULL, NULL);
@@ -522,7 +511,9 @@ TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_45_0, NULL, NULL);
 	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_81_0, NULL, NULL);
 	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_135_0, NULL, NULL);
-	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_157_0, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_192_0, NULL, NULL);
+	TINYTEST_ADD_TEST(greedy_with_LUT_should_compute_sc_1150_3, NULL, NULL);
+	
 TINYTEST_END_SUITE();
 
 TINYTEST_START_MAIN();

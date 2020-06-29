@@ -20,7 +20,7 @@ void read_problem_description_from_file(const char* path, struct problem* specif
 	specific_problem->minimum_efficiency = (float) 0x7f7fffff;
 	
 	// allocate and initialize set array
-	specific_problem->sets = calloc(number_of_elements, sizeof(struct set));
+	specific_problem->sets = calloc(number_of_sets, sizeof(struct set));
 	for (int i = 0; i < number_of_sets; ++i) {
 		specific_problem->sets[i].index_of_root_element = 0;
 		specific_problem->sets[i].elements = malloc(sizeof(struct dynamic_array_element));
@@ -34,7 +34,6 @@ void read_problem_description_from_file(const char* path, struct problem* specif
 	
 	int character;
 	int lineIndex = 0;
-	int number_of_elementsPerSet = 0;
 	int isCost = 1;
 	int characterIndex = 0;
 	int terminatingCharacterReached = 0;
@@ -42,22 +41,27 @@ void read_problem_description_from_file(const char* path, struct problem* specif
 	int element_value;
 	int element_index = 0;
 	
+	int character_count = 0;
+	
 	// skipping a line break followed by a call to `fscanf()'
 	fgetc(file);
 	
 	// read file character-wise
 	while ((character = fgetc(file)) != EOF) {
+		
 		// ignore 0xD (carriage return)
-		if (character == 0xD) continue;
+		if (character == 0xD) continue;	
+		
 		// terminating character found
-		if ((character == ' ') || (character == '\n')) {
+		if ((character == ' ') || (character == '\n')) {				
 			
-			// handle mulitple white spaces and white space + line break			
+			// handle multiple white spaces and white space + line break			
 			if (!terminatingCharacterReached) {
 				if (isCost) {
 					string[characterIndex] = 0;
 					specific_problem->sets[lineIndex].cost = atof(&(string[0]));
-					isCost = 0;
+					isCost = 0;					
+					
 				}
 				else {
 					string[characterIndex] = 0;
@@ -81,8 +85,9 @@ void read_problem_description_from_file(const char* path, struct problem* specif
 				
 			// reset character index
 			characterIndex = 0;
+			
 			// line break found
-			if (character == '\n') {
+			if (character == '\n') {					
 
 				specific_problem->sets[lineIndex].number_of_elements = element_index;
 				specific_problem->sets[lineIndex].efficiency = specific_problem->sets[lineIndex].cost / specific_problem->sets[lineIndex].number_of_elements;
@@ -97,7 +102,6 @@ void read_problem_description_from_file(const char* path, struct problem* specif
 					specific_problem->minimum_efficiency = specific_problem->sets[lineIndex].efficiency;
 				}
 				
-				number_of_elementsPerSet = 0;
 				isCost = 1;
 				lineIndex++;
 				element_index = 0;
@@ -105,10 +109,12 @@ void read_problem_description_from_file(const char* path, struct problem* specif
 			
 			terminatingCharacterReached = 1;
 			continue;
-		}
+		}		
+		
 		// append character to cost/element string
 		string[characterIndex++] = (char) character;
-		terminatingCharacterReached = 0;
+		terminatingCharacterReached = 0;		
+		
 	}
 	
 	// deal with file not ending with line break
