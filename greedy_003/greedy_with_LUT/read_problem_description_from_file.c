@@ -2,10 +2,7 @@
 #include <stdlib.h>
 
 #include "types.h"
-
-// function declarations I had to explicitly state, since re-declarations in header files occured :(
-void initialize(struct dynamic_array_index_pair* array);
-void initialize_element(struct dynamic_array_element* array);
+#include "functions.h"
 
 void read_problem_description_from_file(const char* path, struct problem* specific_problem) {
 	FILE* file = fopen(path, "r");
