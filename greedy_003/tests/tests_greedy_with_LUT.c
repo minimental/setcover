@@ -568,7 +568,6 @@ int greedy_with_LUT_core_should_compute_a_feasible_solution_for_sc_9524_0(const 
 	return 1;
 }
 
-
 TINYTEST_START_SUITE(GREEDY_WITH_LUT);
 	
 	TINYTEST_ADD_TEST(read_problem_description_from_file_should_store_number_of_elements_and_number_of_sets, NULL, NULL);
