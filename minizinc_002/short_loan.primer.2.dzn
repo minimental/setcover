@@ -1,0 +1,9 @@
+/*
+ * Second problem:
+ * If I borrow 1000 AUD at 4% interest rate.
+ * And if I want to owe nothing at the end of the year.
+ * How much do I need to repay?
+ */
+P = 1000;
+I = 0.04;
+B4 = 0;

@@ -1,0 +1,8 @@
+/*
+ * Third problem:
+ * If I can repay 250 AUD every quarter.
+ * How much can I borrow at 4% to end up owing nothing?
+ */
+R = 250;
+I = 0.04;
+B4 = 0;

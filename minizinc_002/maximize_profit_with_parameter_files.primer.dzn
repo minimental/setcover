@@ -1,0 +1,24 @@
+flour_availability = 10001;
+banana_availability = 55;
+sugar_availability = 8500;
+butter_availability = 1600;
+cocoa_availability = 2000;
+
+/*
+ * Recipe 1 (banana cake)
+ * ----------------------
+ * 250 g   flour (24)
+ * 2   pcs banana (27)
+ * 75  g   sugar (100+)
+ * 100 g   butter (16)
+ *
+ * Recipe 2 (chocolate cake)
+ * -------------------------
+ * 200 g   flour (30)
+ * 75  g   cocoa (26)
+ * 150 g   sugar (50+)
+ * 150 g   butter (10)
+ */
+
+maximum_number_of_banana_cakes = 16;
+maximum_number_of_chocolate_cakes = 10;

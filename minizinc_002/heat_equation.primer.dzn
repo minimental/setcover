@@ -1,0 +1,6 @@
+h = 5;
+w = 5;
+left = 0;
+right = 0;
+lower = 0;
+upper = 1;
