@@ -1,0 +1,6 @@
+Products = { bananaCake, chocolateCake };
+Resources = { flour, sugar, butter, banana, cocoa };
+profit = [40, 45];
+capacity = [4000, 2000, 500, 6, 500];
+consumption = [| 250, 75, 100, 2, 0 |
+			     200, 150, 150, 0, 75 |];
