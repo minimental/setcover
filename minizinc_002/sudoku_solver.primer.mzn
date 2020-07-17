@@ -13,9 +13,14 @@
  % include global constraint
  include "alldifferent.mzn";
  
+ int: number_of_squares = 9;
+ int: number_of_subsquares = 3;
+ 
+ set of int: range_of_digits = 1..9;
+ 
  % board with intial state
- array[1..9, 1..9] of 0..9: initial_state;
- array[1..9, 1..9] of var 1..9: board;
+ array[range_of_digits, range_of_digits] of 0..9: initial_state;
+ array[range_of_digits, range_of_digits] of var range_of_digits: board;
  
  /*
   * C O N S T R A I N T S
@@ -29,13 +34,13 @@
   */
   
   % constraint: fixed entries of initial state
-  constraint forall (i,j in 1..9 where initial_state[i,j] != 0) (board[i,j] = initial_state[i,j]);
+  constraint forall (i,j in range_of_digits where initial_state[i,j] != 0) (board[i,j] = initial_state[i,j]);
   
   % constraint: all row entries pairwise different
-  constraint forall(i in 1..9) (alldifferent([board[i,j] | j in 1..9]));
+  constraint forall(i in range_of_digits) (alldifferent([board[i,j] | j in 1..9]));
   
   % constraint: all column entries pairwise different
-  constraint forall(j in 1..9) (alldifferent([board[i,j] | i in 1..9]));
+  constraint forall(j in range_of_digits) (alldifferent([board[i,j] | i in 1..9]));
   
   % constraint: all subsquare entries must be pairwise different
   constraint forall (k,l in 0..2) (alldifferent([board[i + k*3, j + l*3] | i,j in 1..3])); 
@@ -43,23 +48,17 @@
   % solver mode
   solve satisfy;
   
-  output 
-    [if initial_state[1,j] != 0 then "\(initial_state[1,j]) " else "  " endif | j in 1..9] ++ ["\n"] ++
-	[if initial_state[2,j] != 0 then "\(initial_state[2,j]) " else "  " endif | j in 1..9] ++ ["\n"] ++
-	[if initial_state[3,j] != 0 then "\(initial_state[3,j]) " else "  " endif | j in 1..9] ++ ["\n"] ++
-	[if initial_state[4,j] != 0 then "\(initial_state[4,j]) " else "  " endif | j in 1..9] ++ ["\n"] ++
-	[if initial_state[5,j] != 0 then "\(initial_state[5,j]) " else "  " endif | j in 1..9] ++ ["\n"] ++
-	[if initial_state[6,j] != 0 then "\(initial_state[6,j]) " else "  " endif | j in 1..9] ++ ["\n"] ++
-	[if initial_state[7,j] != 0 then "\(initial_state[7,j]) " else "  " endif | j in 1..9] ++ ["\n"] ++
-	[if initial_state[8,j] != 0 then "\(initial_state[8,j]) " else "  " endif | j in 1..9] ++ ["\n"] ++
-	[if initial_state[9,j] != 0 then "\(initial_state[9,j]) " else "  " endif | j in 1..9] ++ ["\n"] ++
-	["\n"] ++
-	["\(board[1, j]) " | j in 1..9] ++ ["\n"] ++
-	["\(board[2, j]) " | j in 1..9] ++ ["\n"] ++
-	["\(board[3, j]) " | j in 1..9] ++ ["\n"] ++
-	["\(board[4, j]) " | j in 1..9] ++ ["\n"] ++
-	["\(board[5, j]) " | j in 1..9] ++ ["\n"] ++
-	["\(board[6, j]) " | j in 1..9] ++ ["\n"] ++
-	["\(board[7, j]) " | j in 1..9] ++ ["\n"] ++
-	["\(board[8, j]) " | j in 1..9] ++ ["\n"] ++
-	["\(board[9, j]) " | j in 1..9]
+  output [
+	"\(board[i,j])" 
+	++ 
+	if j mod number_of_subsquares == 0
+		then if j == number_of_squares then 
+			if i mod number_of_subsquares == 0 then "\n\n" else "\n" endif
+		else
+			"  "
+		endif
+	else
+		" "
+	endif
+    | i,j in range_of_digits 
+  ]
