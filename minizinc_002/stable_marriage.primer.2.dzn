@@ -1,0 +1,25 @@
+WOMEN = {woman};
+MEN = {man_1, man_2};
+
+% If there's only one woman and two man.
+% The woman does not care about neither of them.
+% But one man favors her (man_1) while the other does not (man_2).
+% Then the bit of favor makes the difference and the woman and man_1 make a (stable) match.
+
+% But it turns out that this parameterization does not work.
+% Is the model inconsistent, as claimed?
+% Try to solve it yourself.
+% What about the base constraint?
+%
+% Let mens_choice = [woman, woman]
+%
+% Here, the problem uncovers:
+%
+% We need the same number of men and women.
+
+rank_of_women = [|0, 0|];
+
+rank_of_men = [|
+	9 |
+	0
+|];

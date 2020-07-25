@@ -1,0 +1,28 @@
+% A bit more interesting than the first are two jobs where the first drills holes and trims them, where the second drills holes, makes threads, and then trims them.
+% How would you intuitively schedule such two jobs in your production?
+% You probably start with the job just drilling the holes
+% After the holes are drilled you would start the longer job which includes making threads
+% Which leaves you with an end time of the longer job + waiting time for drilling which accounts for 9 time units
+%
+% Oops.
+%
+% Both jobs start with drilling. x(
+% Thought I took of non-overlapping tasks..?!
+%
+% Mixed up indices, alright.
+% But why does it only take 8 time units..?!
+%
+% Wait, this is interesting:
+%
+% 1st job: iiddiiit
+% 2nd job: ddttttti
+%
+% So my intuition was wrong: It is the more time costly job which starts, runs through, while the other waits, if required.
+% Duh!
+
+JOB = {holes, threads};
+TASK = {drill_hole, make_thread, trim};
+task_duration = [|
+	2, 0, 1 |
+	2, 4, 1 
+|]

@@ -1,0 +1,9 @@
+WOMEN = {woman};
+MEN = {man};
+
+% If there's only one woman and one man, it does not matter if they favor each other.
+% They're the perfect (only) match.
+
+rank_of_women = [|0|];
+
+rank_of_men = [|0|];

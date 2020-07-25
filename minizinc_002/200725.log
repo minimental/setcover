@@ -1,0 +1,28 @@
+0 - unsatisfiable
+Reason: if you choose s_0 = 0, this is wrong. Since index 0 is used once, not (not at all).
+        if you choose s_0 = 1, this is wrong. Since index 0 is used not at all, not once.
+		if you choose s_0 = 2, this is wrong. Since index 0 is used not at all, not once.
+		...
+(0, 0) - wrong: index 0 is used twice, not (not at all)
+(1, 0) - wrong: index 1 is used once, not (not at all)
+(1, 1) - wrong: index 0 is used not at all, not once.
+(0, 1) - wrong: index 0 is used once, not (not at all).
+Every other combination needs digits greater than 1. But these are not included.
+
+(0, 0, 0) - wrong
+(2, 0, 0) - wrong: index 2 is used once, not (not at all)
+(2, 0, 1) - wrong: index 0 is used once, not twice.
+(1, 0, 1) - wrong: index 1 is used twice, not (not at all)
+(1, 2, 1) - wrong: index 0 is used not at all, not once.
+Is 2 possible at all?
+It is not possible for 0, since (2, 0, 0) is the only possible permutation, and wrong.
+Is it possible for 1? Then (1, 2, 1) which is wrong, since there is no 0 involved.
+Is it possible for 2? No, since this exceeds the number of items
+Is 1 possible at all?
+0: (1, 0, 1) - wrong, index 1 is used twice.
+0: (1, 1, 0) - wrong, index 1 is used twice.
+And since 0 is not possible for index 0, since that would contradict the fact that it is used once, three indices are unsatisfiable.
+
+(*, 0, 0, 0) - * must be 3. Which is wrong, since it is claimed that there is no `3' involved.
+(1, 3, 1, 1) - wrong, since there is no 0 included.
+(1, 2, 1, 0) - oops.. found a solution by accident.

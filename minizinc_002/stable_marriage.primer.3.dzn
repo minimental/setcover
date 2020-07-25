@@ -1,0 +1,20 @@
+WOMEN = {woman_1, woman_2};
+MEN = {man_1, man_2};
+
+% There are two women, and two men.
+% Woman 1 favors man 1, and man 1 favors woman 1.
+% Woman 2 favors man 2, and man 2 favors woman 2.
+% Woman 1 does not care about man 2, and man 2 does not care about woman 1.
+% Woman 2 does not care about man 1, and man 1 does not care about woman 2.
+%
+% Match is: (woman 1, man 1) and (woman 2, man 2)
+
+rank_of_women = [|
+	1, 0 |
+	0, 1
+|];
+
+rank_of_men = [|
+	1, 0 |
+	0, 1
+|];
