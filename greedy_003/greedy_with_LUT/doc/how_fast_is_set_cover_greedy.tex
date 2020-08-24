@@ -1,0 +1,51 @@
+At the time of this writing, coursera.org offers the course ''Discrete Optimization´´ of Professor Pascal Van Hentenryck and Dr Carleton Coffrin.
+Topic of week three is ''Constraint Programming´´ where a Practice Programming Assignment deals with the set cover problem.
+For a given set of integer tuples that vary in length and a positive integer N, the student has to choose tuples s.t. all integers in the range 0..N are covered.
+As an example, assume N=2, and the set of integer tuples is given as {(0, 1), (1), (2), (0), (0, 1, 2)}.
+Then a solution would be to choose (0, 1) and (2).
+Another solution would be to choose (0, 1) and (0, 1, 2).
+Yet another solution would be to choose (0), (1), (2).
+And the simplest solution would be to simply choose (0, 1, 2).
+Now associate a cost to any such set.
+E.g. say every tuple has cost 1.
+What would be the cheapest solution? 
+The solution with the least number of tuples.
+Here, it is (0, 1, 2) with a cost of 1.
+Solution (0, 1), (1), and (2) has a cost of 3.
+That's the task of the set cover problem:
+Given a set of tuples with a cost associated to each, find the set of tuples that covers 0..N with minimal cost.
+You can do whatever you want to solve this problem.
+As long as you solve it.
+You may use brute force, you may ask the web, you may use black magic, you may invent a totally new algorithm, or you may just rely on what's already known and use it or re-implement it.
+For self-educational purposes, for curiosity, and for a bit of nostalgia, I re-implemented known patterns.
+The first thing I've found was the greedy algorithm.
+The greedy algorithm chooses, as its name suggests, always the tuple that has the most elements at the lowest price.
+I.e. it chooses the tuple with the lowest cost per element.
+E.g. assume you had to choose between tuple (3, 12, 114, 115) with cost 1 and tuple (2, 27, 66, 205, 207, 290, 340) with cost 2.
+Then the greedy algorithm would choose the first tuple, since its per-element-cost 1/4 = 0.25 is lower than 2/7 = 0.28... 
+The full greedy algorithm for the weighted set cover problem goes something like this:
+
+(1) Start with an empty set, cost 0, and an empty list of chosen tuples.
+(2) Compute the per-element-cost of all the tuples.
+(3) Find the one with the lowest per-element cost.
+(4) Add the tuple index to the list of chosen tuples.
+(5) Add the elements of this tuple to the set U.
+(5) Add the cost of the chosen tuple to the current cost.
+(6) Is the number of elements in U equal to N? If yes, stop and return cost and list of chosen tuples.
+(6) Remove the elements of this tuple from the other tuples, and go to (2)
+
+I implemented this algorithm in C. 
+It took me very long and it was painful.
+I started off on NOV 24 2019 with implementing the difference function, and finalized tests on the greedy algorithm on Feb 23 2020.
+It was only in APR 20 2020, when I found out that the time complexity of the greedy algorithm the way I implemented it was cubic in the number of sets, given that the number of tuples equals the number of integers N.
+While this is considered polynomial behavior and as such computationally no collateral damage, it is still slow.
+Where ''slow´´ means that problems with more than 1000 number of tuples take more than 1 minute to compute.
+This was unsatisfactory.
+Especially since the full problem set goes up to 1 Million tuples.
+No way I could tackle this with an algorithm of cubic behvaior that starts to bail out having more than 1000 tuples involved.
+So I went back to Stack Overflow, asking for a more efficient implementation.
+And I've found one.
+Written in Pyhton.
+But the important part was that it could be done.
+So I started from scratch in C again, following an all different programming approach for the very same greedy algorithm.
+It was a groundbreaking experience to see that the same algorithm, programmed in a different fashion, using up more memory, would now have quadratic time complexity behavior, given that the number of tuples equals the number of elements involved.
