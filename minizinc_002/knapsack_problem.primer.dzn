@@ -1,0 +1,6 @@
+ITEMS = anon_enum(4);
+capacity = 17;
+maximum_value = 20;
+maximum_weight = 8;
+value = [20, 7, 3, 13];
+weight = [6, 4, 1, 8];
