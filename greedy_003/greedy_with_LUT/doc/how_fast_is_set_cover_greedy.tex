@@ -37,7 +37,7 @@ The full greedy algorithm for the weighted set cover problem goes something like
 I implemented this algorithm in C. 
 It took me very long and it was painful.
 I started off on NOV 24 2019 with implementing the difference function, and finalized tests on the greedy algorithm on Feb 23 2020.
-It was only in APR 20 2020, when I found out that the time complexity of the greedy algorithm the way I implemented it was cubic in the number of sets, given that the number of tuples equals the number of integers N.
+It was only in APR 20 2020, when I found out that the time complexity of the greedy algorithm the way I implemented it was cubic in the number of tuples, given that the number of tuples equals the number of integers N.
 While this is considered polynomial behavior and as such computationally no collateral damage, it is still slow.
 Where ''slow´´ means that problems with more than 1000 number of tuples take more than 1 minute to compute.
 This was unsatisfactory.
@@ -49,3 +49,69 @@ Written in Pyhton.
 But the important part was that it could be done.
 So I started from scratch in C again, following an all different programming approach for the very same greedy algorithm.
 It was a groundbreaking experience to see that the same algorithm, programmed in a different fashion, using up more memory, would now have quadratic time complexity behavior, given that the number of tuples equals the number of elements involved.
+
+Above, it says "the time complexity of the greedy algorithm (...) was cubic in the number of tuples".
+Can you prove this statement?
+Somebody else already did:
+
+Cormen, Leiserson, Rivest, Stein: "Introduction to Algorithms" (3e), page 1119, last paragraph of section A greedy approximation algorithm
+
+"
+We can easily implement GREEDY-SET-COVER to run in time polynomial in |X|
+and |F|. Since the number of iterations of the loop on lines 3–6 is bounded from
+above by min(|X|, |F|), and we can implement the loop body to run in time
+O(|X||F|), a simple implementation runs in time O(|X||F| min(|X|, |F|)). Exercise
+35.3-3 asks for a linear-time algorithm.
+"
+
+Exercise 35.3-3 (p. 1122):
+
+"
+Show how to implement GREEDY-SET-COVER in such a way that it runs in time O (sum_{S \in F} |S|).
+"
+
+Hmm..
+this starts getting complicated.
+Let's try to tidy up things a bit.
+What does "cubic in the number of tuples" mean?
+It means when you count the number of tuples, and multiply it with itself, and then again.
+Then, by a factor, you'll get the number of seconds required to compute the whole thing.
+
+E.g. assume you have 4 tuples.
+Multiply it with itself: 16.
+Multiply it with 4 again: 64.
+Then the algorithm will take (64 * factor) seconds to compute.
+Where `factor' depends on the machine you're using, e.g. factor = 10^-9.
+Then it would take the computation 64 * 10^-9 seconds.
+You can get this factor by running the algorithm, measure the time, and then solve for the factor:
+
+computation time = 64 * factor
+
+Measure the computation time, then solve for factor:
+
+factor = 64 * (computation time)^-1
+
+But this requires that `64' is correct. :D
+Why are the number of iterations of the loop on lines 3-6 bounded from above by min(|X|, |F|)?
+The maximum number of iterations is the number of tuples: |F|
+That's because the union of all tuples must, by definition, include all elements.
+I.e. in the worst case, from a computation time standpoint, the last elements that make up the problem set are included in the last tuple.
+Hmm..
+..doesn't sound convincing to me.
+What if the problem only contains one tuple?
+Then only one iteration is required.
+What if |X| < |F|?
+Then there are more tuples than elements.
+So what?
+Then we could still have the situation that only the last tuple contains the missing element:
+
+Overall set: {o, oo}
+
+tuple 1: (o)
+tuple 2: (o)
+...
+tuple 1042: (o)
+tuple 1043: (oo)
+
+Then we would still have to iterate over all the 1043 tuples.
+ 

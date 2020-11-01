@@ -1,0 +1,43 @@
+Erstmal muss man untersuchen, was man zu tun hat.
+Ganz grob:
+
+Solange nicht alle Elemente gefunden wurden, tu Folgendes:
+Tu die billigste Menge in die Sammelmenge.
+
+Das dürfte so mit die knappste Beschreibung von `set cover' sein.
+Was schon mal klar sein dürfte:
+Im blödsten Fall gibt es so viele billigste Mengen wie es Einzelmengen gibt.
+Einfaches Beispiel:
+
+{1}
+{2}
+{3}
+
+Alle Mengen sind gleich teuer.
+Deshalb wird die jeweils letzte genommen, deren Preis bestimmt wurde.
+Um alle Elemente abzudecken, muss jede Menge berücksichtigt werden.
+D.h. es gibt (mindestens) einen Fall, den eben gezeigten/konstruierten, für den gilt, dass die Anzahl zuzufügender, billigster Mengen, gerade der Anzahl der Gesamtmengen entspricht.
+
+D.h. im blödsten Fall musst du den Aufwand für "Tu die billigste Menge in die Sammelmenge" so oft treiben, wie es Einzelmengen gibt.
+
+Welchen Aufwand muss man denn treiben für "Tu die billigste Menge in die Sammelmenge"?
+"Tu die billigste Menge in die Sammelmenge" beinhaltet folgende Einzelschritte:
+
+1. Bestimme das Preis/Anzahl-Verhältnis für jede verbliebene Menge.
+2. Merk dir die billigste.
+3. Tu die billigste zur Sammelmenge.
+4. Entferne die Elemente der billigsten Menge aus den verbliebenen Mengen.
+
+Dabei muss man Schritte 3 und 4 weiter aufdröseln:
+Schritt (3) ist die Vereinigung von zwei Mengen.
+Schritt (4) ist die Differenz von zwei Mengen.
+
+Wieviel (Zeit) kostet die Vereinigung von zwei Mengen? Es gibt Verfahren, die schaffen das in einer Zeit proportional zur Anzahl der Elemente.
+Wieviel (Zeit) kostet die Differenz von zwei Mengen? Es gibt Verfahren, die schaffen das in einer Zeit proportional zur Anzahl der Elemente.
+
+D.h. im blödsten Fall haben wir folgenden Aufwand:
+
+M * (M + N + M * N)
+
+Mehr ist es doch nicht, oder?
+Wie kam ich zu dem Schluss, dass der Aufwand kubisch in der Anzahl der Einzelmengen sein kann?
