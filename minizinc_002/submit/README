@@ -1,0 +1,13 @@
+This directory contains files and directory needed to pass through Coursera's `Discrete Optimization' course of week 3 `Constraint Programming', optional assignment `Set Cover'.
+
+Type
+
+python submit.py
+
+in a command prompt that associates the command `python' with a python interpreter executable, version 3.x.
+
+You will get a score of 45/60.
+Problem 2 (sc_330_0) is solved using MiniZinc/COIN-BC, and an adaption of the constraint programming model given in directory `minizinc_001' in the Git repo of discrete optimization (weight: 23, score: 10/10).
+The other problems are solved using a homebrew implementation of a performant version of the greedy algorithm. (score: 7/10)
+It solves the problem in time proportional to the sum of all elements in all the sets.
+
