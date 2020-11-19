@@ -29,18 +29,18 @@ int search_engine_should_accept_problem_description_and_maximum_cost_as_paramete
 	return 1;
 }
 
-int search_engine_returns_111110_for_sc_6_1_with_no_cost_limit() {
-	double cost_limit = 6.0;
+int search_engine_returns_000011_for_sc_6_1() {
+	double cost_limit = specific_solution.cost;
 	struct solution candidate;
 	search_engine(&specific_problem, cost_limit, &candidate);
-	if (candidate.number_of_sets_picked == 5)
+	if (candidate.number_of_sets_picked == 2)
 		return 1;
 	return 0;
 }
 
 TINYTEST_START_SUITE(SEARCH_ENGINE);
-	TINYTEST_ADD_TEST(search_engine_should_accept_problem_description_and_maximum_cost_as_parameters, NULL, NULL);
-	TINYTEST_ADD_TEST(search_engine_returns_111110_for_sc_6_1_with_no_cost_limit, NULL, NULL);
+	// TINYTEST_ADD_TEST(search_engine_should_accept_problem_description_and_maximum_cost_as_parameters, NULL, NULL);
+	TINYTEST_ADD_TEST(search_engine_returns_000011_for_sc_6_1, setup_greedy_solution_6_1, NULL);
 TINYTEST_END_SUITE();
 
 TINYTEST_MAIN_SINGLE_SUITE(SEARCH_ENGINE);
