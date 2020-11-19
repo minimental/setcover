@@ -9,9 +9,9 @@
  *  
  */
  
-#include "..\greedy_with_LUT\types.h"
+#include "search_engine.h"
 
-int constraint_store(const struct problem *specific_problem, const int *candidate) {
+int constraint_store(const struct problem *specific_problem, const struct solution *specific_solution) {
 	
 	int M, N, set_index;
 	int element_included;
@@ -31,7 +31,7 @@ int constraint_store(const struct problem *specific_problem, const int *candidat
 			set_index = specific_problem->element_value_table[e].data[s].set_index;
 			
 			// at least one set includes e; exit loop
-			if (candidate[set_index]) {
+			if (specific_solution->mask_of_picked_sets[set_index]) {
 				element_included = 1;
 				break;
 			}

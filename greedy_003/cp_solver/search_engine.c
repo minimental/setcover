@@ -22,38 +22,35 @@ int depth_first_search(int depth, double cost_limit, struct solution *candidate,
 	// for debugging purposes
 	printf("dfs (depth = %i): %s\n", depth, convert_binary_integer_array_to_character_array(candidate->mask_of_picked_sets, specific_problem->number_of_sets));
 	
-	// base case: reached the leaves of the search tree
-	if (depth == specific_problem->number_of_sets)
-		return 1;
-	
-	// base case: cost exceeds limit
 	if (candidate->cost >= cost_limit)
-		return 0;
+		return 0; /* prune */
 	
-	// choose current set
+	// leaf
+	if (depth == specific_problem->number_of_sets)
+		if (constraint_store(specific_problem, candidate))
+			return 1; /* new solution found */
+		else
+			return 0;
+	
+	// go the `1' way
 	candidate->mask_of_picked_sets[depth] = 1;
 	++(candidate->number_of_sets_picked);
-	candidate->cost += specific_problem->sets[depth].cost;
-	
-	// recursive call
-	if (!depth_first_search(depth + 1, cost_limit, candidate, specific_problem)) {
-		
-		// wrong turn: remove picked set
-		candidate->mask_of_picked_sets[depth] = 0;
-		--(candidate->number_of_sets_picked);
-		candidate->cost -= specific_problem->sets[depth].cost;
-		depth_first_search(depth + 1, cost_limit, candidate, specific_problem);
-		
-	}
-		
-	// base case: cost below limit
-	return 1;
+	candidate->cost += specific_problem->sets[depth].cost;		
+	if (depth_first_search(depth + 1, cost_limit, candidate, specific_problem))
+		return 1;
+
+	// go the `0' way
+	candidate->mask_of_picked_sets[depth] = 0;
+	--(candidate->number_of_sets_picked);
+	candidate->cost -= specific_problem->sets[depth].cost;		
+	return depth_first_search(depth + 1, cost_limit, candidate, specific_problem);
 		
 }
 
 void search_engine(const struct problem *specific_problem, double cost_limit, struct solution *candidate) {
 	
 	// find new solution candidate
-	depth_first_search(0, cost_limit, candidate, specific_problem);
+	if (depth_first_search(0, cost_limit, candidate, specific_problem))
+		printf("New solution found.\n");
 	
 }
