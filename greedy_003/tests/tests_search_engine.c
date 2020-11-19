@@ -1,6 +1,6 @@
 /*
  * Compile with:
- * gcc -o tests_search_engine.exe tests_search_engine.c ..\cp_solver\search_engine.c ..\greedy_with_LUT\read_problem_description_from_file.c ..\greedy_with_LUT\greedy_with_LUT_core.c ..\greedy_with_LUT\dynamic_array_element.c ..\greedy_with_LUT\dynamic_array_index_pair.c ..\greedy_with_LUT\remove_element_from_all_sets.c ..\greedy_with_LUT\find_most_cost_efficient_set.c
+ * gcc -o tests_search_engine.exe tests_search_engine.c ..\cp_solver\search_engine.c ..\cp_solver\constraint_store.c ..\greedy_with_LUT\read_problem_description_from_file.c ..\greedy_with_LUT\greedy_with_LUT_core.c ..\greedy_with_LUT\dynamic_array_element.c ..\greedy_with_LUT\dynamic_array_index_pair.c ..\greedy_with_LUT\remove_element_from_all_sets.c ..\greedy_with_LUT\find_most_cost_efficient_set.c
  */
 
 #include "tinytest.h"
