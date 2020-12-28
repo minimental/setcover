@@ -2,6 +2,7 @@
 
 #include "dynamic_array_index_pair.h"
 
+/* dynamically sized array; doubles size if added element exceeds capacity; elements are index pairs */
 void _double_capacity(struct dynamic_array_index_pair* array) {
 	struct index_pair* extended_data = calloc(2 * array->capacity, sizeof(struct index_pair));		
 	for (int i = 0; i < array->capacity; ++i)

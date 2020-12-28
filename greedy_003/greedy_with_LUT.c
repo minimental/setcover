@@ -4,6 +4,7 @@
 #include "types.h"
 #include "functions.h"
 
+/* converts 6 into 110 */
 char* convert_binary_integer_array_to_character_array(int* binary_integer_array, int number_of_elements) {
 	
 	char* converted_array = calloc(2 * number_of_elements + 1, sizeof(char));
@@ -18,6 +19,7 @@ char* convert_binary_integer_array_to_character_array(int* binary_integer_array,
 	return converted_array;
 }
 
+/* given a path to the problem file, solves the problem and writes the results to the referenced output string */
 void greedy_with_LUT(const char* path, char** output) {
 	
 	struct problem specific_problem;

@@ -1,5 +1,6 @@
 #include "types.h"
 
+/* from the given sets, finds the set with the least cost/(number of elements ratio) */
 void find_most_cost_efficient_set(struct set* sets, int number_of_sets, float* minimum_efficiency, int* minimum_efficiency_set_index) {
 	
 	// reset minimum efficiency value: largest float (normal) number

@@ -4,6 +4,7 @@
 #include "types.h"
 #include "functions.h"
 
+/* reads problem description from file and fills `problem' data type accordingly */
 void read_problem_description_from_file(const char* path, struct problem* specific_problem) {
 	FILE* file = fopen(path, "r");
 	// read header

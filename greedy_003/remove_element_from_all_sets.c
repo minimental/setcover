@@ -1,5 +1,6 @@
 #include "types.h"
 
+/* removes a given element from all sets efficiently using a look-up table */
 void remove_element_from_all_sets(struct element _element, struct set* sets, struct dynamic_array_index_pair* element_value_table) {
 	
 	int current_set_index, current_element_index, current_previous_element_index, current_next_element_index;
