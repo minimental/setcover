@@ -20,4 +20,4 @@ Then call the solver by typing
 
 in the Windows command prompt, or any other problem description file as an argument.
 
-Author: Max Herrmann (m.herrmann@blaetterundsterne.org)
+Author: [Max Herrmann](https://github.com/minimental) (m.herrmann@blaetterundsterne.org)
